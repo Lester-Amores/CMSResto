@@ -22,6 +22,10 @@ class AdminService
         if ($request->filled('last_name')) {
             $query->where('last_name', $request->last_name);
         }
+        
+        if($request->filled('withDeleted') && $request->withDeleted == 'true'){
+            $query->withTrashed();
+        }
 
         $sortBy = $request->input('sort_by', 'id');
         $sortOrder = $request->filled('sort_order') ? $request->sortOrder : 'desc';
@@ -29,6 +33,6 @@ class AdminService
 
         $perPage = $request->input('rowsPerPage', 10);
 
-        return $query->paginate($perPage);
+        return $query->with('user')->paginate($perPage);
     }
 }

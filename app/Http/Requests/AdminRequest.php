@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class AdminRequest extends FormRequest
 {
@@ -21,14 +22,25 @@ class AdminRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'last_name' => 'required|string|max:255',
             'first_name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:8',
-            'confirm_password' => 'required|string|min:8|same:password',
+            'email' => [
+                'nullable',
+                'email',
+                'max:255',
+                Rule::unique('users', 'email')->ignore($this->route('admin')),
+            ],
             'role' => 'nullable|int|in:0,1',
             'status' => 'nullable|int|in:0,1,2',
         ];
+
+        if ($this->isMethod('post')) {
+            $rules['password'] = 'required|string|min:8';
+        } else {
+            $rules['password'] = 'nullable|string|min:8';
+        }
+
+        return $rules;
     }
 }
