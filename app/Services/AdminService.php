@@ -3,7 +3,12 @@
 namespace App\Services;
 
 use App\Models\Admin;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
+
 
 class AdminService
 {
@@ -22,8 +27,8 @@ class AdminService
         if ($request->filled('last_name')) {
             $query->where('last_name', $request->last_name);
         }
-        
-        if($request->filled('withDeleted') && $request->withDeleted == 'true'){
+
+        if ($request->filled('withDeleted') && $request->withDeleted == 'true') {
             $query->withTrashed();
         }
 
@@ -34,5 +39,39 @@ class AdminService
         $perPage = $request->input('rowsPerPage', 10);
 
         return $query->with('user')->paginate($perPage);
+    }
+
+    public function createAdmin(Request $request)
+    {
+        $validated = $request->validated();
+
+        $user = User::create([
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+            'email_verified_at' => now(),
+            'remember_token' => Str::random(10)
+        ]);
+        Admin::create([
+            'last_name' => $validated['last_name'],
+            'first_name' => $validated['first_name'],
+            'user_id' => $user->id
+        ]);
+    }
+
+    public function updateAdmin(Request $request, Admin $admin)
+    {
+        $validated = $request->validated();
+
+        $admin->update([
+            'first_name' => $validated['first_name'],
+            'last_name' => $validated['last_name'],
+        ]);
+
+        $admin->user->update([
+            'email' => $validated['email'],
+            'password' => isset($validated['password'])
+                ? Hash::make($validated['password'])
+                : $admin->user->password,
+        ]);
     }
 }

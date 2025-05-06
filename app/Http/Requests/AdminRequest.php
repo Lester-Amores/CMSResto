@@ -22,7 +22,7 @@ class AdminRequest extends FormRequest
      */
     public function rules(): array
     {
-        $rules = [
+        return  [
             'last_name' => 'required|string|max:255',
             'first_name' => 'required|string|max:255',
             'email' => [
@@ -33,14 +33,7 @@ class AdminRequest extends FormRequest
             ],
             'role' => 'nullable|int|in:0,1',
             'status' => 'nullable|int|in:0,1,2',
+            'password' => 'nullable|string|min:8',
         ];
-
-        if ($this->isMethod('post')) {
-            $rules['password'] = 'required|string|min:8';
-        } else {
-            $rules['password'] = 'nullable|string|min:8';
-        }
-
-        return $rules;
     }
 }

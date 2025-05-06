@@ -23,13 +23,13 @@ class AdminController extends Controller
 
     public function index(Request $request)
     {
-        $admines = $this->adminService->getAdmin($request);
+        $admins = $this->adminService->getAdmin($request);
         $data = [
-            'admins' => $admines->items(),
-            'current_page' => $admines->currentPage(),
-            'total_pages' => $admines->lastPage(),
-            'total_rows' => $admines->total(),
-            'per_page' => $admines->perPage(),
+            'admins' => $admins->items(),
+            'current_page' => $admins->currentPage(),
+            'total_pages' => $admins->lastPage(),
+            'total_rows' => $admins->total(),
+            'per_page' => $admins->perPage(),
         ];
 
         return Inertia::render('admin/admin/index', $data);
@@ -37,20 +37,12 @@ class AdminController extends Controller
 
     public function store(AdminRequest $request)
     {
-        $validated = $request->validated();
-        $user = User::create([
-            'email' => $validated['email'],
-            'password' => Hash::make($validated['password']),
-            'email_verified_at' => now(),
-            'remember_token' => Str::random(10)
-        ]);
-        Admin::create([
-            'last_name' => $validated['last_name'],
-            'first_name' => $validated['first_name'],
-            'user_id' => $user->id
-        ]);
-
-        return redirect()->back()->with('success', 'Successfully created');
+        try {
+            $this->adminService->createAdmin($request);
+            return redirect()->back()->with('success', 'Successfully created');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Failed to create admin');
+        }
     }
 
     public function show(Admin $admin)
@@ -61,21 +53,13 @@ class AdminController extends Controller
 
     public function update(AdminRequest $request, Admin $admin)
     {
-        $validated = $request->validated();
 
-        $admin->update([
-            'first_name' => $validated['first_name'],
-            'last_name' => $validated['last_name'],
-        ]);
-
-        $admin->user->update([
-            'email' => $validated['email'],
-            'password' => isset($validated['password'])
-                ? Hash::make($validated['password'])
-                : $admin->user->password,
-        ]);
-
-        return redirect()->back()->with('success', 'Successfully updated');
+        try {
+            $this->adminService->updateAdmin($request, $admin);
+            return redirect()->back()->with('success', 'Successfully updated');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Failed to update admin');
+        }
     }
 
 

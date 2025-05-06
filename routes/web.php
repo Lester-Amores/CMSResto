@@ -16,10 +16,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
 Route::prefix('admin')->middleware(['auth', 'verified'])->group(function(){
-    Route::resource('/admins', AdminController::class);
+    Route::resource('/admins', AdminController::class)->except('update');
+    Route::post('/admins/{admin}/update', [AdminController::class, 'update'])->name('admins.update');
     Route::post('/admins/multi-delete', [AdminController::class, 'multiDelete'])->name('admins.multi-delete');
     Route::post('/admins/multi-restore', [AdminController::class, 'multiRestore'])->name('admins.multi-restore');
     Route::post('admins/restore', [AdminController::class, 'restore'])->name('admins.restore');
+
 });
 
 

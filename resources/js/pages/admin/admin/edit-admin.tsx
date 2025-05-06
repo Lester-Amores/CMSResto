@@ -32,10 +32,9 @@ export default function EditAdmin({ onSuccess, adminId }: EditAdminProps) {
     }, [data, reset]);
 
 
-
     const onSubmit: SubmitHandler<Admin> = (data) => {
         const payload = { ...data } as Record<string, FormDataConvertible>;
-        router.patch(route('admins.update', adminId), payload, {
+        router.post(route('admins.update', adminId), payload, {
             preserveScroll: true,
             onSuccess: (page) => {
                 const flash = page.props.flash as FlashMessages;
