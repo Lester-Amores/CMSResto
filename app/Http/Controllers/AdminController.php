@@ -4,13 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AdminRequest;
 use App\Models\Admin;
-use App\Models\User;
 use Exception;
 use App\Services\AdminService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
+
 
 class AdminController extends Controller
 {

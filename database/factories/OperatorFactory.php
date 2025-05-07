@@ -4,12 +4,16 @@ namespace Database\Factories;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Admin>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Operator>
  */
-class AdminFactory extends Factory
+class OperatorFactory extends Factory
 {
+
+    protected static ?string $password;
+
     /**
      * Define the model's default state.
      *
@@ -20,7 +24,10 @@ class AdminFactory extends Factory
         return [
             'last_name' => fake()->lastName(),
             'first_name' => fake()->firstName(),
-            'user_id' => User::factory()
+            'user_id' => User::factory(),
+            'birthday' => fake()->date(),
+            'started_at' => fake()->date(),
+            'phone' => fake()->phoneNumber()
         ];
     }
 }

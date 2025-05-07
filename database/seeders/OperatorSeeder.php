@@ -3,12 +3,13 @@
 namespace Database\Seeders;
 
 use App\Models\Admin;
+use App\Models\Operator;
 use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
-class AdminSeeder extends Seeder
+class OperatorSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,16 +17,19 @@ class AdminSeeder extends Seeder
     public function run(): void
     {
         $user = User::create([
-            'email' => 'default@admin.com',
+            'email' => 'default@operator.com',
             'password' => Hash::make('password'),
             'remember_token' => Str::random(10),
             'email_verified_at' => now(),
         ]);
     
-        Admin::create([
+        Operator::create([
             'first_name' => 'Default',
-            'last_name' => 'Admin',
+            'last_name' => 'Operator',
             'user_id' => $user->id,
+            'phone' => '09123456789',
+            'birthday' => '1990-01-01',
+            'started_at' => '2020-01-01'
         ]);
     }
 }
