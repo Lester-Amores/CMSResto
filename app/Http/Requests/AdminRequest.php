@@ -33,7 +33,11 @@ class AdminRequest extends FormRequest
             ],
             'role' => 'nullable|int|in:0,1',
             'status' => 'nullable|int|in:0,1,2',
-            'password' => 'nullable|string|min:8',
+            'password' =>  [
+                $this->route('admin') ? 'nullable' : 'required',
+                'string',
+                'min:8',
+            ],
         ];
     }
 }
