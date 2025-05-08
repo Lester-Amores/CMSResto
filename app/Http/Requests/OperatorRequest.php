@@ -29,11 +29,11 @@ class OperatorRequest extends FormRequest
                 'nullable',
                 'email',
                 'max:255',
-                Rule::unique('users', 'email')->ignore($this->route('operator')),
+                Rule::unique('users', 'email')->ignore($this->route('operator')?->user_id),
             ],
             'role' => 'nullable|int|in:0,1',
             'status' => 'nullable|int|in:0,1,2',
-            'phone' => 'required|integer|digits:12',
+            'phone' => 'required|string|max:12',
             'birthday' => 'required|date',
             'started_at' => 'required|date',
             'password' =>  [

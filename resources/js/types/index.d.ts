@@ -76,6 +76,24 @@ export interface Admin{
     updated_at: string;
 }
 
+export interface Operator{
+    id: number;
+    last_name: string;
+    first_name: string;
+    user_id:number;
+    email: string;
+    password: string;
+    role: number;
+    status: number;
+    user: User;
+    phone: string;
+    birthday: string;
+    started_at: string;
+    deleted_at: string | null;
+    created_at: string;
+    updated_at: string;
+}
+
 export type PageProps = InertiaPageProps;
 
 export type ModalMode = "add" | "edit" | "view" | "mail" | null;

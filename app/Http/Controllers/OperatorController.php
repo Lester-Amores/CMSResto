@@ -30,7 +30,7 @@ class OperatorController extends Controller
             'per_page' => $operators->perPage(),
         ];
 
-        return Inertia::render('operator/operator/index', $data);
+        return Inertia::render('admin/operator/index', $data);
     }
 
     public function store(OperatorRequest $request)

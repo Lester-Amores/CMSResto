@@ -58,6 +58,11 @@ class User extends Authenticatable
         return $this->hasOne(Admin::class);
     }
 
+    public function operator()
+    {
+        return $this->hasOne(Operator::class);
+    }
+
     public function getNameAttribute()
     {
         $admin = $this->admin;

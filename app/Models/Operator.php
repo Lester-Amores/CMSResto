@@ -15,11 +15,12 @@ class Operator extends Model
         'last_name',
         'first_name',
         'user_id',
+        'phone',
         'birthday',
-        'started_At'
+        'started_at'
     ];
 
     public function user(){
-        return $this->belongTo(User::class);
+        return $this->belongsTo(User::class);
     }
 }

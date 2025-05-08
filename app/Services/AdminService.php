@@ -24,17 +24,34 @@ class AdminService
         }
 
 
-        if ($request->filled('last_name')) {
-            $query->where('last_name', $request->last_name);
+        if ($request->filled('name')) {
+            $query->where(function ($q) use ($request) {
+                $q->whereRaw("LOWER(first_name) LIKE LOWER(?)", ["%{$request->name}%"])
+                  ->orWhereRaw("LOWER(last_name) LIKE LOWER(?)", ["%{$request->name}%"])
+                  ->orWhereRaw("LOWER(CONCAT(first_name, ' ', last_name)) LIKE LOWER(?)", ["%{$request->name}%"])
+                  ->orWhereRaw("LOWER(CONCAT(last_name, ' ', first_name)) LIKE LOWER(?)", ["%{$request->name}%"]);
+            });
+        }
+
+        if ($request->filled('email')) {
+            $query->whereHas('user', function ($q) use ($request) {
+                $q->where('email', 'like', "%{$request->email}%");
+            });
         }
 
         if ($request->filled('withDeleted') && $request->withDeleted == 'true') {
             $query->withTrashed();
         }
 
-        $sortBy = $request->input('sort_by', 'id');
-        $sortOrder = $request->filled('sort_order') ? $request->sortOrder : 'desc';
-        $query->orderBy($sortBy, $sortOrder);
+        $sortBy = $request->input('sortBy', 'id');
+        $sortOrder = $request->filled('sortOrder') ? $request->sortOrder : 'desc';
+        if ($sortBy === 'email') {
+            $query->join('users', 'admins.user_id', '=', 'users.id')
+                  ->orderBy('users.email', $sortOrder)
+                  ->select('admins.*'); 
+        } else {
+            $query->orderBy($sortBy, $sortOrder);
+        }
 
         $perPage = $request->input('rowsPerPage', 10);
 
