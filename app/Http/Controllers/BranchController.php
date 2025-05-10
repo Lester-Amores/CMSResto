@@ -1,0 +1,119 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Requests\BranchRequest;
+use App\Models\Branch;
+use Exception;
+use App\Services\BranchService;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
+
+
+class BranchController extends Controller
+{
+    protected BranchService $branchService;
+
+    public function __construct(BranchService $branchService)
+    {
+        $this->branchService = $branchService;
+    }
+
+    public function index(Request $request)
+    {
+        $branchs = $this->branchService->getBranch($request);
+        $data = [
+            'branchs' => $branchs->items(),
+            'current_page' => $branchs->currentPage(),
+            'total_pages' => $branchs->lastPage(),
+            'total_rows' => $branchs->total(),
+            'per_page' => $branchs->perPage(),
+        ];
+
+        return Inertia::render('branch/branch/index', $data);
+    }
+
+    public function store(BranchRequest $request)
+    {
+        try {
+            $validated = $request->validated();
+            Branch::create($validated);
+            return redirect()->back()->with('success', 'Successfully created');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Failed to create branch');
+        }
+    }
+
+    public function show(Branch $branch)
+    {
+        $branch = Branch::with('user')->findOrFail($branch->id);
+        return response()->json($branch);
+    }
+
+    public function update(BranchRequest $request, Branch $branch)
+    {
+
+        try {
+            $validated = $request->validated();
+            $branch->update($validated);
+            return redirect()->back()->with('success', 'Successfully created');
+            return redirect()->back()->with('success', 'Successfully updated');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Failed to update branch');
+        }
+    }
+
+
+    public function destroy(Branch $branch)
+    {
+        try {
+            $branch->delete();
+            return redirect()->back()->with('success', 'Branch deleted successfully');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Deletion failed');
+        }
+    }
+
+    public function restore(Request $request)
+    {
+        try {
+            $branch = Branch::withTrashed()->findOrFail($request->id);
+            $branch->restore();
+            return redirect()->back()->with('success', 'Branch restored successfully');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'restoration failed');
+        }
+    }
+
+    public function multiDelete(Request $request)
+    {
+        try {
+            $ids = $request->input('ids');
+            $request->validate([
+                'ids' => 'required|array',
+                'ids.*' => 'integer|exists:branchs,id',
+            ]);
+            Branch::whereIn('id', $ids)->delete();
+            return redirect()->back()->with('success', 'Branch deleted Successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Deletion failed');
+        }
+    }
+
+    public function multiRestore(Request $request)
+    {
+        try {
+            $ids = $request->input('ids');
+            $request->validate([
+                'ids' => 'required|array',
+                'ids.*' => 'integer|exists:branchs,id',
+            ]);
+
+            Branch::onlyTrashed()->whereIn('id', $ids)->restore();
+
+            return redirect()->back()->with('success', 'Branch restored successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'restoration failed');
+        }
+    }
+}

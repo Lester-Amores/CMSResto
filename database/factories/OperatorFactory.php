@@ -27,7 +27,7 @@ class OperatorFactory extends Factory
             'user_id' => User::factory(),
             'birthday' => fake()->date(),
             'started_at' => fake()->date(),
-            'phone' => fake()->phoneNumber()
+            'phone' => fake()->numerify('09#########'),
         ];
     }
 }
