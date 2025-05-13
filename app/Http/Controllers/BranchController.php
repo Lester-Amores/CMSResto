@@ -21,16 +21,16 @@ class BranchController extends Controller
 
     public function index(Request $request)
     {
-        $branchs = $this->branchService->getBranch($request);
+        $branches = $this->branchService->getBranch($request);
         $data = [
-            'branchs' => $branchs->items(),
-            'current_page' => $branchs->currentPage(),
-            'total_pages' => $branchs->lastPage(),
-            'total_rows' => $branchs->total(),
-            'per_page' => $branchs->perPage(),
+            'branches' => $branches->items(),
+            'current_page' => $branches->currentPage(),
+            'total_pages' => $branches->lastPage(),
+            'total_rows' => $branches->total(),
+            'per_page' => $branches->perPage(),
         ];
 
-        return Inertia::render('branch/branch/index', $data);
+        return Inertia::render('admin/branch/index', $data);
     }
 
     public function store(BranchRequest $request)
@@ -46,7 +46,7 @@ class BranchController extends Controller
 
     public function show(Branch $branch)
     {
-        $branch = Branch::with('user')->findOrFail($branch->id);
+        $branch = Branch::with('operator.user')->findOrFail($branch->id);
         return response()->json($branch);
     }
 
@@ -91,7 +91,7 @@ class BranchController extends Controller
             $ids = $request->input('ids');
             $request->validate([
                 'ids' => 'required|array',
-                'ids.*' => 'integer|exists:branchs,id',
+                'ids.*' => 'integer|exists:branches,id',
             ]);
             Branch::whereIn('id', $ids)->delete();
             return redirect()->back()->with('success', 'Branch deleted Successfully');
@@ -106,7 +106,7 @@ class BranchController extends Controller
             $ids = $request->input('ids');
             $request->validate([
                 'ids' => 'required|array',
-                'ids.*' => 'integer|exists:branchs,id',
+                'ids.*' => 'integer|exists:branches,id',
             ]);
 
             Branch::onlyTrashed()->whereIn('id', $ids)->restore();

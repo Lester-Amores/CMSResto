@@ -24,7 +24,7 @@ class OperatorFactory extends Factory
         return [
             'last_name' => fake()->lastName(),
             'first_name' => fake()->firstName(),
-            'user_id' => User::factory(),
+            'user_id' => User::factory(['role' => user::ROLE_OPERATOR]),
             'birthday' => fake()->date(),
             'started_at' => fake()->date(),
             'phone' => fake()->numerify('09#########'),

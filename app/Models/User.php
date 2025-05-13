@@ -13,6 +13,9 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, SoftDeletes;
 
+
+    public const ROLE_ADMIN = 0;
+    public const ROLE_OPERATOR = 1;
     protected $appends = ['name'];
 
     /**
@@ -65,7 +68,13 @@ class User extends Authenticatable
 
     public function getNameAttribute()
     {
-        $admin = $this->admin;
-        return $admin ? $admin->first_name . ' ' . $admin->last_name : '';
+        switch ((int)$this->role) {
+            case self::ROLE_ADMIN:
+                return $this->admin ? $this->admin->first_name . ' ' . $this->admin->last_name : '';
+            case self::ROLE_OPERATOR:
+                return $this->operator ? $this->operator->first_name . ' ' . $this->operator->last_name : '';
+            default:
+                return '';
+        }
     }
 }
