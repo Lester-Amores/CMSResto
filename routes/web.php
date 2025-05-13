@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BranchController;
 use App\Http\Controllers\OperatorController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -29,6 +30,11 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function(){
     Route::post('/operators/multi-restore', [OperatorController::class, 'multiRestore'])->name('operators.multi-restore');
     Route::post('operators/restore', [OperatorController::class, 'restore'])->name('operators.restore');
 
+    Route::resource('/branches', BranchController::class)->except('update');
+    Route::post('/branches/{branch}/update', [BranchController::class, 'update'])->name('branches.update');
+    Route::post('/branches/multi-delete', [BranchController::class, 'multiDelete'])->name('branches.multi-delete');
+    Route::post('/branches/multi-restore', [BranchController::class, 'multiRestore'])->name('branches.multi-restore');
+    Route::post('branches/restore', [BranchController::class, 'restore'])->name('branches.restore');
 });
 
 
