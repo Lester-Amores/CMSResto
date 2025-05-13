@@ -32,3 +32,17 @@ export const getOperator = async (id: number) => {
         throw new Error('message.errorTryAgain');
     }
 };
+
+export const getBranch = async (id: number) => {
+    try {
+        const response = await http.get('admin/branches/' + id);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        if (isAxiosError(error)) {
+            const responseData = error.response?.data as ErrorResponse;
+            throw responseData?.message || 'message.error';
+        }
+        throw new Error('message.errorTryAgain');
+    }
+};

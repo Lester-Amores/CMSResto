@@ -94,6 +94,20 @@ export interface Operator{
     updated_at: string;
 }
 
+
+export interface Branch{
+    id: number;
+    name: string;
+    address: string;
+    image:number;
+    operator_id: string;
+    operator?: Operator;
+    deleted_at: string | null;
+    created_at: string;
+    updated_at: string;
+}
+
+
 export type PageProps = InertiaPageProps;
 
 export type ModalMode = "add" | "edit" | "view" | "mail" | null;
