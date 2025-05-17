@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { router } from '@inertiajs/react';
+import { usePage, router } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
 import OperatorForm from './operator-form';
-import { FlashMessages, Operator } from '@/types';
+import { PageProps, FlashMessages, Operator } from '@/types';
 import { handleFlashMessages, showErrors } from '@/lib/utils';
 import { useQuery } from '@tanstack/react-query';
 import { getOperator } from '@/services/services';
@@ -15,6 +15,7 @@ interface EditOperatorProps {
 }
 
 export default function EditOperator({ onSuccess, operatorId }: EditOperatorProps) {
+    const { t } = usePage<PageProps>().props;
     const { register, handleSubmit, formState: { errors }, reset } = useForm<Operator>();
     const { data, isLoading, error } = useQuery({
         queryKey: ['operator', operatorId],

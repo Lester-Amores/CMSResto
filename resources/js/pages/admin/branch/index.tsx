@@ -5,6 +5,7 @@ import type { BreadcrumbItem, PaginatedProps, Branch, FlashMessages, ModalMode }
 import DataTable from '@/components/datatable';
 import ActionButtons from '@/components/action-buttons';
 import SlidingModal from '@/components/sliding-modal';
+import CenterModal from '@/components/center-modal';
 import { showConfirmationPopup } from '@/components/confirmation-popup';
 import { useFetchData } from '@/hooks/use-fetch-data';
 import { handleFlashMessages, showErrors } from '@/lib/utils';
@@ -12,19 +13,12 @@ import FilterForm, { type FilterFormData } from './filter-form';
 import AddBranch from './add-branch';
 import EditBranch from './edit-branch';
 import ViewBranch from './view-branch/view-branch';
+import { userInfo } from 'os';
 
 
 
 interface BranchProps extends PaginatedProps {
     branches: Branch[];
-}
-
-interface Row {
-  id: number;
-  name: string;
-  email?: string;
-  actions: React.ReactNode;
-  isDeleted: boolean;
 }
 
 export default function BranchPage({ branches, current_page, total_pages, total_rows, per_page }: BranchProps) {
@@ -73,7 +67,7 @@ export default function BranchPage({ branches, current_page, total_pages, total_
     const handleFilterSubmit = (formData: FilterFormData) => {
         setPage(1);
         const params = Object.entries(formData)
-            .filter(([ value]) => value !== '')
+            .filter(([_, value]) => value !== '')
             .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
         setSearchParams(params);
     }
@@ -146,7 +140,7 @@ export default function BranchPage({ branches, current_page, total_pages, total_
         })
     }
 
-    const handleRowSelect = (selectedRows: Row[]) => {
+    const handleRowSelect = (selectedRows: Record<string, any>[]) => {
         const selectedIds = selectedRows.map(row => row.id);
         selectedIdsRef.current = selectedIds;
     };

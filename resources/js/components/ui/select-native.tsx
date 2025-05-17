@@ -1,8 +1,10 @@
 import React from 'react';
 import { cn } from "@/lib/utils";
 
+// SelectItem component
+interface SelectItemProps extends React.OptionHTMLAttributes<HTMLOptionElement> {}
 
-export const SelectItem = ({ children, ...props }: React.OptionHTMLAttributes<HTMLOptionElement>) => {
+export const SelectItem = ({ children, ...props }: SelectItemProps) => {
   return (
     <option {...props}>
       {children}

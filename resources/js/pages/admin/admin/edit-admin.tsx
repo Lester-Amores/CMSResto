@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { router } from '@inertiajs/react';
+import { usePage, router } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
 import AdminForm from './admin-form';
-import {FlashMessages, Admin } from '@/types';
+import { PageProps, FlashMessages, Admin } from '@/types';
 import { handleFlashMessages, showErrors } from '@/lib/utils';
 import { useQuery } from '@tanstack/react-query';
 import { getAdmin } from '@/services/services';
@@ -15,6 +15,7 @@ interface EditAdminProps {
 }
 
 export default function EditAdmin({ onSuccess, adminId }: EditAdminProps) {
+    const { t } = usePage<PageProps>().props;
     const { register, handleSubmit, formState: { errors }, reset } = useForm<Admin>();
     const { data, isLoading, error } = useQuery({
         queryKey: ['admin', adminId],

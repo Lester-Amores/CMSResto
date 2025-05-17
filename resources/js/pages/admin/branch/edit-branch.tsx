@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { router } from '@inertiajs/react';
+import { usePage, router } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
 import BranchForm from './branch-form';
-import { FlashMessages, Branch } from '@/types';
+import { PageProps, FlashMessages, Branch } from '@/types';
 import { handleFlashMessages, showErrors } from '@/lib/utils';
 import { useQuery } from '@tanstack/react-query';
 import { getBranch } from '@/services/services';
@@ -15,6 +15,7 @@ interface EditBranchProps {
 }
 
 export default function EditBranch({ onSuccess, branchId }: EditBranchProps) {
+    const { t } = usePage<PageProps>().props;
     const { register, handleSubmit, formState: { errors }, reset } = useForm<Branch>();
     const { data, isLoading, error } = useQuery({
         queryKey: ['branch', branchId],
