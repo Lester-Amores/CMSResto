@@ -5,7 +5,6 @@ import type { BreadcrumbItem, PaginatedProps, Admin, FlashMessages, ModalMode } 
 import DataTable from '@/components/datatable';
 import ActionButtons from '@/components/action-buttons';
 import SlidingModal from '@/components/sliding-modal';
-import CenterModal from '@/components/center-modal';
 import { showConfirmationPopup } from '@/components/confirmation-popup';
 import { useFetchData } from '@/hooks/use-fetch-data';
 import { handleFlashMessages, showErrors } from '@/lib/utils';
@@ -18,6 +17,14 @@ import ViewAdmin from './view-admin/view-admin';
 
 interface AdminProps extends PaginatedProps {
     admins: Admin[];
+}
+
+interface Row {
+  id: number;
+  last_name: string;
+  email: string;
+  actions: React.ReactNode;
+  isDeleted: boolean;
 }
 
 export default function AdminPage({ admins, current_page, total_pages, total_rows, per_page }: AdminProps) {
@@ -67,7 +74,7 @@ export default function AdminPage({ admins, current_page, total_pages, total_row
     const handleFilterSubmit = (formData: FilterFormData) => {
         setPage(1);
         const params = Object.entries(formData)
-            .filter(([_, value]) => value !== '')
+            .filter(([ value]) => value !== '')
             .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
         setSearchParams(params);
     }
@@ -140,7 +147,7 @@ export default function AdminPage({ admins, current_page, total_pages, total_row
         })
     }
 
-    const handleRowSelect = (selectedRows: Record<string, any>[]) => {
+    const handleRowSelect = (selectedRows: Row[]) => {
         const selectedIds = selectedRows.map(row => row.id);
         selectedIdsRef.current = selectedIds;
     };

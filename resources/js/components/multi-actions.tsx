@@ -8,8 +8,13 @@ interface MultiActionsProps<T> {
     selectedRows: T[];
 }
 
-const isRowWithDeleted = (row: any): row is { isDeleted: boolean } => {
-    return row && typeof row.isDeleted === 'boolean';
+const isRowWithDeleted = (row: unknown): row is { isDeleted: boolean } => {
+    return (
+        typeof row === 'object' &&
+        row !== null &&
+        'isDeleted' in row &&
+        typeof (row as { isDeleted: unknown }).isDeleted === 'boolean'
+    );
 };
 
 export const MultiActions = <T,>({
