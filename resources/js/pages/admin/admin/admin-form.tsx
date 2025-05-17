@@ -3,7 +3,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/lib/constants';
 import type { Admin } from '@/types';
-import { SelectDropDown, SelectItem } from '@/components/ui/select-native';
 
 
 

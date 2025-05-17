@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Table, TableHeader, TableBody, TableRow, TableCell } from '@/components/ui/table';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { FilterIcon, Plus, FileSpreadsheetIcon } from 'lucide-react';
+import { FilterIcon, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { MultiActions } from '@/components/multi-actions';
@@ -59,12 +59,10 @@ export default function DataTable<T>({
   const [showFilter, setShowFilter] = useState(false);
   const [selectedRows, setSelectedRows] = useState<T[]>([]);
   const [selectAll, setSelectAll] = useState(false);
-  const [isExportImportOpen, setIsExportImportOpen] = useState(false);
   const search = useDebounce(searchTerm, 1000);
   const previousPageRef = useRef(currentPage);
   const multiActionRef = useRef<HTMLDivElement | null>(null);
   const tableRef = useRef<HTMLTableElement>(null);
-  const exportImportRef = useRef<HTMLDivElement | null>(null);
   const startItem = (currentPage - 1) * rowsPerPage + 1;
   const endItem = Math.min(startItem + rowsPerPage - 1, totalRows);
 
@@ -157,18 +155,6 @@ export default function DataTable<T>({
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [multiActionRef, tableRef, setSelectedRows, setSelectAll]);
-
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (exportImportRef.current && !exportImportRef.current.contains(event.target as Node)) {
-        setIsExportImportOpen(false);
-      }
-    }
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [exportImportRef]);
 
 
   return (
