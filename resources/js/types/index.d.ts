@@ -50,6 +50,7 @@ export interface User {
 }
 
 export interface FlashMessages {
+    data?: T;
     success?: string;
     error?: string;
 }
@@ -85,6 +86,8 @@ export interface Operator{
     password: string;
     role: number;
     status: number;
+    branch_id: number;
+    branch: Branch;
     user: User;
     phone: string;
     birthday: string;

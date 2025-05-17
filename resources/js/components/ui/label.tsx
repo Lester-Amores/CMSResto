@@ -1,12 +1,17 @@
 import * as React from "react"
 import * as LabelPrimitive from "@radix-ui/react-label"
-
+import { Asterisk } from "lucide-react"
 import { cn } from "@/lib/utils"
+
+interface LabelProps extends React.ComponentProps<typeof LabelPrimitive.Root> {
+  required?: boolean
+}
 
 function Label({
   className,
+  required = false,
   ...props
-}: React.ComponentProps<typeof LabelPrimitive.Root>) {
+}: LabelProps) {
   return (
     <LabelPrimitive.Root
       data-slot="label"
@@ -15,7 +20,12 @@ function Label({
         className
       )}
       {...props}
-    />
+    >
+      <div className="flex items-center mb-1">
+        {props.children}
+        {required && <Asterisk className="text-red-500 ml-1 w-3 h-3" />}
+      </div>
+    </LabelPrimitive.Root>
   )
 }
 

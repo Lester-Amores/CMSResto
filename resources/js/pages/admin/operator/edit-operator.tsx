@@ -7,7 +7,7 @@ import { FlashMessages, Operator } from '@/types';
 import { handleFlashMessages, showErrors } from '@/lib/utils';
 import { useQuery } from '@tanstack/react-query';
 import { getOperator } from '@/services/services';
-import { FormDataConvertible } from '@inertiajs/core';
+import BranchPicker from '@/components/picker/branch-picker';
 
 interface EditOperatorProps {
     onSuccess: () => void;
@@ -15,7 +15,7 @@ interface EditOperatorProps {
 }
 
 export default function EditOperator({ onSuccess, operatorId }: EditOperatorProps) {
-    const { register, handleSubmit, formState: { errors }, reset } = useForm<Operator>();
+    const { register, handleSubmit, formState: { errors }, reset, setError, setValue, clearErrors } = useForm<Operator>();
     const { data, isLoading, error } = useQuery({
         queryKey: ['operator', operatorId],
         queryFn: () => getOperator(operatorId),
@@ -32,8 +32,19 @@ export default function EditOperator({ onSuccess, operatorId }: EditOperatorProp
 
 
     const onSubmit: SubmitHandler<Operator> = (data) => {
-        const payload = { ...data } as Record<string, FormDataConvertible>;
-        router.post(route('operators.update', operatorId), payload, {
+        if (!data.branch_id) {
+            setError("branch_id", { message: "This field is required." });
+            return;
+        };
+
+        const formData = new FormData();
+        Object.entries(data).forEach(([key, value]) => {
+            if (value !== '' && value !== null && value !== undefined) {
+                formData.append(key, value);
+            }
+        });
+
+        router.post(route('operators.update', operatorId), formData, {
             preserveScroll: true,
             onSuccess: (page) => {
                 const flash = page.props.flash as FlashMessages;
@@ -59,6 +70,8 @@ export default function EditOperator({ onSuccess, operatorId }: EditOperatorProp
             ) : (
                 <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col h-full">
                     <OperatorForm register={register} errors={errors} />
+                    <BranchPicker initialBranch={data?.branch} setValue={setValue} errors={errors} clearErrors={clearErrors} required />
+
                     <div className="flex justify-end">
                         <Button type="submit">
                             Submit
