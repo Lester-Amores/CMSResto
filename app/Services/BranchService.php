@@ -35,6 +35,6 @@ class BranchService
 
         $perPage = $request->input('rowsPerPage', 10);
 
-        return $query->with('operator.user')->paginate($perPage);
+        return $query->paginate($perPage);
     }
 }

@@ -49,7 +49,7 @@ class BranchController extends Controller
 
     public function show(Branch $branch)
     {
-        $branch = Branch::with('operator.user')->findOrFail($branch->id);
+        $branch = Branch::findOrFail($branch->id);
         return response()->json($branch);
     }
 
