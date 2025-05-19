@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('phone', 12);
             $table->date('birthday');
             $table->date('started_at');
-            // $table->foreignId('branch_id')->constrained()->onDelete('cascade');
+            $table->foreignId('branch_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();

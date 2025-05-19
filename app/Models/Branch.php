@@ -18,7 +18,7 @@ class Branch extends Model
         'operator_id'
     ];
 
-    public function operator(){
-        return $this->belongsTo(Operator::class);
+    public function operators(){
+        return $this->hasMany(Operator::class);
     }
 }

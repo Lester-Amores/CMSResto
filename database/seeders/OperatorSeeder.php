@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Admin;
+use App\Models\Branch;
 use App\Models\Operator;
 use App\Models\User;
 use Illuminate\Support\Str;
@@ -28,6 +29,7 @@ class OperatorSeeder extends Seeder
             'first_name' => 'Default',
             'last_name' => 'Operator',
             'user_id' => $user->id,
+            'branch_id' => Branch::factory()->create()->id,
             'phone' => '09123456789',
             'birthday' => '1990-01-01',
             'started_at' => '2020-01-01'

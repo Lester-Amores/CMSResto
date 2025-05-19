@@ -15,6 +15,7 @@ class Operator extends Model
         'last_name',
         'first_name',
         'user_id',
+        'branch_id',
         'phone',
         'birthday',
         'started_at'
@@ -24,7 +25,7 @@ class Operator extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function branches(){
-        return $this->hasMany(Branch::class);
+    public function branch(){
+        return $this->belongsTo(Branch::class);
     }
 }
