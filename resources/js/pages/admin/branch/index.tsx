@@ -205,7 +205,7 @@ export default function BranchPage({ branches, current_page, total_pages, total_
     const columns = [
         { header: '#', key: 'id', sortTable: true },
         { header: 'Name', key: 'name', sortTable: true },
-        { header: 'Email', key: 'email', sortTable: true },
+        { header: 'Address', key: 'address', sortTable: true },
         { header: 'Actions', key: 'actions', sortTable: false },
     ];
 
@@ -214,7 +214,7 @@ export default function BranchPage({ branches, current_page, total_pages, total_
         return {
             id: branch.id,
             name: branch?.name,
-            email: branch?.operator?.user?.email,
+            address: branch?.address,
             actions: (
                 <ActionButtons
                     toggleId={branch.id}

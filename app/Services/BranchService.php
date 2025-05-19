@@ -19,15 +19,8 @@ class BranchService
             });
         }
 
-
         if ($request->filled('name')) {
             $query->where('name', 'like', "%{$request->name}%");
-        }
-
-        if ($request->filled('email')) {
-            $query->whereHas('user', function ($q) use ($request) {
-                $q->where('email', 'like', "%{$request->email}%");
-            });
         }
 
         if ($request->filled('withDeleted') && $request->withDeleted == 'true') {
@@ -36,14 +29,8 @@ class BranchService
 
         $sortBy = $request->input('sortBy', 'id');
         $sortOrder = $request->filled('sortOrder') ? $request->sortOrder : 'desc';
-        if ($sortBy === 'email') {
-            $query->join('operators', 'branches.operator_id', '=', 'operators.id')
-                ->join('users', 'operators.user_id', '=', 'users.id')
-                ->orderBy('users.email', $sortOrder)
-                ->addSelect('branches.*');
-        } else {
-            $query->orderBy($sortBy, $sortOrder);
-        }
+        $query->orderBy($sortBy, $sortOrder);
+      
 
 
         $perPage = $request->input('rowsPerPage', 10);

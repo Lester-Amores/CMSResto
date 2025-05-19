@@ -26,14 +26,6 @@ export default function ViewBranch({ branchId }: ViewBranchProps) {
                     <CardContent>
                         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                             <div>
-                                <h3 className="font-semibold">Operator Name</h3>
-                                <p>{data ? data.operator.user.name : `Not available`}</p>
-                            </div>
-                            <div>
-                                <h3 className="font-semibold">Operator Email</h3>
-                                <p>{data ? data.operator.user.email : `Not available`}</p>
-                            </div>
-                            <div>
                                 <h3 className="font-semibold">Address</h3>
                                 <p>{data ? data.address : `Not available`}</p>
                             </div>

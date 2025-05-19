@@ -26,7 +26,6 @@ class BranchRequest extends FormRequest
             'name' => 'required|string|max:255',
             'address' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'operator_id' => 'required|exists:operators,id'
         ];
     }
 }
