@@ -18,7 +18,7 @@ class OperatorSeeder extends Seeder
     public function run(): void
     {
         $user = User::create([
-            'email' => 'default@operator.com',
+            'email' => 'operator@resto.com',
             'password' => Hash::make('password'),
             'role' => 1,
             'remember_token' => Str::random(10),

@@ -21,13 +21,13 @@ class MenuController extends Controller
 
     public function index(Request $request)
     {
-        $menues = $this->menuService->getMenu($request);
+        $menus = $this->menuService->getMenu($request);
         $data = [
-            'menues' => $menues->items(),
-            'current_page' => $menues->currentPage(),
-            'total_pages' => $menues->lastPage(),
-            'total_rows' => $menues->total(),
-            'per_page' => $menues->perPage(),
+            'menus' => $menus->items(),
+            'current_page' => $menus->currentPage(),
+            'total_pages' => $menus->lastPage(),
+            'total_rows' => $menus->total(),
+            'per_page' => $menus->perPage(),
         ];
 
         if ($request->expectsJson()) {
@@ -58,8 +58,8 @@ class MenuController extends Controller
 
         try {
             $validated = $request->validated();
+            \Log::info($request->validated());
             $menu->update($validated);
-            return redirect()->back()->with('success', 'Successfully created');
             return redirect()->back()->with('success', 'Successfully updated');
         } catch (Exception $e) {
             return redirect()->back()->with('error', 'Failed to update menu');
@@ -94,7 +94,7 @@ class MenuController extends Controller
             $ids = $request->input('ids');
             $request->validate([
                 'ids' => 'required|array',
-                'ids.*' => 'integer|exists:menues,id',
+                'ids.*' => 'integer|exists:menus,id',
             ]);
             Menu::whereIn('id', $ids)->delete();
             return redirect()->back()->with('success', 'Menu deleted Successfully');
@@ -109,7 +109,7 @@ class MenuController extends Controller
             $ids = $request->input('ids');
             $request->validate([
                 'ids' => 'required|array',
-                'ids.*' => 'integer|exists:menues,id',
+                'ids.*' => 'integer|exists:menus,id',
             ]);
 
             Menu::onlyTrashed()->whereIn('id', $ids)->restore();

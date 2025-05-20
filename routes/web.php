@@ -38,7 +38,7 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function(){
     Route::post('branches/restore', [BranchController::class, 'restore'])->name('branches.restore');
 
     Route::resource('/menus', MenuController::class)->except('update');
-    Route::post('/menus/{branch}/update', [MenuController::class, 'update'])->name('menus.update');
+    Route::post('/menus/{menu}/update', [MenuController::class, 'update'])->name('menus.update');
     Route::post('/menus/multi-delete', [MenuController::class, 'multiDelete'])->name('menus.multi-delete');
     Route::post('/menus/multi-restore', [MenuController::class, 'multiRestore'])->name('menus.multi-restore');
     Route::post('menus/restore', [MenuController::class, 'restore'])->name('menus.restore');

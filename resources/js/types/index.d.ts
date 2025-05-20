@@ -110,6 +110,15 @@ export interface Branch{
     updated_at: string;
 }
 
+export interface Menu{
+    id: number;
+    name: string;
+    description: string;
+    deleted_at: string | null;
+    created_at: string;
+    updated_at: string;
+}
+
 
 export type PageProps = InertiaPageProps;
 

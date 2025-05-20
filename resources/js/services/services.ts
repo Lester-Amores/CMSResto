@@ -67,3 +67,17 @@ export const fetchBranches = async ({ page = 1, per_page = 10, withDeleted = fal
         throw new Error('message.errorTryAgain');
     }
 };
+
+export const getMenu = async (id: number) => {
+    try {
+        const response = await http.get('admin/menus/' + id);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        if (isAxiosError(error)) {
+            const responseData = error.response?.data as ErrorResponse;
+            throw responseData?.message || 'message.error';
+        }
+        throw new Error('message.errorTryAgain');
+    }
+};
