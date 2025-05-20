@@ -22,7 +22,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             AdminSeeder::class,
             OperatorSeeder::class,
-            BranchSeeder::class
+            BranchSeeder::class,
+            MenuSeeder::class
         ]);
     }
 }
