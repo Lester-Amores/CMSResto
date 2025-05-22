@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BranchController;
+use App\Http\Controllers\MealController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OperatorController;
 use Illuminate\Support\Facades\Route;
@@ -18,7 +19,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 
-Route::prefix('admin')->middleware(['auth', 'verified'])->group(function(){
+Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     Route::resource('/admins', AdminController::class)->except('update');
     Route::post('/admins/{admin}/update', [AdminController::class, 'update'])->name('admins.update');
     Route::post('/admins/multi-delete', [AdminController::class, 'multiDelete'])->name('admins.multi-delete');
@@ -42,9 +43,15 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function(){
     Route::post('/menus/multi-delete', [MenuController::class, 'multiDelete'])->name('menus.multi-delete');
     Route::post('/menus/multi-restore', [MenuController::class, 'multiRestore'])->name('menus.multi-restore');
     Route::post('menus/restore', [MenuController::class, 'restore'])->name('menus.restore');
+
+    Route::resource('/meals', MealController::class)->except('update');
+    Route::post('/meals/{meal}/update', [MealController::class, 'update'])->name('meals.update');
+    Route::post('/meals/multi-delete', [MealController::class, 'multiDelete'])->name('meals.multi-delete');
+    Route::post('/meals/multi-restore', [MealController::class, 'multiRestore'])->name('meals.multi-restore');
+    Route::post('/meals/restore', [MealController::class, 'restore'])->name('meals.restore');
 });
 
 
 
-require __DIR__.'/settings.php';
-require __DIR__.'/auth.php';
+require __DIR__ . '/settings.php';
+require __DIR__ . '/auth.php';
