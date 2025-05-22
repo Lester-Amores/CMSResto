@@ -45,7 +45,7 @@ class OperatorController extends Controller
 
     public function show(Operator $operator)
     {
-        $operator = Operator::with('user')->findOrFail($operator->id);
+        $operator = $operator->load('branch');
         return response()->json($operator);
     }
 

@@ -28,6 +28,6 @@ class MealService
         $perPage = $request->input('rowsPerPage', 10);
 
 
-        return $query->paginate($perPage);
+        return $query->with('menu')->paginate($perPage);
     }
 }
