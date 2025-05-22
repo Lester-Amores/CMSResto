@@ -20,7 +20,7 @@ class BranchFactory extends Factory
         return [
             'name' => fake()->company . ' Branch',
             'address' => fake()->address,
-            'image' => fake()->imageUrl(640, 480, 'business', true),
+            'img_src' => fake()->imageUrl(640, 480, 'business', true),
         ];
     }
 }

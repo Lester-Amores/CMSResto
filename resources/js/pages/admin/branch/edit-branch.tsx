@@ -7,7 +7,6 @@ import { FlashMessages, Branch } from '@/types';
 import { handleFlashMessages, showErrors } from '@/lib/utils';
 import { useQuery } from '@tanstack/react-query';
 import { getBranch } from '@/services/services';
-import { FormDataConvertible } from '@inertiajs/core';
 
 interface EditBranchProps {
     onSuccess: () => void;
@@ -23,17 +22,21 @@ export default function EditBranch({ onSuccess, branchId }: EditBranchProps) {
 
     useEffect(() => {
         if (data) {
-            reset({
-                ...data,
-                email: data.user?.email || '',
-            });
+            reset(data);
         }
     }, [data, reset]);
 
-
+    console.log(data);
     const onSubmit: SubmitHandler<Branch> = (data) => {
-        const payload = { ...data } as unknown as Record<string, FormDataConvertible>;
-        router.post(route('branches.update', branchId), payload, {
+
+        const formData = new FormData();
+        Object.entries(data).forEach(([key, value]) => {
+            if (value !== '' && value !== null && value !== undefined) {
+                formData.append(key, value);
+            }
+        });
+
+        router.post(route('branches.update', branchId), formData, {
             preserveScroll: true,
             onSuccess: (page) => {
                 const flash = page.props.flash as FlashMessages;
