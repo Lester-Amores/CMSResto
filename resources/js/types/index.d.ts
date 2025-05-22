@@ -119,6 +119,19 @@ export interface Menu{
     updated_at: string;
 }
 
+export interface Meal{
+    id: number;
+    name: string;
+    price: number;
+    menu_id: number;
+    img_src: string;
+    menu: Menu;
+    description: string;
+    deleted_at: string | null;
+    created_at: string;
+    updated_at: string;
+}
+
 
 export type PageProps = InertiaPageProps;
 
