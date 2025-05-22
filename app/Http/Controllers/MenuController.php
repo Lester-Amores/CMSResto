@@ -30,10 +30,9 @@ class MenuController extends Controller
             'per_page' => $menus->perPage(),
         ];
 
-        if ($request->expectsJson()) {
-        return response()->json($data);
-    }
-        return Inertia::render('admin/menu/index', $data);
+        return $request->expectsJson()
+            ? response()->json($data)
+            : Inertia::render('admin/menu/index', $data);
     }
 
     public function store(MenuRequest $request)
@@ -58,7 +57,6 @@ class MenuController extends Controller
 
         try {
             $validated = $request->validated();
-            \Log::info($request->validated());
             $menu->update($validated);
             return redirect()->back()->with('success', 'Successfully updated');
         } catch (Exception $e) {

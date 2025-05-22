@@ -30,10 +30,9 @@ class BranchController extends Controller
             'per_page' => $branches->perPage(),
         ];
 
-        if ($request->expectsJson()) {
-        return response()->json($data);
-    }
-        return Inertia::render('admin/branch/index', $data);
+        return $request->expectsJson()
+            ? response()->json($data)
+            : Inertia::render('admin/branch/index', $data);
     }
 
     public function store(BranchRequest $request)

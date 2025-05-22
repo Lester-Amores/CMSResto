@@ -23,7 +23,8 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
             OperatorSeeder::class,
             BranchSeeder::class,
-            MenuSeeder::class
+            MenuSeeder::class,
+            MealSeeder::class
         ]);
     }
 }
