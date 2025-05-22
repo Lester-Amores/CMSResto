@@ -12,4 +12,9 @@ class Menu extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = ['name' , 'description'];
+
+    public function meals()
+    {
+        return $this->hasMany(Meal::class);
+    }
 }
