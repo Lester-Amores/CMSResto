@@ -15,7 +15,7 @@ class Meal extends Model
         'description',
         'price',
         'menu_id',
-        'img_url',
+        'img_src',
     ];
 
     public function menu()

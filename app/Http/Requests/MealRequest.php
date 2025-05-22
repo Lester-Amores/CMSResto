@@ -18,7 +18,7 @@ class MealRequest extends FormRequest
             'description' => 'required|string|max:255',
             'price' => 'required|integer|min:0',
             'menu_id' => 'required|exists:menus,id',
-            'img_url' => 'required|string|max:255',
+            'img_src' => 'required|string|max:255',
         ];
     }
 }

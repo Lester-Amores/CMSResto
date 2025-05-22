@@ -17,7 +17,7 @@ class MealFactory extends Factory
             'description' => $this->faker->sentence(),
             'price' => $this->faker->numberBetween(50, 500),
             'menu_id' => Menu::factory(),
-            'img_url' => $this->faker->imageUrl(),
+            'img_src' => $this->faker->imageUrl(),
         ];
     }
 }
