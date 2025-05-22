@@ -23,16 +23,18 @@ const MenuPicker = ({ setValue, initialMenu = null, errors, clearErrors, require
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [isSmallModalOpen, setSmallModalOpen] = useState(false);
     const { data, isLoading } = useQuery({
-        queryKey: ['fetchMenues', searchInput],
+        queryKey: ['fetchMenus', searchInput],
         queryFn: () => fetchMenus({ page: 1, per_page: 10, withDeleted: false, search: searchInput }),
     });
 
-    const menues = data?.menues;
+    console.log(data);
+
+    const menus = data?.menus;
     useEffect(() => {
         setSelectedMenu(initialMenu);
     }, [initialMenu]);
 
-    const filteredMenues = menues?.filter((menu: Menu) =>
+    const filteredMenus = menus?.filter((menu: Menu) =>
         menu.name.toLowerCase().includes(searchInput.toLowerCase())
     );
 
@@ -104,8 +106,8 @@ const MenuPicker = ({ setValue, initialMenu = null, errors, clearErrors, require
                         <ul className="absolute z-50 bg-gray-500 border border-gray-300 rounded w-full max-h-40 overflow-y-auto top-12 shadow-lg">
                             {isLoading ? (
                                 <li className="px-4 py-2">Loading</li>
-                            ) : filteredMenues?.length > 0 ? (
-                                filteredMenues.map((menu: Menu) => (
+                            ) : filteredMenus?.length > 0 ? (
+                                filteredMenus.map((menu: Menu) => (
                                     <li
                                         key={menu.id}
                                         className="px-4 py-2 cursor-pointer hover:bg-gray-200 bg-white dark:bg-black dark:hover:bg-gray-300 dark:hover:text-black"

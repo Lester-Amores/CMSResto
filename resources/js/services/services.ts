@@ -91,7 +91,7 @@ export const fetchMenus = async ({ page = 1, per_page = 10, withDeleted = false,
             search
         }).toString();
 
-        const response = await http.get(`admin/branches?${queryParams}`);
+        const response = await http.get(`admin/menus?${queryParams}`);
         return response.data;
     } catch (error) {
         console.error(error);
