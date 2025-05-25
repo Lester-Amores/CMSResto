@@ -35,6 +35,7 @@ class AdminController extends Controller
 
     public function store(AdminRequest $request)
     {
+        \Log::info($request->all());
         try {
             $this->adminService->createAdmin($request);
             return redirect()->back()->with('success', 'Successfully created');

@@ -26,6 +26,7 @@ class OperatorRequest extends FormRequest
             'last_name' => 'required|string|max:255',
             'first_name' => 'required|string|max:255',
             'branch_id' => 'required|integer|exists:branches,id',
+            'img_src' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'email' => [
                 'nullable',
                 'email',

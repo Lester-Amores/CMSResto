@@ -45,12 +45,12 @@ const FilterForm = ({ onSubmit }: FilterFormProps) => {
                     </div>
 
                     <div className="w-full md:w-1/2 lg:w-1/4 px-2 mb-4 md:mb-0">
-                        <Label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                        <Label htmlFor="filter-email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                             Email
                         </Label>
                         <Input
                             type="text"
-                            id="email"
+                            id="filter-email"
                             placeholder="email"
                             className="mt-1 block w-full bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-200 border border-gray-300 dark:border-gray-600 focus:ring-indigo-500 focus:border-indigo-500"
                             {...register('email')}

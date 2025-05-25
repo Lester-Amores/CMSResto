@@ -20,6 +20,7 @@ return new class extends Migration
             $table->date('started_at');
             $table->foreignId('branch_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('img_src')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

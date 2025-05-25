@@ -25,6 +25,7 @@ class AdminRequest extends FormRequest
         return  [
             'last_name' => 'required|string|max:255',
             'first_name' => 'required|string|max:255',
+            'img_src' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'email' => [
                 'nullable',
                 'email',

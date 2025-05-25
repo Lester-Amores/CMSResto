@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { router } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
@@ -7,7 +7,8 @@ import { FlashMessages, Admin } from '@/types';
 import { handleFlashMessages, showErrors } from '@/lib/utils';
 import { useQuery } from '@tanstack/react-query';
 import { getAdmin } from '@/services/services';
-import { FormDataConvertible } from '@inertiajs/core';
+import ImageUpload from '@/components/image-upload';
+
 
 interface EditAdminProps {
     onSuccess: () => void;
@@ -16,6 +17,8 @@ interface EditAdminProps {
 
 export default function EditAdmin({ onSuccess, adminId }: EditAdminProps) {
     const { register, handleSubmit, formState: { errors }, reset } = useForm<Admin>();
+    const [imageFiles, setImageFiles] = useState<File[] | null>(null);
+
     const { data, isLoading, error } = useQuery({
         queryKey: ['admin', adminId],
         queryFn: () => getAdmin(adminId),
@@ -32,8 +35,20 @@ export default function EditAdmin({ onSuccess, adminId }: EditAdminProps) {
 
 
     const onSubmit: SubmitHandler<Admin> = (data) => {
-        const payload = { ...data } as Record<string, FormDataConvertible>;
-        router.post(route('admins.update', adminId), payload, {
+        const formData = new FormData();
+        Object.entries(data).forEach(([key, value]) => {
+            if (value !== '' && value !== null && value !== undefined) {
+                formData.append(key, value);
+            }
+        });
+
+        if (imageFiles) {
+            Array.from(imageFiles).forEach((file) => {
+                formData.append('img_src', file);
+            });
+        }
+
+        router.post(route('admins.update', adminId), formData, {
             preserveScroll: true,
             onSuccess: (page) => {
                 const flash = page.props.flash as FlashMessages;
@@ -59,6 +74,8 @@ export default function EditAdmin({ onSuccess, adminId }: EditAdminProps) {
             ) : (
                 <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col h-full">
                     <AdminForm register={register} errors={errors} />
+                    <ImageUpload initialImageUrl={data?.img_src} label="Profile Image" name="img_src" onChange={(files) => setImageFiles(files)} />
+
                     <div className="flex justify-end">
                         <Button type="submit">
                             Submit

@@ -18,7 +18,8 @@ class Operator extends Model
         'branch_id',
         'phone',
         'birthday',
-        'started_at'
+        'started_at',
+        'img_src'
     ];
 
     public function user(){
