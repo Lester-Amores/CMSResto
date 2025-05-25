@@ -84,9 +84,14 @@ class AdminService
     {
         $validated = $request->validated();
 
+        if ($request->hasFile('img_src')) {
+            $imagePath = $request->file('img_src')->store('uploads/admins', 'public');
+        }
+
         $admin->update([
             'first_name' => $validated['first_name'],
             'last_name' => $validated['last_name'],
+            'img_src' => $imagePath,
         ]);
 
         $admin->user->update([

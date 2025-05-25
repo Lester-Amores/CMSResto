@@ -30,7 +30,7 @@ class AdminRequest extends FormRequest
                 'nullable',
                 'email',
                 'max:255',
-                Rule::unique('users', 'email')->ignore($this->route('admin')),
+                Rule::unique('users', 'email')->ignore($this->route('admin')?->user_id),
             ],
             'role' => 'nullable|int|in:0,1',
             'status' => 'nullable|int|in:0,1,2',
