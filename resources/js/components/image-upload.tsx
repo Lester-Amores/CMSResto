@@ -1,30 +1,29 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { X, User } from 'lucide-react';
 import { getFullImageUrl } from '@/lib/helpers';
+import { UseFormSetValue } from 'react-hook-form';
 
 interface ImageUploadProps {
   initialImageUrl?: string;
   label?: string;
   name: string;
-  onChange: (files: File[] | null) => void;
+  onChange: (file: File | null) => void;
+  setValue: UseFormSetValue<any>;
 }
 
-export default function ImageUpload({ initialImageUrl, label, name, onChange }: ImageUploadProps) {
+export default function ImageUpload({ initialImageUrl, label, name, onChange, setValue }: ImageUploadProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [previews, setPreviews] = useState<{ file: File; url: string }[]>([]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
-    if (!files) return;
+    if (!files || files.length === 0) return;
 
-    const fileArray = Array.from(files);
-    const previewData = fileArray.map(file => ({
-      file,
-      url: URL.createObjectURL(file),
-    }));
+    const file = files[0];
+    const previewUrl = URL.createObjectURL(file);
 
-    setPreviews(previewData);
-    onChange([fileArray[0]]);
+    setPreviews([{ file, url: previewUrl }]);
+    onChange(file);
   };
 
   useEffect(() => {
@@ -51,6 +50,7 @@ export default function ImageUpload({ initialImageUrl, label, name, onChange }: 
     if (inputRef.current) {
       inputRef.current.value = '';
     }
+    setValue('img_src', null);
   };
 
 

@@ -6,6 +6,7 @@ use App\Models\Admin;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
@@ -83,6 +84,15 @@ class AdminService
     public function updateAdmin(Request $request, Admin $admin)
     {
         $validated = $request->validated();
+
+        $imagePath = $admin->img_src;
+
+        if ($request->boolean('img_src_removed')) {
+            $imagePath = null;
+            if ($admin->img_src && Storage::disk('public')->exists($admin->img_src)) {
+                Storage::disk('public')->delete($admin->img_src);
+            }
+        }
 
         if ($request->hasFile('img_src')) {
             $imagePath = $request->file('img_src')->store('uploads/admins', 'public');

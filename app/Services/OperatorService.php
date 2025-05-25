@@ -27,9 +27,9 @@ class OperatorService
         if ($request->filled('name')) {
             $query->where(function ($q) use ($request) {
                 $q->whereRaw("LOWER(first_name) LIKE LOWER(?)", ["%{$request->name}%"])
-                  ->orWhereRaw("LOWER(last_name) LIKE LOWER(?)", ["%{$request->name}%"])
-                  ->orWhereRaw("LOWER(CONCAT(first_name, ' ', last_name)) LIKE LOWER(?)", ["%{$request->name}%"])
-                  ->orWhereRaw("LOWER(CONCAT(last_name, ' ', first_name)) LIKE LOWER(?)", ["%{$request->name}%"]);
+                    ->orWhereRaw("LOWER(last_name) LIKE LOWER(?)", ["%{$request->name}%"])
+                    ->orWhereRaw("LOWER(CONCAT(first_name, ' ', last_name)) LIKE LOWER(?)", ["%{$request->name}%"])
+                    ->orWhereRaw("LOWER(CONCAT(last_name, ' ', first_name)) LIKE LOWER(?)", ["%{$request->name}%"]);
             });
         }
 
@@ -59,6 +59,10 @@ class OperatorService
     {
         $validated = $request->validated();
 
+        if ($request->hasFile('img_src')) {
+            $imagePath = $request->file('img_src')->store('uploads/admins', 'public');
+        }
+
         $user = User::create([
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
@@ -71,7 +75,8 @@ class OperatorService
             'user_id' => $user->id,
             'phone' => $validated['phone'],
             'birthday' => $validated['birthday'],
-            'started_at' => $validated['started_at']
+            'started_at' => $validated['started_at'],
+            'img_src' => $imagePath ?? null,
         ]);
     }
 
@@ -79,12 +84,17 @@ class OperatorService
     {
         $validated = $request->validated();
 
+        if ($request->hasFile('img_src')) {
+            $imagePath = $request->file('img_src')->store('uploads/admins', 'public');
+        }
+
         $operator->update([
             'first_name' => $validated['first_name'],
             'last_name' => $validated['last_name'],
             'phone' => $validated['phone'],
             'birthday' => $validated['birthday'],
-            'started_at' => $validated['started_at']
+            'started_at' => $validated['started_at'],
+            'img_src' => $imagePath,
         ]);
 
         $operator->user->update([

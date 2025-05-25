@@ -72,6 +72,7 @@ export interface Admin{
     role: number;
     status: number;
     user: User;
+    img_src: string;
     deleted_at: string | null;
     created_at: string;
     updated_at: string;
