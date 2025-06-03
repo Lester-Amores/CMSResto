@@ -5,6 +5,9 @@ import MealForm from './meal-form';
 import { FlashMessages, Meal } from '@/types';
 import { handleFlashMessages, showErrors } from '@/lib/utils';
 import MenuPicker from '@/components/picker/menu-picker';
+import ImageUpload from '@/components/image-upload';
+import { useState } from 'react';
+
 
 
 interface AddMealProps {
@@ -13,6 +16,8 @@ interface AddMealProps {
 
 export default function AddMeal({ onSuccess }: AddMealProps) {
     const { register, handleSubmit, formState: { errors }, setError, setValue, clearErrors } = useForm<Meal>();
+    const [imageFile, setImageFile] = useState<File | null>(null);
+
     const onSubmit: SubmitHandler<Meal> = (data) => {
 
         if (!data.menu_id) {
@@ -24,6 +29,10 @@ export default function AddMeal({ onSuccess }: AddMealProps) {
         Object.entries(data).forEach(([key, value]) => {
             formData.append(key, value);
         });
+
+        if (imageFile) {
+            formData.append('img_src', imageFile);
+        }
 
 
 
@@ -47,6 +56,8 @@ export default function AddMeal({ onSuccess }: AddMealProps) {
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col h-full">
                 <MealForm register={register} errors={errors} />
                 <MenuPicker setValue={setValue} errors={errors} clearErrors={clearErrors} required />
+                <ImageUpload label="Profile Image" name="img_src" onChange={(file) => setImageFile(file)} />
+
                 <div className="flex justify-end">
                     <Button type="submit" >
                         Submit

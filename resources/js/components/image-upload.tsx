@@ -8,7 +8,7 @@ interface ImageUploadProps {
   label?: string;
   name: string;
   onChange: (file: File | null) => void;
-  setValue: UseFormSetValue<any>;
+  setValue?: UseFormSetValue<any>;
 }
 
 export default function ImageUpload({ initialImageUrl, label, name, onChange, setValue }: ImageUploadProps) {
@@ -50,7 +50,9 @@ export default function ImageUpload({ initialImageUrl, label, name, onChange, se
     if (inputRef.current) {
       inputRef.current.value = '';
     }
-    setValue('img_src', null);
+    if (setValue) {
+      setValue('img_src', null);
+    }
   };
 
 

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Meal;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class MealService
 {
@@ -29,5 +30,42 @@ class MealService
 
 
         return $query->with('menu')->paginate($perPage);
+    }
+
+
+    public function createMeal(Request $request)
+    {
+        $validated = $request->validated();
+
+        if ($request->hasFile('img_src')) {
+            $imagePath = $request->file('img_src')->store('uploads/meals', 'public');
+            $validated['img_src'] = $imagePath;
+        }
+
+        $validated['img_src'] = $validated['img_src'] ?? null;
+
+        Meal::create($validated);
+    }
+
+    public function updateMeal(Request $request, Meal $meal)
+    {
+        $validated = $request->validated();
+
+        $imagePath = $meal->img_src;
+
+        if ($request->boolean('img_src_removed')) {
+            $imagePath = null;
+            if ($meal->img_src && Storage::disk('public')->exists($meal->img_src)) {
+                Storage::disk('public')->delete($meal->img_src);
+            }
+        }
+
+        if ($request->hasFile('img_src')) {
+            $imagePath = $request->file('img_src')->store('uploads/meals', 'public');
+        }
+
+        $validated['img_src'] = $imagePath;
+
+        $meal->update($validated);
     }
 }

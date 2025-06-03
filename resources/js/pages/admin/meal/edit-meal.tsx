@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { router } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
@@ -8,6 +8,7 @@ import { handleFlashMessages, showErrors } from '@/lib/utils';
 import { useQuery } from '@tanstack/react-query';
 import { getMeal } from '@/services/services';
 import MenuPicker from '@/components/picker/menu-picker';
+import ImageUpload from '@/components/image-upload';
 
 interface EditMealProps {
     onSuccess: () => void;
@@ -16,6 +17,8 @@ interface EditMealProps {
 
 export default function EditMeal({ onSuccess, mealId }: EditMealProps) {
     const { register, handleSubmit, formState: { errors }, reset, setError, setValue, clearErrors } = useForm<Meal>();
+    const [imageFile, setImageFile] = useState<File | null>(null);
+
     const { data, isLoading, error } = useQuery({
         queryKey: ['meal', mealId],
         queryFn: () => getMeal(mealId),
@@ -41,6 +44,14 @@ export default function EditMeal({ onSuccess, mealId }: EditMealProps) {
                 formData.append(key, value);
             }
         });
+
+        if (imageFile) {
+            formData.append('img_src', imageFile);
+        }
+
+        if (data.img_src === null) {
+            formData.append('img_src_removed', 'true');
+        }
 
         router.post(route('meals.update', mealId), formData, {
             preserveScroll: true,
@@ -69,7 +80,7 @@ export default function EditMeal({ onSuccess, mealId }: EditMealProps) {
                 <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col h-full">
                     <MealForm register={register} errors={errors} />
                     <MenuPicker initialMenu={data?.menu} setValue={setValue} errors={errors} clearErrors={clearErrors} required />
-
+                    <ImageUpload initialImageUrl={data?.img_src} label="Profile Image" name="img_src" onChange={(file) => setImageFile(file)} setValue={setValue} />
                     <div className="flex justify-end">
                         <Button type="submit">
                             Submit

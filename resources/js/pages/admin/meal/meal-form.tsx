@@ -26,7 +26,7 @@ const MealForm = ({ register, errors }: MealFormProps) => {
             </div>
 
             <div className="mb-4">
-                <Label htmlFor="description">Address</Label>
+                <Label htmlFor="description">Description</Label>
                 <Input
                     id="description"
                     {...register("description")}
@@ -36,7 +36,7 @@ const MealForm = ({ register, errors }: MealFormProps) => {
                 {errors.description && <p className="text-red-600">{errors.description.message}</p>}
             </div>
             <div className="mb-4">
-                <Label htmlFor="price">Address</Label>
+                <Label htmlFor="price">Price</Label>
                 <Input
                     id="price"
                     {...register("price")}

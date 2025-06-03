@@ -13,7 +13,7 @@ interface AddAdminProps {
 }
 
 export default function AddAdmin({ onSuccess }: AddAdminProps) {
-    const [imageFiles, setImageFiles] = useState<File[] | null>(null);
+    const [imageFile, setImageFile] = useState<File | null>(null);
 
     const { register, handleSubmit, formState: { errors } } = useForm<Admin>();
     const onSubmit: SubmitHandler<Admin> = (data) => {
@@ -22,10 +22,8 @@ export default function AddAdmin({ onSuccess }: AddAdminProps) {
             formData.append(key, value);
         });
 
-        if (imageFiles) {
-            Array.from(imageFiles).forEach((file) => {
-                formData.append('img_src', file);
-            });
+        if (imageFile) {
+            formData.append('img_src', imageFile);
         }
 
         router.post(route('admins.store'), formData, {
@@ -47,7 +45,7 @@ export default function AddAdmin({ onSuccess }: AddAdminProps) {
             <h2 className="text-2xl font-semibold mb-10">Add Admin</h2>
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col h-full">
                 <AdminForm register={register} errors={errors} />
-                <ImageUpload label="Profile Image"  name="img_src" onChange={(files) => setImageFiles(files)}/>
+                <ImageUpload label="Profile Image"  name="img_src" onChange={(file) => setImageFile(file)}/>
                 <div className="flex justify-end">
                     <Button type="submit" >
                         Submit

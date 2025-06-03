@@ -38,8 +38,7 @@ class MealController extends Controller
     public function store(MealRequest $request)
     {
         try {
-            $validated = $request->validated();
-            Meal::create($validated);
+            $this->mealService->createMeal($request);
             return redirect()->back()->with('success', 'Successfully created');
         } catch (Exception $e) {
             return redirect()->back()->with('error', 'Failed to create meal');
@@ -56,8 +55,7 @@ class MealController extends Controller
     {
 
         try {
-            $validated = $request->validated();
-            $meal->update($validated);
+            $this->mealService->updateMeal($request, $meal);
             return redirect()->back()->with('success', 'Successfully updated');
         } catch (Exception $e) {
             return redirect()->back()->with('error', 'Failed to update meal');
