@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Meal;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Menu;
 use Illuminate\Database\Seeder;
 
 class MealSeeder extends Seeder
@@ -13,6 +13,22 @@ class MealSeeder extends Seeder
      */
     public function run(): void
     {
-        Meal::factory()->count(10)->create();
+        $menuMeals = config('data.menu_meals');
+
+        foreach ($menuMeals as $menuName => $meals) {
+            $menu = Menu::where('name', $menuName)->first();
+
+            if (!$menu) continue;
+
+            foreach ($meals as $meal) {
+                Meal::create([
+                    'name' => $meal['name'],
+                    'description' => $meal['description'],
+                    'price' => $meal['price'],
+                    'img_src' => $meal['img_src'],
+                    'menu_id' => $menu->id,
+                ]);
+            }
+        }
     }
 }
