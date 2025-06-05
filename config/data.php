@@ -24,6 +24,13 @@ return  [
             ['name' => 'Vegetable Stir Fry', 'description' => 'Colorful vegetables stir-fried in soy-ginger sauce.', 'price' => 13.00, 'img_src' => 'https://source.unsplash.com/640x480/?vegetable,stirfry'],
             ['name' => 'Chicken Alfredo', 'description' => 'Creamy fettuccine Alfredo with grilled chicken.', 'price' => 15.25, 'img_src' => 'https://source.unsplash.com/640x480/?chicken,alfredo'],
         ],
+        'Kids Menu' => [
+            ['name' => 'Mini Burger', 'description' => 'Kid-sized beef burger with cheese and ketchup.', 'price' => 5.99, 'img_src' => 'https://source.unsplash.com/640x480/?kids,burger'],
+            ['name' => 'Chicken Nuggets', 'description' => 'Crispy nuggets with fries and ketchup.', 'price' => 5.50, 'img_src' => 'https://source.unsplash.com/640x480/?nuggets,kids'],
+            ['name' => 'Mini Cheese Pizza', 'description' => 'Small cheese pizza just for kids.', 'price' => 6.25, 'img_src' => 'https://source.unsplash.com/640x480/?mini,pizza'],
+            ['name' => 'Peanut Butter Sandwich', 'description' => 'Classic sandwich served with apple slices.', 'price' => 4.75, 'img_src' => 'https://source.unsplash.com/640x480/?kids,sandwich'],
+            ['name' => 'Fruit Cup', 'description' => 'Mixed seasonal fruits in a fun cup.', 'price' => 3.95, 'img_src' => 'https://source.unsplash.com/640x480/?fruit,cup'],
+        ],
         'Drinks Menu' => [
             ['name' => 'Iced Latte', 'description' => 'Espresso with chilled milk over ice.', 'price' => 4.50, 'img_src' => 'https://source.unsplash.com/640x480/?iced,latte'],
             ['name' => 'Fresh Orange Juice', 'description' => '100% fresh-squeezed orange juice.', 'price' => 3.95, 'img_src' => 'https://source.unsplash.com/640x480/?orange,juice'],
@@ -37,13 +44,6 @@ return  [
             ['name' => 'Tiramisu', 'description' => 'Espresso-soaked ladyfingers with mascarpone cream.', 'price' => 7.25, 'img_src' => 'https://source.unsplash.com/640x480/?tiramisu,dessert'],
             ['name' => 'Macaron Set', 'description' => 'Colorful French macarons in assorted flavors.', 'price' => 5.95, 'img_src' => 'https://source.unsplash.com/640x480/?macaron,dessert'],
             ['name' => 'Ice Cream Sundae', 'description' => 'Vanilla ice cream with chocolate sauce and nuts.', 'price' => 4.99, 'img_src' => 'https://source.unsplash.com/640x480/?icecream,sundae'],
-        ],
-        'Kids Menu' => [
-            ['name' => 'Mini Burger', 'description' => 'Kid-sized beef burger with cheese and ketchup.', 'price' => 5.99, 'img_src' => 'https://source.unsplash.com/640x480/?kids,burger'],
-            ['name' => 'Chicken Nuggets', 'description' => 'Crispy nuggets with fries and ketchup.', 'price' => 5.50, 'img_src' => 'https://source.unsplash.com/640x480/?nuggets,kids'],
-            ['name' => 'Mini Cheese Pizza', 'description' => 'Small cheese pizza just for kids.', 'price' => 6.25, 'img_src' => 'https://source.unsplash.com/640x480/?mini,pizza'],
-            ['name' => 'Peanut Butter Sandwich', 'description' => 'Classic sandwich served with apple slices.', 'price' => 4.75, 'img_src' => 'https://source.unsplash.com/640x480/?kids,sandwich'],
-            ['name' => 'Fruit Cup', 'description' => 'Mixed seasonal fruits in a fun cup.', 'price' => 3.95, 'img_src' => 'https://source.unsplash.com/640x480/?fruit,cup'],
         ],
     ],
 
