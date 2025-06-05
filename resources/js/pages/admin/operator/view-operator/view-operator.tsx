@@ -5,7 +5,6 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useInitials } from '@/hooks/use-initials';
 import { getFullImageUrl } from '@/lib/helpers';
 
-
 interface ViewOperatorProps {
     operatorId: number;
 }
@@ -13,14 +12,10 @@ interface ViewOperatorProps {
 export default function ViewOperator({ operatorId }: ViewOperatorProps) {
     const getInitials = useInitials();
 
-
     const { data, isLoading } = useQuery({
         queryKey: ['operator', operatorId],
         queryFn: () => getOperator(operatorId),
     });
-
-    console.log(data);
-
 
     return (
         <div className="container mx-auto py-10">

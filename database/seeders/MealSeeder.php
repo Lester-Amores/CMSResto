@@ -28,7 +28,7 @@ class MealSeeder extends Seeder
 
         foreach ($menuMeals as $menuName => &$meals) {
             foreach ($meals as &$meal) {
-                if (in_array($menuName, ['Drinks Menu', 'Desserts Menu'])) {
+                if (in_array($menuName, ['Drinks', 'Desserts'])) {
                     $meal['img_src'] = $drinkImages[array_rand($drinkImages)] ?? null;
                 } else {
                     $meal['img_src'] = $mealImages[array_rand($mealImages)] ?? null;

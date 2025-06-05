@@ -14,12 +14,12 @@ class MenuSeeder extends Seeder
     public function run(): void
     {
         $menuNames = [
-            'Breakfast Menu',
-            'Lunch Menu',
-            'Dinner Menu',
-            'Drinks Menu',
-            'Desserts Menu',
-            'Kids Menu',
+            'Breakfast',
+            'Lunch',
+            'Dinner',
+            'Drinks',
+            'Desserts',
+            'Kids',
         ];
 
         foreach ($menuNames as $name) {

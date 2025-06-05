@@ -5,7 +5,6 @@ import { getAdmin } from '@/services/services';
 import { useInitials } from '@/hooks/use-initials';
 import { getFullImageUrl } from '@/lib/helpers';
 
-
 interface ViewAdminProps {
     adminId: number;
 }
