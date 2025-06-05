@@ -62,30 +62,34 @@ export default function ImageUpload({ initialImageUrl, label, name, onChange, se
       {label && <label className="block mb-1 font-medium">{label}</label>}
 
       <div className="flex items-center gap-4">
-        <div className="w-32 aspect-square">
+        <div className="relative p-2 w-32 aspect-square">
           {previews.length > 0 ? (
             previews.map((preview, index) => (
-              <div key={index} className="relative w-full h-full aspect-square rounded overflow-hidden border">
-                <img
-                  src={preview.url}
-                  alt={`Preview ${index}`}
-                  className="object-contain w-full h-full"
-                />
+              <div key={index} className="relative w-full h-full aspect-square">
+                <div className="w-full h-full rounded-full overflow-hidden border">
+                  <img
+                    src={preview.url}
+                    alt={`Preview ${index}`}
+                    className="object-cover w-full h-full rounded-full"
+                  />
+                </div>
                 <button
                   type="button"
                   onClick={() => removeImage()}
-                  className="absolute top-1 right-1 bg-white/80 hover:bg-white text-red-500 p-1 rounded-full shadow"
+                  className="absolute -top-2 -right-2 hover:text-red-500 p-1"
+                  aria-label="Remove image"
                 >
                   <X size={16} />
                 </button>
               </div>
             ))
           ) : (
-            <div className="relative w-full h-full aspect-square rounded border flex items-center justify-center text-gray-400 bg-gray-100">
+            <div className="relative w-full h-full aspect-square rounded-full border flex items-center justify-center bg-gray-100 text-gray-400">
               <User size={48} />
             </div>
           )}
         </div>
+
 
         <input
           ref={inputRef}
