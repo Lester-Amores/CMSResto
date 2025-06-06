@@ -5,6 +5,7 @@ use App\Http\Controllers\BranchController;
 use App\Http\Controllers\MealController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OperatorController;
+use App\Http\Controllers\PublicPageController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -18,6 +19,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 });
 
+Route::get('/', [PublicPageController::class, 'home'])->name('home');
+Route::get('/about', [PublicPageController::class, 'about'])->name('about');
+Route::get('/services', [PublicPageController::class, 'services'])->name('services');
+Route::get('/contact', [PublicPageController::class, 'contact'])->name('contact');
 
 Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     Route::resource('/admins', AdminController::class)->except('update');
