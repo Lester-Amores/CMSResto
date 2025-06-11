@@ -1,6 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { getMenu } from '@/services/services';
+import { Avatar, AvatarImage } from '@/components/ui/avatar';
+import { getFullImageUrl } from '@/lib/helpers';
 
 interface ViewMenuProps {
     menuId: number;
@@ -21,6 +23,9 @@ export default function ViewMenu({ menuId }: ViewMenuProps) {
                 <Card>
                     <CardHeader>
                         <CardTitle className="text-2xl font-semibold mb-4">Menu Details</CardTitle>
+                        <Avatar className="h-32 w-32 overflow-hidden object-cover align-text">
+                            <AvatarImage src={getFullImageUrl(data.img_src) ?? undefined} alt={data.name} />
+                        </Avatar>
                         <CardDescription className="text-black dark:text-white text-xl font-semibold">{data.name}</CardDescription>
                     </CardHeader>
                     <CardContent>

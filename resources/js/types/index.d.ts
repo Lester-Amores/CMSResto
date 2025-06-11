@@ -56,18 +56,18 @@ export interface FlashMessages {
     error?: string;
 }
 
-export interface PaginatedProps{
+export interface PaginatedProps {
     current_page: number;
     total_pages: number;
     total_rows: number;
     per_page: number;
 }
 
-export interface Admin{
+export interface Admin {
     id: number;
     last_name: string;
     first_name: string;
-    user_id:number;
+    user_id: number;
     email: string;
     password: string;
     role: number;
@@ -79,11 +79,11 @@ export interface Admin{
     updated_at: string;
 }
 
-export interface Operator{
+export interface Operator {
     id: number;
     last_name: string;
     first_name: string;
-    user_id:number;
+    user_id: number;
     email: string;
     password: string;
     role: number;
@@ -100,11 +100,11 @@ export interface Operator{
 }
 
 
-export interface Branch{
+export interface Branch {
     id: number;
     name: string;
     address: string;
-    image:number;
+    image: number;
     operator_id: string;
     operator?: Operator;
     deleted_at: string | null;
@@ -112,16 +112,17 @@ export interface Branch{
     updated_at: string;
 }
 
-export interface Menu{
+export interface Menu {
     id: number;
     name: string;
     description: string;
+    img_src: string;
     deleted_at: string | null;
     created_at: string;
     updated_at: string;
 }
 
-export interface Meal{
+export interface Meal {
     id: number;
     name: string;
     price: number;

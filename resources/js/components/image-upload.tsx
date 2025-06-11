@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
-import { X, User } from 'lucide-react';
+import { X, User, Image } from 'lucide-react';
 import { getFullImageUrl } from '@/lib/helpers';
 import { UseFormSetValue } from 'react-hook-form';
 
@@ -85,7 +85,7 @@ export default function ImageUpload({ initialImageUrl, label, name, onChange, se
             ))
           ) : (
             <div className="relative w-full h-full aspect-square rounded-full border flex items-center justify-center bg-gray-100 text-gray-400">
-              <User size={48} />
+              {label === "Profile Image" ? <User size={48}/> : <Image size={48} />}
             </div>
           )}
         </div>

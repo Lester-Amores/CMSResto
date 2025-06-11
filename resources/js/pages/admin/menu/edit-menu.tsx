@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { router } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
@@ -7,6 +7,7 @@ import { FlashMessages, Menu } from '@/types';
 import { handleFlashMessages, showErrors } from '@/lib/utils';
 import { useQuery } from '@tanstack/react-query';
 import { getMenu } from '@/services/services';
+import ImageUpload from '@/components/image-upload';
 
 interface EditMenuProps {
     onSuccess: () => void;
@@ -14,7 +15,9 @@ interface EditMenuProps {
 }
 
 export default function EditMenu({ onSuccess, menuId }: EditMenuProps) {
-    const { register, handleSubmit, formState: { errors }, reset } = useForm<Menu>();
+    const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm<Menu>();
+    const [imageFile, setImageFile] = useState<File | null>(null);
+
     const { data, isLoading, error } = useQuery({
         queryKey: ['menu', menuId],
         queryFn: () => getMenu(menuId),
@@ -35,6 +38,14 @@ export default function EditMenu({ onSuccess, menuId }: EditMenuProps) {
                 formData.append(key, value);
             }
         });
+
+        if (imageFile) {
+            formData.append('img_src', imageFile);
+        }
+
+        if (data.img_src === null) {
+            formData.append('img_src_removed', 'true');
+        }
 
         router.post(route('menus.update', menuId), formData, {
             preserveScroll: true,
@@ -62,6 +73,7 @@ export default function EditMenu({ onSuccess, menuId }: EditMenuProps) {
             ) : (
                 <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col h-full">
                     <MenuForm register={register} errors={errors} />
+                    <ImageUpload initialImageUrl={data?.img_src} label="Profile Image" name="img_src" onChange={(file) => setImageFile(file)} setValue={setValue} />
                     <div className="flex justify-end">
                         <Button type="submit">
                             Submit

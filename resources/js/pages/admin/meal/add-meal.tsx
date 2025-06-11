@@ -56,7 +56,7 @@ export default function AddMeal({ onSuccess }: AddMealProps) {
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col h-full">
                 <MealForm register={register} errors={errors} />
                 <MenuPicker setValue={setValue} errors={errors} clearErrors={clearErrors} required />
-                <ImageUpload label="Profile Image" name="img_src" onChange={(file) => setImageFile(file)} />
+                <ImageUpload label="Meal Image" name="img_src" onChange={(file) => setImageFile(file)} />
 
                 <div className="flex justify-end">
                     <Button type="submit" >
