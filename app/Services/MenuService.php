@@ -4,8 +4,7 @@ namespace App\Services;
 
 use App\Models\Menu;
 use Illuminate\Http\Request;
-
-
+use Illuminate\Support\Facades\Storage;
 
 class MenuService
 {
@@ -30,11 +29,47 @@ class MenuService
         $sortBy = $request->input('sortBy', 'id');
         $sortOrder = $request->filled('sortOrder') ? $request->sortOrder : 'desc';
         $query->orderBy($sortBy, $sortOrder);
-      
+
 
 
         $perPage = $request->input('rowsPerPage', 10);
 
         return $query->paginate($perPage);
+    }
+
+    public function createMenu(Request $request)
+    {
+        $validated = $request->validated();
+
+        if ($request->hasFile('img_src')) {
+            $imagePath = $request->file('img_src')->store('uploads/menus', 'public');
+            $validated['img_src'] = $imagePath;
+        }
+
+        $validated['img_src'] = $validated['img_src'] ?? null;
+
+        Menu::create($validated);
+    }
+
+    public function updateMenu(Request $request, Menu $menu)
+    {
+        $validated = $request->validated();
+
+        $imagePath = $menu->img_src;
+
+        if ($request->boolean('img_src_removed')) {
+            $imagePath = null;
+            if ($menu->img_src && Storage::disk('public')->exists($menu->img_src)) {
+                Storage::disk('public')->delete($menu->img_src);
+            }
+        }
+
+        if ($request->hasFile('img_src')) {
+            $imagePath = $request->file('img_src')->store('uploads/menus', 'public');
+        }
+
+        $validated['img_src'] = $imagePath;
+
+        $menu->update($validated);
     }
 }

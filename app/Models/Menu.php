@@ -11,7 +11,7 @@ class Menu extends Model
     /** @use HasFactory<\Database\Factories\MenuFactory> */
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['name' , 'description'];
+    protected $fillable = ['name' , 'description', 'img_src'];
 
     public function meals()
     {

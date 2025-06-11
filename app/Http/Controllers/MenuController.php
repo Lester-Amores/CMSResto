@@ -38,8 +38,7 @@ class MenuController extends Controller
     public function store(MenuRequest $request)
     {
         try {
-            $validated = $request->validated();
-            Menu::create($validated);
+            $this->menuService->createMenu($request);
             return redirect()->back()->with('success', 'Successfully created');
         } catch (Exception $e) {
             return redirect()->back()->with('error', 'Failed to create menu');
@@ -56,8 +55,7 @@ class MenuController extends Controller
     {
 
         try {
-            $validated = $request->validated();
-            $menu->update($validated);
+            $this->menuService->updateMenu($request, $menu);
             return redirect()->back()->with('success', 'Successfully updated');
         } catch (Exception $e) {
             return redirect()->back()->with('error', 'Failed to update menu');

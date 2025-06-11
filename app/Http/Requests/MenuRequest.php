@@ -25,6 +25,7 @@ class MenuRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:255',
+            'img_src' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
         ];
     }
 }
