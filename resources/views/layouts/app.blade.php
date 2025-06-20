@@ -7,10 +7,12 @@
 
     <title>{{ $title ?? config('app.name') }}</title>
     <meta name="description" content="{{ $description ?? '' }}">
+    <meta name="app-url" content="{{ config('app.url') }}">
     <meta property="og:title" content="{{ $title ?? config('app.name') }}">
     <meta property="og:description" content="{{ $description ?? '' }}">
-    
+
     @vite('resources/css/app.css')
+    @vite('resources/js/public/menu.ts')
 </head>
 
 <body class="font-crimson antialiased">

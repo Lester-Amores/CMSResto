@@ -4,7 +4,7 @@ import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createRoot } from 'react-dom/client';
-import { initializeTheme } from './hooks/use-appearance';
+import { initializeTheme } from './admin/hooks/use-appearance';
 import { Toaster } from 'sonner';
 
 
@@ -15,7 +15,7 @@ const queryClient = new QueryClient();
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
-    resolve: (name) => resolvePageComponent(`./pages/${name}.tsx`, import.meta.glob('./pages/**/*.tsx')),
+    resolve: (name) => resolvePageComponent(`./admin/pages/${name}.tsx`, import.meta.glob('./admin/pages/**/*.tsx')),
     setup({ el, App, props }) {
         const root = createRoot(el);
 
@@ -31,5 +31,4 @@ createInertiaApp({
     },
 });
 
-// This will set light / dark mode on load...
 initializeTheme();
