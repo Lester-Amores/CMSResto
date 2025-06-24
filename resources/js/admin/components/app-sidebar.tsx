@@ -1,10 +1,9 @@
-import { NavFooter } from '@/admin/components/nav-footer';
 import { NavMain } from '@/admin/components/nav-main';
 import { NavUser } from '@/admin/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/admin/components/ui/sidebar';
 import { type NavItem } from '@/admin/types';
 import { Link } from '@inertiajs/react';
-import { BookOpen, Building2, Folder, LayoutGrid, SquareMenuIcon, User, Users, UtensilsCrossedIcon } from 'lucide-react';
+import { Building2, LayoutGrid, Scale, SquareMenuIcon, User, Users, UtensilsCrossedIcon } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
@@ -37,20 +36,12 @@ const mainNavItems: NavItem[] = [
         title: 'Meal',
         href: '/admin/meals',
         icon: UtensilsCrossedIcon,
+    },
+    {
+        title: 'Unit',
+        href: '/admin/units',
+        icon: Scale,
     }
-];
-
-const footerNavItems: NavItem[] = [
-    {
-        title: 'Repository',
-        href: 'https://github.com/laravel/react-starter-kit',
-        icon: Folder,
-    },
-    {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#react',
-        icon: BookOpen,
-    },
 ];
 
 export function AppSidebar() {

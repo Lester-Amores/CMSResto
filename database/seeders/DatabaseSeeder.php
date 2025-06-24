@@ -24,7 +24,8 @@ class DatabaseSeeder extends Seeder
             OperatorSeeder::class,
             BranchSeeder::class,
             MenuSeeder::class,
-            MealSeeder::class
+            MealSeeder::class,
+            UnitSeeder::class
         ]);
     }
 }

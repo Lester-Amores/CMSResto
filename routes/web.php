@@ -6,6 +6,7 @@ use App\Http\Controllers\MealController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\PublicPageController;
+use App\Http\Controllers\UnitController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -54,6 +55,12 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     Route::post('/meals/multi-delete', [MealController::class, 'multiDelete'])->name('meals.multi-delete');
     Route::post('/meals/multi-restore', [MealController::class, 'multiRestore'])->name('meals.multi-restore');
     Route::post('/meals/restore', [MealController::class, 'restore'])->name('meals.restore');
+
+    Route::resource('/units', UnitController::class)->except('update');
+    Route::post('/units/{unit}/update', [UnitController::class, 'update'])->name('units.update');
+    Route::post('/units/multi-delete', [UnitController::class, 'multiDelete'])->name('units.multi-delete');
+    Route::post('/units/multi-restore', [UnitController::class, 'multiRestore'])->name('units.multi-restore');
+    Route::post('/units/restore', [UnitController::class, 'restore'])->name('units.restore');
 });
 
 
