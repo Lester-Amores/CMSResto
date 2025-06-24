@@ -1,4 +1,4 @@
-<section class="min-h-screen py-12 bg-gray-300">
+<section class="min-h-screen py-12 bg-stone-300">
     <div class="py-4">
         <div class="flex items-center justify-center">
             <div class="flex items-center max-w-xl">
@@ -32,9 +32,8 @@
     </div>
 
     <div id="menuModal" class="fixed inset-0 bg-black/80 hidden items-center justify-center z-50">
-        <!-- Outer modal backdrop -->
         <div id="menuModalContent"
-            class="bg-gray-300 rounded shadow w-full max-w-5xl p-8 relative overflow-y-auto max-h-[80vh]">
+            class="bg-stone-300 rounded shadow w-full max-w-5xl p-8 relative overflow-y-auto max-h-[80vh]">
             <button class="absolute top-0 right-2 text-red-500 hover:text-red-800 text-4xl"
                 onclick="closeMenuModal()">&times;</button>
             <h2 id="modalMenuName" class="text-3xl font-semibold text-center uppercase"></h2>
@@ -46,75 +45,3 @@
     </div>
 
 </section>
-
-
-{{-- <script>
-    function getFullImageUrl(path) {
-        if (!path) return '';
-        const baseUrl = "{{ config('app.url') ?? request()->getSchemeAndHttpHost() }}";
-        return (path.startsWith('storage/') || path.startsWith('images/')) ?
-            `${baseUrl}/${path}` :
-            `${baseUrl}/storage/${path}`;
-    }
-
-    function showMenuModal(menu) {
-        document.getElementById('modalMenuName').textContent = menu.name;
-        document.getElementById('modalMenuDescription').textContent = menu.description;
-
-
-        const mealsContainer = document.getElementById('modalMeals');
-        const noMealsText = document.getElementById('noMealsText');
-        mealsContainer.innerHTML = '';
-
-        if (menu.meals && menu.meals.length > 0) {
-            noMealsText.classList.add('hidden');
-
-            menu.meals.forEach(meal => {
-                const div = document.createElement('div');
-                div.className = 'relative rounded shadow overflow-hidden group';
-
-                const img = document.createElement('img');
-                img.src = getFullImageUrl(meal.img_src);
-                img.className = 'w-full h-60 object-cover transition-transform duration-300 group-hover:scale-110';
-                const overlay = document.createElement('div');
-                overlay.className = `absolute inset-0 bg-black/70 flex items-center justify-center transition-transform duration-300 translate-y-full group-hover:translate-y-0`;
-
-                const desc = document.createElement('div');
-                desc.className = 'text-white text-center text-sm px-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300';
-                desc.textContent = meal.description || 'No description';
-                overlay.appendChild(desc);
-                const nameDiv = document.createElement('div');
-                nameDiv.className = `absolute bottom-0 left-0 right-0 bg-black/50 text-white text-center text-xl py-2 transition-opacity duration-300 group-hover:opacity-0`;
-                nameDiv.textContent = `${meal.name} - ${meal.price}$`;
-
-                div.appendChild(img);
-                div.appendChild(overlay);
-                div.appendChild(nameDiv);
-                mealsContainer.appendChild(div);
-            });
-        }
-        if (!menu.meals && menu.meals.length <= 0) {
-            noMealsText.classList.remove('hidden');
-        }
-        document.getElementById('menuModal').classList.remove('hidden');
-        document.getElementById('menuModal').classList.add('flex');
-    }
-
-    function closeMenuModal() {
-        document.getElementById('menuModal').classList.add('hidden');
-        document.getElementById('menuModal').classList.remove('flex');
-    }
-
-    document.getElementById('menuModal').addEventListener('click', function(e) {
-        const modalContent = document.getElementById('menuModalContent');
-        if (!modalContent.contains(e.target)) {
-            closeMenuModal();
-        }
-    });
-
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            closeMenuModal();
-        }
-    });
-</script> --}}
