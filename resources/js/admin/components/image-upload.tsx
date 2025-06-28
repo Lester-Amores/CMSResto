@@ -2,6 +2,7 @@ import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { X, User, Image } from 'lucide-react';
 import { getFullImageUrl } from '@/admin/lib/helpers';
 import { UseFormSetValue } from 'react-hook-form';
+import { Button } from './ui/button';
 
 interface ImageUploadProps {
   initialImageUrl?: string;
@@ -73,14 +74,14 @@ export default function ImageUpload({ initialImageUrl, label, name, onChange, se
                     className="object-cover w-full h-full rounded-full"
                   />
                 </div>
-                <button
+                <Button
                   type="button"
                   onClick={() => removeImage()}
-                  className="absolute -top-2 -right-2 hover:text-red-500 p-1"
+                  className="absolute -top-2 -right-2 hover:text-red-500 p-1 bg-transparent text-black hover:bg-transparent cursor-pointer"
                   aria-label="Remove image"
                 >
                   <X size={16} />
-                </button>
+                </Button>
               </div>
             ))
           ) : (
