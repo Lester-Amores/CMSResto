@@ -22,4 +22,10 @@ class Material extends Model
     {
         return $this->belongsTo(Unit::class);
     }
+
+    public function meals()
+    {
+        return $this->belongsToMany(Meal::class)
+            ->withPivot('quantity');
+    }
 }
