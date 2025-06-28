@@ -144,6 +144,18 @@ export interface Unit {
     updated_at: string;
 }
 
+export interface Material {
+    id: number;
+    name: string;
+    unit_id: string;
+    unit_cost: number;
+    quantity: number;
+    unit: Unit;
+    deleted_at: string | null;
+    created_at: string;
+    updated_at: string;
+}
+
 
 export type PageProps = InertiaPageProps;
 
