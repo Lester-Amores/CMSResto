@@ -31,10 +31,8 @@ class MaterialService
         $sortOrder = $request->filled('sortOrder') ? $request->sortOrder : 'desc';
         $query->orderBy($sortBy, $sortOrder);
       
-
-
         $perPage = $request->input('rowsPerPage', 10);
 
-        return $query->paginate($perPage);
+        return $query->with('unit')->paginate($perPage);
     }
 }

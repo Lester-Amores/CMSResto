@@ -21,13 +21,13 @@ class MaterialController extends Controller
 
     public function index(Request $request)
     {
-        $materiales = $this->materialService->getMaterial($request);
+        $materials = $this->materialService->getMaterial($request);
         $data = [
-            'materiales' => $materiales->items(),
-            'current_page' => $materiales->currentPage(),
-            'total_pages' => $materiales->lastPage(),
-            'total_rows' => $materiales->total(),
-            'per_page' => $materiales->perPage(),
+            'materials' => $materials->items(),
+            'current_page' => $materials->currentPage(),
+            'total_pages' => $materials->lastPage(),
+            'total_rows' => $materials->total(),
+            'per_page' => $materials->perPage(),
         ];
 
         return $request->expectsJson()
@@ -48,7 +48,7 @@ class MaterialController extends Controller
 
     public function show(Material $material)
     {
-        $material = Material::findOrFail($material->id);
+        $material->load('unit');
         return response()->json($material);
     }
 
@@ -93,7 +93,7 @@ class MaterialController extends Controller
             $ids = $request->input('ids');
             $request->validate([
                 'ids' => 'required|array',
-                'ids.*' => 'integer|exists:materiales,id',
+                'ids.*' => 'integer|exists:materials,id',
             ]);
             Material::whereIn('id', $ids)->delete();
             return redirect()->back()->with('success', 'Material deleted Successfully');
@@ -108,7 +108,7 @@ class MaterialController extends Controller
             $ids = $request->input('ids');
             $request->validate([
                 'ids' => 'required|array',
-                'ids.*' => 'integer|exists:materiales,id',
+                'ids.*' => 'integer|exists:materials,id',
             ]);
 
             Material::onlyTrashed()->whereIn('id', $ids)->restore();
