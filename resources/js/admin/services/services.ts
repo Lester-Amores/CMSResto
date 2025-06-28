@@ -165,3 +165,24 @@ export const fetchUnits = async ({ page = 1, per_page = 10, withDeleted = false,
         throw new Error('message.errorTryAgain');
     }
 };
+
+export const fetchMaterials = async ({ page = 1, per_page = 10, withDeleted = false, search = "" }) => {
+    try {
+        const queryParams = new URLSearchParams({
+            page: String(page),
+            per_page: String(per_page),
+            withDeleted: String(withDeleted),
+            search
+        }).toString();
+
+        const response = await http.get(`admin/materials?${queryParams}`);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        if (isAxiosError(error)) {
+            const responseData = error.response?.data as ErrorResponse;
+            throw responseData?.message || 'message.error';
+        }
+        throw new Error('message.errorTryAgain');
+    }
+};

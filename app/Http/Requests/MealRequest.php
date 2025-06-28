@@ -11,6 +11,15 @@ class MealRequest extends FormRequest
         return true;
     }
 
+    protected function prepareForValidation(): void
+    {
+        if ($this->has('materials') && is_string($this->materials)) {
+            $this->merge([
+                'materials' => json_decode($this->materials, true),
+            ]);
+        }
+    }
+
     public function rules(): array
     {
         return [
@@ -19,6 +28,9 @@ class MealRequest extends FormRequest
             'price' => 'required|integer|min:0',
             'menu_id' => 'required|exists:menus,id',
             'img_src' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'materials' => 'required|array',
+            'materials.*.id' => 'required|exists:materials,id',
+            'materials.*.quantity' => 'required|integer|min:1',
         ];
     }
 }

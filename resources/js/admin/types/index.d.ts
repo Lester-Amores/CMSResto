@@ -127,6 +127,7 @@ export interface Meal {
     name: string;
     price: number;
     menu_id: number;
+    materials: Material[];
     img_src: string;
     menu: Menu;
     description: string;
@@ -155,6 +156,14 @@ export interface Material {
     created_at: string;
     updated_at: string;
 }
+
+export type MaterialMeal = {
+    meal_id?: number | null;
+    material_id: number;
+    quantity: number;
+    material?: Material | null;
+    meal?: Meal | null;
+};
 
 
 export type PageProps = InertiaPageProps;

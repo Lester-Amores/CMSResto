@@ -47,7 +47,7 @@ class MealController extends Controller
 
     public function show(Meal $meal)
     {
-        $meal = $meal->load('menu');
+        $meal = $meal->load('menu', 'materials');
         return response()->json($meal);
     }
 

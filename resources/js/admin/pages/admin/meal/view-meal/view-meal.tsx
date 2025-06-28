@@ -32,7 +32,7 @@ export default function ViewMeal({ mealId }: ViewMealProps) {
                         <div className="grid grid-cols-1 gap-4">
                             <div>
                                 <h3 className="font-semibold">Menu Type</h3>
-                                <p>{data ? data.menu.name : `Not available`}</p>
+                                <p>{data ? data?.menu?.name : `Not available`}</p>
                             </div>
                             <div>
                                 <h3 className="font-semibold">Price</h3>
