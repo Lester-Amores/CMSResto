@@ -14,31 +14,31 @@ class UnitSeeder extends Seeder
     {
         DB::table('units')->insert([
             [
-                'name' => 'gram',
+                'name' => 'g',
                 'description' => 'Metric unit of mass, commonly used for solids.',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
-                'name' => 'millilitre',
+                'name' => 'ml',
                 'description' => 'Metric unit of volume, used for liquids.',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
-                'name' => 'piece',
+                'name' => 'pc',
                 'description' => 'Individual countable item.',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
-                'name' => 'liter',
+                'name' => 'l',
                 'description' => 'Larger metric volume unit, typically for liquids.',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
-                'name' => 'kilogram',
+                'name' => 'kl',
                 'description' => 'Metric unit equal to 1,000 grams.',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),

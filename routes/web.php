@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BranchController;
+use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\MealController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OperatorController;
@@ -61,6 +62,12 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     Route::post('/units/multi-delete', [UnitController::class, 'multiDelete'])->name('units.multi-delete');
     Route::post('/units/multi-restore', [UnitController::class, 'multiRestore'])->name('units.multi-restore');
     Route::post('/units/restore', [UnitController::class, 'restore'])->name('units.restore');
+
+    Route::resource('/materials', MaterialController::class)->except('update');
+    Route::post('/materials/{material}/update', [MaterialController::class, 'update'])->name('materials.update');
+    Route::post('/materials/multi-delete', [MaterialController::class, 'multiDelete'])->name('materials.multi-delete');
+    Route::post('/materials/multi-restore', [MaterialController::class, 'multiRestore'])->name('materials.multi-restore');
+    Route::post('/materials/restore', [MaterialController::class, 'restore'])->name('materials.restore');
 });
 
 

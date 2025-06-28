@@ -6,18 +6,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Unit extends Model
+class Material extends Model
 {
-    /** @use HasFactory<\Database\Factories\UnitsFactory> */
+    /** @use HasFactory<\Database\Factories\MaterialsFactory> */
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'name',
-        'description',
+        'unit_id',
+        'unit_cost',
+        'quantity'
     ];
 
-    public function materials()
+    public function unit()
     {
-        return $this->hasMany(Material::class);
+        return $this->belongsTo(Unit::class);
     }
 }
