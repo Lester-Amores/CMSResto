@@ -14,7 +14,7 @@ interface ImageUploadProps {
 
 export default function ImageUpload({ initialImageUrl, label, name, onChange, setValue }: ImageUploadProps) {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [previews, setPreviews] = useState<{ file: File; url: string }[]>([]);
+  const [previews, setPreviews] = useState<{ file: File | null; url: string }[]>([]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -31,12 +31,7 @@ export default function ImageUpload({ initialImageUrl, label, name, onChange, se
     if (initialImageUrl) {
       const fullUrl = getFullImageUrl(initialImageUrl);
       if (fullUrl) {
-        setPreviews([
-          {
-            file: new File([], 'existing'),
-            url: fullUrl,
-          },
-        ]);
+        setPreviews([{ file: null, url: fullUrl }])
       }
     }
   }, [initialImageUrl]);

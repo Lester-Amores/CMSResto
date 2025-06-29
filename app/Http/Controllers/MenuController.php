@@ -7,6 +7,7 @@ use App\Models\Menu;
 use Exception;
 use App\Services\MenuService;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 
 
@@ -57,6 +58,8 @@ class MenuController extends Controller
         try {
             $this->menuService->updateMenu($request, $menu);
             return redirect()->back()->with('success', 'Successfully updated');
+        } catch (ValidationException $e) {
+            throw $e;
         } catch (Exception $e) {
             return redirect()->back()->with('error', 'Failed to update menu');
         }

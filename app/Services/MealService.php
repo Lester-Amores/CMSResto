@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Meal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
 
 class MealService
 {
@@ -59,6 +60,12 @@ class MealService
     public function updateMeal(Request $request, Meal $meal)
     {
         $validated = $request->validated();
+
+        if ($request->boolean('img_src_removed') && empty($validated['img_src'])) {
+            throw ValidationException::withMessages([
+                'img_src' => 'Image is required.'
+            ]);
+        }
 
         $imagePath = $meal->img_src;
 

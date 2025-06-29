@@ -7,6 +7,7 @@ use App\Http\Requests\MealRequest;
 use App\Services\MealService;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 
 class MealController extends Controller
@@ -57,6 +58,8 @@ class MealController extends Controller
         try {
             $this->mealService->updateMeal($request, $meal);
             return redirect()->back()->with('success', 'Successfully updated');
+        } catch (ValidationException $e) {
+            throw $e;
         } catch (Exception $e) {
             return redirect()->back()->with('error', 'Failed to update meal');
         }

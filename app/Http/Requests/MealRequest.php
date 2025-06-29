@@ -27,10 +27,12 @@ class MealRequest extends FormRequest
             'description' => 'required|string|max:255',
             'price' => 'required|integer|min:0',
             'menu_id' => 'required|exists:menus,id',
-            'img_src' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
             'materials' => 'required|array',
             'materials.*.id' => 'required|exists:materials,id',
             'materials.*.quantity' => 'required|integer|min:1',
+            'img_src' => $this->route('meal')
+                ? ['nullable']
+                : ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ];
     }
 }

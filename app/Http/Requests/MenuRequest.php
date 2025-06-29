@@ -22,10 +22,13 @@ class MenuRequest extends FormRequest
      */
     public function rules(): array
     {
+
         return [
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:255',
-            'img_src' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'img_src' => $this->route('menu')
+                ? ['nullable']
+                : ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ];
     }
 }
