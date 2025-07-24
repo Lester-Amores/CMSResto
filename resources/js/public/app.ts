@@ -5,8 +5,16 @@ declare global {
         showMenuModal: (menu: any) => void;
         closeMenuModal: () => void;
         initMenuModal: () => void;
+        toggleNav: () => void;
     }
 }
+
+window.toggleNav = () => {
+    const menu = document.getElementById('mobileNav');
+    if (menu) {
+        menu.classList.toggle('hidden');
+    }
+};
 
 function getFullImageUrl(path: string): string {
     const baseUrl = (document.querySelector('meta[name="app-url"]') as HTMLMetaElement)?.content || '';

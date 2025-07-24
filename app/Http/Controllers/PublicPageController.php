@@ -10,7 +10,7 @@ class PublicPageController extends Controller
     public function home()
     {
         return view('public.home.home', [
-            'title' => 'Home - MySite',
+            'title' => 'Home',
             'description' => 'Welcome to MySite, your go-to for XYZ services.',
             'menus' => Menu::with('meals')->get(),
         ]);
@@ -19,7 +19,7 @@ class PublicPageController extends Controller
     public function about()
     {
         return view('public.about', [
-            'title' => 'About Us - MySite',
+            'title' => 'About Us',
             'description' => 'Learn more about our mission, vision, and team.',
         ]);
     }
@@ -27,7 +27,7 @@ class PublicPageController extends Controller
     public function services()
     {
         return view('public.services', [
-            'title' => 'Our Services - MySite',
+            'title' => 'Our Services',
             'description' => 'Explore the services we offer to help you succeed.',
         ]);
     }
@@ -35,7 +35,7 @@ class PublicPageController extends Controller
     public function contact()
     {
         return view('public.contact', [
-            'title' => 'Contact Us - MySite',
+            'title' => 'Contact Us',
             'description' => 'Get in touch with us for any inquiries or support.',
         ]);
     }
