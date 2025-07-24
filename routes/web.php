@@ -15,10 +15,10 @@ Route::get('/', function () {
     return Inertia::render('welcome');
 })->name('home');
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::prefix('operator')->middleware(['auth', 'role:operator'])->group(function () {
     Route::get('dashboard', function () {
-        return Inertia::render('dashboard');
-    })->name('dashboard');
+        return Inertia::render('operator/dashboard');
+    })->name('operator.dashboard');
 });
 
 Route::get('/', [PublicPageController::class, 'home'])->name('home');
@@ -26,7 +26,10 @@ Route::get('/about', [PublicPageController::class, 'about'])->name('about');
 Route::get('/services', [PublicPageController::class, 'services'])->name('services');
 Route::get('/contact', [PublicPageController::class, 'contact'])->name('contact');
 
-Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
+Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('dashboard', function () {
+        return Inertia::render('dashboard');
+    })->name('admin.dashboard');
     Route::resource('/admins', AdminController::class)->except('update');
     Route::post('/admins/{admin}/update', [AdminController::class, 'update'])->name('admins.update');
     Route::post('/admins/multi-delete', [AdminController::class, 'multiDelete'])->name('admins.multi-delete');

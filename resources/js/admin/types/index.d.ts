@@ -44,6 +44,7 @@ export interface User {
     status: number;
     email_verified_at: string | null;
     admin: Admin;
+    operator: Operator;
     deleted_at: string | null;
     created_at: string;
     updated_at: string;
@@ -93,6 +94,7 @@ export interface Operator {
     user: User;
     phone: string;
     birthday: string;
+    img_src: string;
     started_at: string;
     deleted_at: string | null;
     created_at: string;

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,8 +33,16 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
+        $user = Auth::user();
+        $redirectPath = match ($user->role) {
+            User::ROLE_ADMIN => route('admin.dashboard'),
+            User::ROLE_OPERATOR => route('operator.dashboard'),
+            default => '/',
+        };
+        logger()->info('User logged in:', ['id' => Auth::id(), 'email' => Auth::user()->email]);
 
-        return redirect()->intended(route('dashboard', absolute: false));
+
+        return redirect()->intended($redirectPath);
     }
 
     /**
@@ -46,6 +55,6 @@ class AuthenticatedSessionController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/login');
     }
 }
