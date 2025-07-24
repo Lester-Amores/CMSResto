@@ -2,16 +2,16 @@
 
 namespace App\Services;
 
-use App\Models\Material;
+use App\Models\Ingredient;
 use Illuminate\Http\Request;
 
 
 
-class MaterialService
+class IngredientService
 {
-    public function getMaterial(Request $request)
+    public function getIngredient(Request $request)
     {
-        $query = Material::query();
+        $query = Ingredient::query();
 
         if ($request->has('search') && !empty($request->search)) {
             $query->where(function ($q) use ($request) {

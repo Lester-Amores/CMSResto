@@ -38,8 +38,8 @@ const mainNavItems: NavItem[] = [
         icon: UtensilsCrossedIcon,
     },
     {
-        title: 'Material',
-        href: '/admin/materials',
+        title: 'Ingredient',
+        href: '/admin/ingredients',
         icon: BoxIcon,
     },
     {

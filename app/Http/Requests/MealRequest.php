@@ -13,9 +13,9 @@ class MealRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
-        if ($this->has('materials') && is_string($this->materials)) {
+        if ($this->has('ingredients') && is_string($this->ingredients)) {
             $this->merge([
-                'materials' => json_decode($this->materials, true),
+                'ingredients' => json_decode($this->ingredients, true),
             ]);
         }
     }
@@ -27,9 +27,9 @@ class MealRequest extends FormRequest
             'description' => 'required|string|max:255',
             'price' => 'required|integer|min:0',
             'menu_id' => 'required|exists:menus,id',
-            'materials' => 'required|array',
-            'materials.*.id' => 'required|exists:materials,id',
-            'materials.*.quantity' => 'required|integer|min:1',
+            'ingredients' => 'required|array',
+            'ingredients.*.id' => 'required|exists:ingredients,id',
+            'ingredients.*.quantity' => 'required|integer|min:1',
             'img_src' => $this->route('meal')
                 ? ['nullable']
                 : ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],

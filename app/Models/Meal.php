@@ -23,9 +23,9 @@ class Meal extends Model
         return $this->belongsTo(Menu::class);
     }
 
-    public function materials()
+    public function ingredients()
     {
-        return $this->belongsToMany(Material::class)
+        return $this->belongsToMany(Ingredient::class)
             ->withPivot('quantity');
     }
 }

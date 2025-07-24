@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Head, router } from '@inertiajs/react';
 import AppLayout from '@/admin/layouts/app-layout';
-import type { BreadcrumbItem, PaginatedProps, Material, FlashMessages, ModalMode } from '@/admin/types';
+import type { BreadcrumbItem, PaginatedProps, Ingredient, FlashMessages, ModalMode } from '@/admin/types';
 import DataTable from '@/admin/components/datatable';
 import ActionButtons from '@/admin/components/action-buttons';
 import SlidingModal from '@/admin/components/sliding-modal';
@@ -9,17 +9,17 @@ import { showConfirmationPopup } from '@/admin/components/confirmation-popup';
 import { useFetchData } from '@/admin/hooks/use-fetch-data';
 import { handleFlashMessages, showErrors } from '@/admin/lib/utils';
 import FilterForm, { type FilterFormData } from './filter-form';
-import AddMaterial from './add-material';
-import EditMaterial from './edit-material';
-import ViewMaterial from './view-material/view-material';
+import AddIngredient from './add-ingredient';
+import EditIngredient from './edit-ingredient';
+import ViewIngredient from './view-ingredient/view-ingredient';
 
 
 
-interface MaterialProps extends PaginatedProps {
-    materials: Material[];
+interface IngredientProps extends PaginatedProps {
+    ingredients: Ingredient[];
 }
 
-export default function MaterialPage({ materials, current_page, total_pages, total_rows, per_page }: MaterialProps) {
+export default function IngredientPage({ ingredients, current_page, total_pages, total_rows, per_page }: IngredientProps) {
     const [searchParams, setSearchParams] = useState({});
     const [page, setPage] = useState(current_page);
     const [withDeleted, setWithDeleted] = useState(false);
@@ -100,7 +100,7 @@ export default function MaterialPage({ materials, current_page, total_pages, tot
             confirmButton,
             cancelButton,
             onSuccess: () => {
-                router.delete(route('materials.destroy', id), {
+                router.delete(route('ingredients.destroy', id), {
                     preserveScroll: true,
                     onSuccess: (page) => {
                         const flash = page.props.flash as FlashMessages;
@@ -124,7 +124,7 @@ export default function MaterialPage({ materials, current_page, total_pages, tot
             confirmButton,
             cancelButton,
             onSuccess: () => {
-                router.post(route('materials.restore'), { id }, {
+                router.post(route('ingredients.restore'), { id }, {
                     preserveScroll: true,
                     onSuccess: (page) => {
                         const flash = page.props.flash as FlashMessages;
@@ -155,7 +155,7 @@ export default function MaterialPage({ materials, current_page, total_pages, tot
             confirmButton,
             cancelButton,
             onSuccess: () => {
-                router.post(route('materials.multi-delete'), { ids: selectedIdsRef.current }, {
+                router.post(route('ingredients.multi-delete'), { ids: selectedIdsRef.current }, {
                     headers: {
                         'Content-Type': 'application/json',
                     },
@@ -184,7 +184,7 @@ export default function MaterialPage({ materials, current_page, total_pages, tot
             confirmButton,
             cancelButton,
             onSuccess: () => {
-                router.post(route('materials.multi-restore'), { ids: selectedIdsRef.current }, {
+                router.post(route('ingredients.multi-restore'), { ids: selectedIdsRef.current }, {
                     headers: {
                         'Content-Type': 'application/json',
                     },
@@ -211,17 +211,17 @@ export default function MaterialPage({ materials, current_page, total_pages, tot
         { header: 'Actions', key: 'actions', sortTable: false },
     ];
 
-    const data = materials?.map(material => {
-        const isDeleted: boolean = !!material.deleted_at;
+    const data = ingredients?.map(ingredient => {
+        const isDeleted: boolean = !!ingredient.deleted_at;
         return {
-            id: material.id,
-            name: material?.name,
-            unit_id: material?.unit?.name,
-            quantity: material?.quantity,
-            unit_cost: material?.unit_cost,
+            id: ingredient.id,
+            name: ingredient?.name,
+            unit_id: ingredient?.unit?.name,
+            quantity: ingredient?.quantity,
+            unit_cost: ingredient?.unit_cost,
             actions: (
                 <ActionButtons
-                    toggleId={material.id}
+                    toggleId={ingredient.id}
                     toggleEdit={handleEdit}
                     toggleShow={handleShow}
                     toggleRestore={handleRestore}
@@ -235,15 +235,15 @@ export default function MaterialPage({ materials, current_page, total_pages, tot
 
     const breadcrumbs: BreadcrumbItem[] = [
         {
-            title: 'Materials',
-            href: '/materials',
+            title: 'Ingredients',
+            href: '/ingredients',
         },
     ];
 
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Materials" />
+            <Head title="Ingredients" />
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
                 <DataTable
                     columns={columns}
@@ -266,9 +266,9 @@ export default function MaterialPage({ materials, current_page, total_pages, tot
             </div>
 
             <SlidingModal isOpen={isModalOpen} onClose={closeModal} size={modalMode === 'mail' ? 'md' : 'sm'}>
-                {modalMode === 'add' && <AddMaterial onSuccess={closeModal} />}
-                {modalMode === 'edit' && selectedId && <EditMaterial materialId={selectedId} onSuccess={closeModal} />}
-                {modalMode === 'view' && selectedId && <ViewMaterial materialId={selectedId} />}
+                {modalMode === 'add' && <AddIngredient onSuccess={closeModal} />}
+                {modalMode === 'edit' && selectedId && <EditIngredient ingredientId={selectedId} onSuccess={closeModal} />}
+                {modalMode === 'view' && selectedId && <ViewIngredient ingredientId={selectedId} />}
             </SlidingModal>
         </AppLayout >
     )

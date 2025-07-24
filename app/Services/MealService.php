@@ -44,17 +44,17 @@ class MealService
         }
 
         $validated['img_src'] = $validated['img_src'] ?? null;
-        $materials = $validated['materials'];
-        unset($validated['materials']);
+        $ingredients = $validated['ingredients'];
+        unset($validated['ingredients']);
 
         $meal = Meal::create($validated);
 
         $pivotData = [];
-        foreach ($materials as $material) {
-            $pivotData[$material['id']] = ['quantity' => $material['quantity']];
+        foreach ($ingredients as $ingredient) {
+            $pivotData[$ingredient['id']] = ['quantity' => $ingredient['quantity']];
         }
 
-        $meal->materials()->sync($pivotData);
+        $meal->ingredients()->sync($pivotData);
     }
 
     public function updateMeal(Request $request, Meal $meal)
@@ -82,16 +82,16 @@ class MealService
 
         $validated['img_src'] = $imagePath;
 
-        $materials = $validated['materials'];
-        unset($validated['materials']);
+        $ingredients = $validated['ingredients'];
+        unset($validated['ingredients']);
 
         $meal->update($validated);
 
         $pivotData = [];
-        foreach ($materials as $material) {
-            $pivotData[$material['id']] = ['quantity' => $material['quantity']];
+        foreach ($ingredients as $ingredient) {
+            $pivotData[$ingredient['id']] = ['quantity' => $ingredient['quantity']];
         }
 
-        $meal->materials()->sync($pivotData);
+        $meal->ingredients()->sync($pivotData);
     }
 }

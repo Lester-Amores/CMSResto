@@ -4,22 +4,22 @@ import { useQuery } from '@tanstack/react-query';
 import { Input } from '@/admin/components/ui/input';
 import { Button } from '@/admin/components/ui/button';
 import { Trash2 } from 'lucide-react';
-import { Material, Meal } from '@/admin/types';
-import { fetchMaterials } from '@/admin/services/services';
+import { Ingredient, Meal } from '@/admin/types';
+import { fetchIngredients } from '@/admin/services/services';
 import { useEffect, useRef } from 'react';
 
 type Props = {
-    selectedMaterials: Material[];
-    onMaterialsChange: (newMaterials: Material[]) => void;
+    selectedIngredients: Ingredient[];
+    onIngredientsChange: (newIngredients: Ingredient[]) => void;
     errors: FieldErrors<Meal>;
 };
 
-export default function MaterialsPicker({
-    selectedMaterials,
-    onMaterialsChange,
+export default function IngredientsPicker({
+    selectedIngredients,
+    onIngredientsChange,
     errors,
 }: Props) {
-    const [selectedMaterialId, setSelectedMaterialId] = useState<number>(0);
+    const [selectedIngredientId, setSelectedIngredientId] = useState<number>(0);
     const [quantity, setQuantity] = useState<number>(1);
     const dropdownRef = useRef<HTMLDivElement | null>(null);
     const [searchInput, setSearchInput] = useState('');
@@ -27,13 +27,13 @@ export default function MaterialsPicker({
 
 
     const { data } = useQuery({
-        queryKey: ['fetchMaterials', searchInput],
-        queryFn: () => fetchMaterials({ page: 1, per_page: 100, withDeleted: false, search: searchInput }),
+        queryKey: ['fetchIngredients', searchInput],
+        queryFn: () => fetchIngredients({ page: 1, per_page: 100, withDeleted: false, search: searchInput }),
     });
 
-    const materials = data?.materials;
+    const ingredients = data?.ingredients;
 
-    const filteredMaterials = materials?.filter((mat: Material) =>
+    const filteredIngredients = ingredients?.filter((mat: Ingredient) =>
         mat.name.toLowerCase().includes(searchInput.toLowerCase())
     );
 
@@ -48,55 +48,55 @@ export default function MaterialsPicker({
     }, []);
 
     const handleAdd = () => {
-        if (!selectedMaterialId || quantity < 1) return;
+        if (!selectedIngredientId || quantity < 1) return;
 
-        const selectedMaterial = materials?.find((mat) => mat.id === selectedMaterialId);
-        if (!selectedMaterial) return;
+        const selectedIngredient = ingredients?.find((mat) => mat.id === selectedIngredientId);
+        if (!selectedIngredient) return;
 
-        const alreadyAdded = selectedMaterials.some(
-            (item) => item.id === selectedMaterialId
+        const alreadyAdded = selectedIngredients.some(
+            (item) => item.id === selectedIngredientId
         );
         if (alreadyAdded) return;
 
         const newEntry = {
-            ...selectedMaterial,
+            ...selectedIngredient,
             quantity,
         };
 
-        const updated = [...selectedMaterials, newEntry];
-        onMaterialsChange(updated);
+        const updated = [...selectedIngredients, newEntry];
+        onIngredientsChange(updated);
 
         setQuantity(1);
         setSearchInput('');
-        setSelectedMaterialId(0);
+        setSelectedIngredientId(0);
     };
 
     const handleRemove = (index: number) => {
-        const updated = selectedMaterials.filter((_, i) => i !== index);
-        onMaterialsChange(updated);
+        const updated = selectedIngredients.filter((_, i) => i !== index);
+        onIngredientsChange(updated);
     };
 
     return (
         <div className="mb-6">
             <div className="flex gap-2 mb-4">
                 <div className="relative w-full" ref={dropdownRef}>
-                    <label className="block font-medium mb-2">Materials</label>
+                    <label className="block font-medium mb-2">Ingredients</label>
                     <Input
                         type="text"
-                        placeholder="Search material"
+                        placeholder="Search ingredient"
                         className="w-full"
                         value={searchInput}
                         onChange={(e) => setSearchInput(e.target.value)}
                         onFocus={() => setDropdownOpen(true)}
                     />
-                    {dropdownOpen && filteredMaterials?.length > 0 && (
+                    {dropdownOpen && filteredIngredients?.length > 0 && (
                         <ul className="absolute z-10 w-full mt-1 bg-white border rounded shadow max-h-48 overflow-y-auto">
-                            {filteredMaterials.map((mat) => (
+                            {filteredIngredients.map((mat) => (
                                 <li
                                     key={mat.id}
                                     className="px-3 py-2 cursor-pointer hover:bg-gray-100"
                                     onClick={() => {
-                                        setSelectedMaterialId(mat.id);
+                                        setSelectedIngredientId(mat.id);
                                         setSearchInput(mat.name);
                                         setDropdownOpen(false);
                                     }}
@@ -113,27 +113,27 @@ export default function MaterialsPicker({
                         type="number"
                         value={quantity}
                         onChange={(e) => setQuantity(Number(e.target.value))}
-                        disabled={!selectedMaterialId}
+                        disabled={!selectedIngredientId}
                         placeholder="Qty"
                     />
                 </div>
                 <div className='flex items-end'>
-                    <Button type="button" onClick={handleAdd} disabled={!selectedMaterialId || quantity < 1}
+                    <Button type="button" onClick={handleAdd} disabled={!selectedIngredientId || quantity < 1}
                     >
                         Add
                     </Button>
                 </div>
             </div>
 
-            {errors.materials && (
+            {errors.ingredients && (
                 <p className="text-sm text-red-500 mb-2">
-                    {(errors.materials as any)?.message || 'Please select materials correctly.'}
+                    {(errors.ingredients as any)?.message || 'Please select ingredients correctly.'}
                 </p>
             )}
 
-            {selectedMaterials.length > 0 && (
+            {selectedIngredients?.length > 0 && (
                 <ul className="space-y-2 border rounded p-2">
-                    {selectedMaterials?.map((mat, index) => (
+                    {selectedIngredients?.map((mat, index) => (
                         <li key={mat.id} className="flex items-center justify-between">
                             <span>
                                 {index + 1}.  {(mat.name)} — Qty: {mat.quantity}

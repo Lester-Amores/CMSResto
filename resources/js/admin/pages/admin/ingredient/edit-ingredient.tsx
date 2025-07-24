@@ -2,24 +2,24 @@ import { useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { router } from '@inertiajs/react';
 import { Button } from '@/admin/components/ui/button';
-import MaterialForm from './material-form';
-import { FlashMessages, Material } from '@/admin/types';
+import IngredientForm from './ingredient-form';
+import { FlashMessages, Ingredient } from '@/admin/types';
 import { handleFlashMessages, showErrors } from '@/admin/lib/utils';
 import { useQuery } from '@tanstack/react-query';
-import { getMaterial } from '@/admin/services/services';
+import { getIngredient } from '@/admin/services/services';
 import UnitPicker from '@/admin/components/picker/unit-picker';
 
-interface EditMaterialProps {
+interface EditIngredientProps {
     onSuccess: () => void;
-    materialId: number;
+    ingredientId: number;
 }
 
-export default function EditMaterial({ onSuccess, materialId }: EditMaterialProps) {
-    const { register, handleSubmit, formState: { errors }, reset, setError, setValue, clearErrors } = useForm<Material>();
+export default function EditIngredient({ onSuccess, ingredientId }: EditIngredientProps) {
+    const { register, handleSubmit, formState: { errors }, reset, setError, setValue, clearErrors } = useForm<Ingredient>();
 
     const { data, isLoading, error } = useQuery({
-        queryKey: ['material', materialId],
-        queryFn: () => getMaterial(materialId),
+        queryKey: ['ingredient', ingredientId],
+        queryFn: () => getIngredient(ingredientId),
     });
 
     useEffect(() => {
@@ -29,7 +29,7 @@ export default function EditMaterial({ onSuccess, materialId }: EditMaterialProp
     }, [data, reset]);
 
 
-    const onSubmit: SubmitHandler<Material> = (data) => {
+    const onSubmit: SubmitHandler<Ingredient> = (data) => {
 
         if (!data.unit_id) {
             setError("unit_id", { message: "This field is required." });
@@ -43,7 +43,7 @@ export default function EditMaterial({ onSuccess, materialId }: EditMaterialProp
             }
         });
 
-        router.post(route('materials.update', materialId), formData, {
+        router.post(route('ingredients.update', ingredientId), formData, {
             preserveScroll: true,
             onSuccess: (page) => {
                 const flash = page.props.flash as FlashMessages;
@@ -63,12 +63,12 @@ export default function EditMaterial({ onSuccess, materialId }: EditMaterialProp
 
     return (
         <div className="px-8 py-6 dark:text-white">
-            <h2 className="text-2xl font-semibold mb-10">Edit Material</h2>
+            <h2 className="text-2xl font-semibold mb-10">Edit Ingredient</h2>
             {isLoading ? (
                 <p>Loading...</p>
             ) : (
                 <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col h-full">
-                    <MaterialForm register={register} errors={errors} />
+                    <IngredientForm register={register} errors={errors} />
                     <UnitPicker initialUnit={data?.unit} setValue={setValue} errors={errors} clearErrors={clearErrors} required />
                     <div className="flex justify-end">
                         <Button type="submit">

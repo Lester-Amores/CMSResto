@@ -16,8 +16,8 @@ class Unit extends Model
         'description',
     ];
 
-    public function materials()
+    public function ingredients()
     {
-        return $this->hasMany(Material::class);
+        return $this->hasMany(Ingredient::class);
     }
 }

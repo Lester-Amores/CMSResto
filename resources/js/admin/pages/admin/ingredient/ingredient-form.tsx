@@ -1,16 +1,16 @@
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
 import { Input } from '@/admin/components/ui/input';
 import { Label } from '@/admin/components/ui/label';
-import type { Material } from '@/admin/types';
+import type { Ingredient } from '@/admin/types';
 
 
 
-interface MaterialFormProps {
-    register: UseFormRegister<Material>;
-    errors: FieldErrors<Material>;
+interface IngredientFormProps {
+    register: UseFormRegister<Ingredient>;
+    errors: FieldErrors<Ingredient>;
 }
 
-const MaterialForm = ({ register, errors }: MaterialFormProps) => {
+const IngredientForm = ({ register, errors }: IngredientFormProps) => {
 
     return (
         <>
@@ -50,4 +50,4 @@ const MaterialForm = ({ register, errors }: MaterialFormProps) => {
     );
 };
 
-export default MaterialForm;
+export default IngredientForm;

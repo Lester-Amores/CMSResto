@@ -127,7 +127,7 @@ export interface Meal {
     name: string;
     price: number;
     menu_id: number;
-    materials: Material[];
+    ingredients: Ingredient[];
     img_src: string;
     menu: Menu;
     description: string;
@@ -145,7 +145,7 @@ export interface Unit {
     updated_at: string;
 }
 
-export interface Material {
+export interface Ingredient {
     id: number;
     name: string;
     unit_id: string;
@@ -157,11 +157,11 @@ export interface Material {
     updated_at: string;
 }
 
-export type MaterialMeal = {
+export type IngredientMeal = {
     meal_id?: number | null;
-    material_id: number;
+    ingredient_id: number;
     quantity: number;
-    material?: Material | null;
+    ingredient?: Ingredient | null;
     meal?: Meal | null;
 };
 

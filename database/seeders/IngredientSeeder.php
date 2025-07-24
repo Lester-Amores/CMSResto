@@ -3,10 +3,10 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Material;
+use App\Models\Ingredient;
 use App\Models\Unit;
 
-class MaterialSeeder extends Seeder
+class IngredientSeeder extends Seeder
 {
     public function run(): void
     {
@@ -28,7 +28,7 @@ class MaterialSeeder extends Seeder
             $unitIds[$unitName] = $unit->id;
         }
 
-        $materials = [
+        $ingredients = [
             ['name' => 'Ribeye Steak', 'unit' => 'kg', 'cost' => 950, 'qty' => 20],
             ['name' => 'Truffle Oil', 'unit' => 'ml', 'cost' => 150, 'qty' => 250],
             ['name' => 'Parmesan Cheese', 'unit' => 'g', 'cost' => 80, 'qty' => 500],
@@ -41,12 +41,12 @@ class MaterialSeeder extends Seeder
             ['name' => 'Wagyu Beef', 'unit' => 'kg', 'cost' => 2800, 'qty' => 5],
         ];
 
-        foreach ($materials as $material) {
-            Material::create([
-                'name' => $material['name'],
-                'unit_id' => $unitIds[$material['unit']],
-                'unit_cost' => $material['cost'],
-                'quantity' => $material['qty'],
+        foreach ($ingredients as $ingredient) {
+            Ingredient::create([
+                'name' => $ingredient['name'],
+                'unit_id' => $unitIds[$ingredient['unit']],
+                'unit_cost' => $ingredient['cost'],
+                'quantity' => $ingredient['qty'],
             ]);
         }
     }

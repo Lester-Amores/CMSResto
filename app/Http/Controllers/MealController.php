@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Meal;
@@ -48,7 +47,7 @@ class MealController extends Controller
 
     public function show(Meal $meal)
     {
-        $meal = $meal->load('menu', 'materials');
+        $meal = $meal->load('menu', 'ingredients.unit');
         return response()->json($meal);
     }
 

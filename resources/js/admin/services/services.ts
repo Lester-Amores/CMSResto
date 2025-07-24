@@ -131,9 +131,9 @@ export const getMeal = async (id: number) => {
     }
 };
 
-export const getMaterial = async (id: number) => {
+export const getIngredient = async (id: number) => {
     try {
-        const response = await http.get('admin/materials/' + id);
+        const response = await http.get('admin/ingredients/' + id);
         return response.data;
     } catch (error) {
         console.error(error);
@@ -166,7 +166,7 @@ export const fetchUnits = async ({ page = 1, per_page = 10, withDeleted = false,
     }
 };
 
-export const fetchMaterials = async ({ page = 1, per_page = 10, withDeleted = false, search = "" }) => {
+export const fetchIngredients = async ({ page = 1, per_page = 10, withDeleted = false, search = "" }) => {
     try {
         const queryParams = new URLSearchParams({
             page: String(page),
@@ -175,7 +175,7 @@ export const fetchMaterials = async ({ page = 1, per_page = 10, withDeleted = fa
             search
         }).toString();
 
-        const response = await http.get(`admin/materials?${queryParams}`);
+        const response = await http.get(`admin/ingredients?${queryParams}`);
         return response.data;
     } catch (error) {
         console.error(error);

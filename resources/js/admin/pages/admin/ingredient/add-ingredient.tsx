@@ -1,19 +1,19 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { router } from '@inertiajs/react';
 import { Button } from '@/admin/components/ui/button';
-import MaterialForm from './material-form';
-import { FlashMessages, Material } from '@/admin/types';
+import IngredientForm from './ingredient-form';
+import { FlashMessages, Ingredient } from '@/admin/types';
 import { handleFlashMessages, showErrors } from '@/admin/lib/utils';
-import MaterialPicker from '@/admin/components/picker/unit-picker';
+import IngredientPicker from '@/admin/components/picker/unit-picker';
 
-interface AddMaterialProps {
+interface AddIngredientProps {
     onSuccess: () => void;
 }
 
-export default function AddMaterial({ onSuccess }: AddMaterialProps) {
-    const { register, handleSubmit, formState: { errors }, setError, setValue, clearErrors } = useForm<Material>();
+export default function AddIngredient({ onSuccess }: AddIngredientProps) {
+    const { register, handleSubmit, formState: { errors }, setError, setValue, clearErrors } = useForm<Ingredient>();
 
-    const onSubmit: SubmitHandler<Material> = (data) => {
+    const onSubmit: SubmitHandler<Ingredient> = (data) => {
 
         if (!data.unit_id) {
             setError("unit_id", { message: "This field is required" });
@@ -25,7 +25,7 @@ export default function AddMaterial({ onSuccess }: AddMaterialProps) {
             formData.append(key, value);
         });
 
-        router.post(route('materials.store'), formData, {
+        router.post(route('ingredients.store'), formData, {
             preserveScroll: true,
             onSuccess: (page) => {
                 const flash = page.props.flash as FlashMessages;
@@ -40,10 +40,10 @@ export default function AddMaterial({ onSuccess }: AddMaterialProps) {
 
     return (
         <div className="px-8 py-6 dark:text-white">
-            <h2 className="text-2xl font-semibold mb-10">Add Material</h2>
+            <h2 className="text-2xl font-semibold mb-10">Add Ingredient</h2>
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col h-full">
-                <MaterialForm register={register} errors={errors} />
-                <MaterialPicker setValue={setValue} errors={errors} clearErrors={clearErrors} required />
+                <IngredientForm register={register} errors={errors} />
+                <IngredientPicker setValue={setValue} errors={errors} clearErrors={clearErrors} required />
                 <div className="flex justify-end">
                     <Button type="submit" >
                         Submit

@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BranchController;
-use App\Http\Controllers\MaterialController;
+use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\MealController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OperatorController;
@@ -63,11 +63,11 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     Route::post('/units/multi-restore', [UnitController::class, 'multiRestore'])->name('units.multi-restore');
     Route::post('/units/restore', [UnitController::class, 'restore'])->name('units.restore');
 
-    Route::resource('/materials', MaterialController::class)->except('update');
-    Route::post('/materials/{material}/update', [MaterialController::class, 'update'])->name('materials.update');
-    Route::post('/materials/multi-delete', [MaterialController::class, 'multiDelete'])->name('materials.multi-delete');
-    Route::post('/materials/multi-restore', [MaterialController::class, 'multiRestore'])->name('materials.multi-restore');
-    Route::post('/materials/restore', [MaterialController::class, 'restore'])->name('materials.restore');
+    Route::resource('/ingredients', IngredientController::class)->except('update');
+    Route::post('/ingredients/{ingredient}/update', [IngredientController::class, 'update'])->name('ingredients.update');
+    Route::post('/ingredients/multi-delete', [IngredientController::class, 'multiDelete'])->name('ingredients.multi-delete');
+    Route::post('/ingredients/multi-restore', [IngredientController::class, 'multiRestore'])->name('ingredients.multi-restore');
+    Route::post('/ingredients/restore', [IngredientController::class, 'restore'])->name('ingredients.restore');
 });
 
 

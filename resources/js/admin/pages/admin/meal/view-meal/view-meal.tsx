@@ -14,7 +14,6 @@ export default function ViewMeal({ mealId }: ViewMealProps) {
         queryKey: ['meal', mealId],
         queryFn: () => getMeal(mealId),
     });
-
     return (
         <div className="container mx-auto py-10">
             {isLoading ? (
@@ -42,6 +41,22 @@ export default function ViewMeal({ mealId }: ViewMealProps) {
                                 <h3 className="font-semibold">Description</h3>
                                 <p>{data ? data.description : `Not available`}</p>
                             </div>
+                            <div>
+                                <h3 className="font-semibold">Ingredients</h3>
+                                {data && data.ingredients && data.ingredients.length > 0 ? (
+                                    <ul className="list-disc pl-5">
+                                        {data.ingredients.map((ingredient: any, index: number) => (
+                                            <li key={index}>
+                                                {ingredient.name} &mdash; {ingredient.pivot.quantity} {ingredient.unit.name}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                ) : (
+                                    <p>Not available</p>
+                                )}
+                            </div>
+
+
 
                         </div>
 

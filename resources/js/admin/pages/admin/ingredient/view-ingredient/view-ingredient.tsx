@@ -1,17 +1,17 @@
 import { useQuery } from '@tanstack/react-query';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/admin/components/ui/card';
-import { getMaterial } from '@/admin/services/services';
+import { getIngredient } from '@/admin/services/services';
 
 
-interface ViewMaterialProps {
-    materialId: number;
+interface ViewIngredientProps {
+    ingredientId: number;
 }
 
-export default function ViewMaterial({ materialId }: ViewMaterialProps) {
+export default function ViewIngredient({ ingredientId }: ViewIngredientProps) {
 
     const { data, isLoading } = useQuery({
-        queryKey: ['material', materialId],
-        queryFn: () => getMaterial(materialId),
+        queryKey: ['ingredient', ingredientId],
+        queryFn: () => getIngredient(ingredientId),
     });
 
     return (
@@ -21,7 +21,7 @@ export default function ViewMaterial({ materialId }: ViewMaterialProps) {
             ) : (
                 <Card>
                     <CardHeader>
-                        <CardTitle className="text-2xl font-semibold mb-4">Material Details</CardTitle>
+                        <CardTitle className="text-2xl font-semibold mb-4">Ingredient Details</CardTitle>
                         <CardDescription className="text-black dark:text-white text-xl font-semibold">{data.name}</CardDescription>
                     </CardHeader>
                     <CardContent>
