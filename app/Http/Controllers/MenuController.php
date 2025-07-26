@@ -36,6 +36,18 @@ class MenuController extends Controller
             : Inertia::render('admin/menu/index', $data);
     }
 
+    public function OperatorPosPage(Request $request)
+    {
+        $menus = $this->menuService->getOperatorMenu($request);
+        $data = [
+            'menus' => $menus,
+        ];
+
+        return $request->expectsJson()
+            ? response()->json($data)
+            : Inertia::render('operator/point-of-sale/index', $data);
+    }
+
     public function store(MenuRequest $request)
     {
         try {

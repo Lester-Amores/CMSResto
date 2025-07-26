@@ -20,6 +20,11 @@ const mainNavItems: NavItem[] = [
         href: '/operator/dashboard',
         icon: LayoutGrid,
     },
+    {
+        title: 'Point of Sale',
+        href: '/operator/pos',
+        icon: LayoutGrid,
+    },
 ];
 
 const rightNavItems: NavItem[] = [

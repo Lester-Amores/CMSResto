@@ -19,6 +19,8 @@ Route::prefix('operator')->middleware(['auth', 'role:operator'])->group(function
     Route::get('dashboard', function () {
         return Inertia::render('operator/dashboard');
     })->name('operator.dashboard');
+
+    Route::get('/pos', [MenuController::class, 'OperatorPosPage'])->name('operator.pos');
 });
 
 Route::get('/', [PublicPageController::class, 'home'])->name('home');
