@@ -13,8 +13,8 @@
         <div>
             <img src="{{ asset('images/app-logo.png') }}" alt="App Logo" class="h-50 w-auto pl-8 ">
         </div>
-        <h1 class="text-8xl font-bold mb-4">Welcome To Coeur Véritable</h1>
-        <p class="text-5xl max-w-lg">True Heart, Fine Taste</p>
+        <h1 class="text-2xl md:text-8xl font-bold mb-4">Welcome To Coeur Véritable</h1>
+        <p class="text-xl md:text-5xl max-w-lg">True Heart, Fine Taste</p>
 
         <div class="mt-8">
             <button
