@@ -20,6 +20,11 @@ class PasswordController extends Controller
         return Inertia::render('settings/password');
     }
 
+    public function operatorEdit(): Response
+    {
+        return Inertia::render('settings/operator-password');
+    }
+
     /**
      * Update the user's password.
      */

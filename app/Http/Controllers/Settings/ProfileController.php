@@ -47,6 +47,7 @@ class ProfileController extends Controller
 
         return to_route('profile.edit');
     }
+    
 
     /**
      * Delete the user's account.

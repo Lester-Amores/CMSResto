@@ -8,9 +8,9 @@ interface PaymentMethodSelectorProps {
 export function PaymentMethodSelector({ paymentMethod, setPaymentMethod }: PaymentMethodSelectorProps) {
     return (
         <div className="mt-2">
-            <Label className="text-xs text-gray-600">Payment Method:</Label>
+            <Label className="text-xs">Payment Method:</Label>
             <select
-                className="w-full border rounded p-1 text-sm"
+                className="w-full border rounded p-1 text-sm dark:bg-black"
                 value={paymentMethod}
                 onChange={(e) => setPaymentMethod(e.target.value as any)}
             >

@@ -9,7 +9,7 @@ interface MenuListProps {
 
 export default function MenuList({ menus, onSelect, selectedMenuId }: MenuListProps) {
   return (
-    <div className="w-1/4 overflow-y-auto p-4 no-scrollbar bg-gray-100 shadow-[4px_0_6px_-1px_rgba(0,0,0,0.1)]">
+    <div className="w-1/4 overflow-y-auto p-4 no-scrollbar bg-gray-100 dark:bg-black dark:border-r shadow-[4px_0_6px_-1px_rgba(0,0,0,0.1)]">
       <h2 className="font-bold mb-4 text-center text-2xl">Menu List</h2>
       <div className="space-y-3">
         <div

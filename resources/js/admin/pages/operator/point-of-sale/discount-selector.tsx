@@ -16,9 +16,9 @@ interface DiscountSelectorProps {
   export function DiscountSelector({ discountType, setDiscountType, customDiscount, setCustomDiscount, idNumber, setIdNumber }: DiscountSelectorProps) {
     return (
       <div>
-        <Label className="text-xs text-gray-600">Discount Type:</Label>
+        <Label className="text-xs">Discount Type:</Label>
         <select
-          className="w-full border rounded p-1 text-sm"
+          className="w-full border rounded p-1 text-sm dark:bg-black"
           value={discountType}
           onChange={(e) => setDiscountType(e.target.value as DiscountType)}
         >

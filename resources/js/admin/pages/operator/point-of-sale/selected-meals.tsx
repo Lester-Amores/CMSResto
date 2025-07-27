@@ -16,7 +16,7 @@ export default function SelectedMeals({
     const menusToRender = selectedMenu ? [selectedMenu] : menus;
 
     return (
-        <div className="flex-1 h-[calc(100vh-4rem)] overflow-y-auto p-4 border-r bg-white">
+        <div className="flex-1 h-[calc(100vh-4rem)] overflow-y-auto p-4 border-r bg-white dark:bg-black">
             <h2 className="font-bold text-lg mb-4 uppercase">
                 {selectedMenu ? `${selectedMenu.name} Menu` : 'All Menus'}
             </h2>
@@ -24,7 +24,7 @@ export default function SelectedMeals({
             {menusToRender.map((menu) => (
                 <div key={menu.id} className="mb-8">
                     {!selectedMenu && (
-                        <h3 className="font-semibold text-md mb-2 text-gray-700">{menu.name} Menu</h3>
+                        <h3 className="font-semibold text-md mb-2 text-gray-700 dark:text-white">{menu.name} Menu</h3>
                     )}
 
                     {menu.meals.length === 0 ? (
@@ -34,7 +34,7 @@ export default function SelectedMeals({
                             {menu.meals.map((meal) => (
                                 <div
                                     key={meal.id}
-                                    className="bg-white rounded shadow hover:shadow-md transition p-2 flex flex-col"
+                                    className="bg-white dark:bg-gray-700 rounded shadow hover:shadow-md transition p-2 flex flex-col"
                                 >
                                     <div
                                         className="h-28 bg-cover bg-center rounded mb-2"
@@ -42,7 +42,7 @@ export default function SelectedMeals({
                                     />
                                     <div className="flex-1">
                                         <h3 className="font-semibold text-sm truncate">{meal.name}</h3>
-                                        <p className="text-xs text-gray-600 mb-2">₱{meal.price.toFixed(2)}</p>
+                                        <p className="text-xs text-gray-600 dark:text-white mb-2">₱{meal.price.toFixed(2)}</p>
                                     </div>
                                     <Button
                                         onClick={() => onAddToCart(meal)}

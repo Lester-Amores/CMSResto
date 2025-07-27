@@ -58,10 +58,10 @@ export default function Cart({ cartItems, onUpdateQuantity, onRemove }: CartProp
   const total = Math.max(subtotal - discount, 0);
 
   return (
-    <div className="w-1/6 p-4 bg-white border flex flex-col justify-between">
+    <div className="w-1/6 p-4 border flex flex-col justify-between">
       <div className="flex flex-col">
         <div className="flex items-center gap-2 mb-4">
-          <ShoppingCart className="text-gray-700" />
+          <ShoppingCart />
           <h2 className="font-bold text-lg">Cart</h2>
         </div>
 
@@ -105,7 +105,7 @@ export default function Cart({ cartItems, onUpdateQuantity, onRemove }: CartProp
         )}
 
         <div className="mt-3">
-          <Label className="text-xs text-gray-600">Order Notes:</Label>
+          <Label className="text-xs">Order Notes:</Label>
           <textarea
             className="w-full border rounded p-1 text-sm"
             rows={2}
