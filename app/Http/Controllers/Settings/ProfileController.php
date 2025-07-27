@@ -24,6 +24,14 @@ class ProfileController extends Controller
         ]);
     }
 
+    public function operatorEdit(Request $request): Response
+    {
+        return Inertia::render('settings/operator-profile', [
+            'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
+            'status' => $request->session()->get('status'),
+        ]);
+    }
+
     /**
      * Update the user's profile settings.
      */

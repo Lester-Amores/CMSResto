@@ -5,7 +5,7 @@ import { Button } from '@/admin/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/admin/components/ui/dropdown-menu';
 import { NavigationMenu, NavigationMenuItem, NavigationMenuList, navigationMenuTriggerStyle } from '@/admin/components/ui/navigation-menu';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/admin/components/ui/sheet';
-import { UserMenuContent } from '@/admin/components/user-menu-content';
+import { UserMenuContent } from '@/admin/components/operator-user-menu-content';
 import { useInitials } from '@/admin/hooks/use-initials';
 import { cn } from '@/admin/lib/utils';
 import { type BreadcrumbItem, type NavItem, type SharedData } from '@/admin/types';
