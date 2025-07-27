@@ -11,9 +11,6 @@ use App\Http\Controllers\UnitController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('welcome');
-})->name('home');
 
 Route::prefix('operator')->middleware(['auth', 'role:operator'])->group(function () {
     Route::get('dashboard', function () {
