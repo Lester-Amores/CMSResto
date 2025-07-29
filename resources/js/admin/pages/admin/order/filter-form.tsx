@@ -27,19 +27,19 @@ const FilterForm = ({ onSubmit }: FilterFormProps) => {
             <form className="space-y-4" onSubmit={handleSubmit(handleFormSubmit)}>
                 <div className="flex flex-wrap -mx-2">
                     <div className="w-full md:w-1/2 lg:w-1/4 px-2 mb-4 md:mb-0">
-                        <Label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                            Name
+                        <Label htmlFor="order_number" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                            Order Number
                         </Label>
                         <Input
                             type="text"
-                            id="name"
-                            placeholder="name"
+                            id="order_number"
+                            placeholder="order number"
                             className="mt-1 block w-full bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-200 border border-gray-300 dark:border-gray-600 focus:ring-indigo-500 focus:border-indigo-500"
-                            {...register('name')}
+                            {...register('order_number')}
                         />
-                        {errors.name && (
+                        {errors.order_number && (
                             <span className="text-red-500 dark:text-red-400 text-sm">
-                                {typeof errors.name.message === 'string' ? errors.name.message : ''}
+                                {typeof errors.order_number.message === 'string' ? errors.order_number.message : ''}
                             </span>
                         )}
                     </div>

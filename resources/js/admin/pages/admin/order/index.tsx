@@ -12,6 +12,7 @@ import FilterForm, { type FilterFormData } from './filter-form';
 import AddOrder from './add-order';
 import EditOrder from './edit-order';
 import ViewOrder from './view-order/view-order';
+import { getOrderStatusLabel, getPaymentMethodLabel } from '@/admin/lib/helpers';
 
 
 
@@ -37,7 +38,7 @@ export default function OrderPage({ orders, current_page, total_pages, total_row
             sortOrder,
         }));
     };
-    
+
     const handleSearch = (query: string) => {
         setPage(1);
         setSearchParams(query !== ' ' ? { ...searchParams, search: query } : {});
@@ -204,7 +205,11 @@ export default function OrderPage({ orders, current_page, total_pages, total_row
 
     const columns = [
         { header: '#', key: 'id', sortTable: true },
-        { header: 'Name', key: 'name', sortTable: true },
+        { header: 'Order Number', key: 'order_number', sortTable: true },
+        { header: 'Status', key: 'status', sortTable: true },
+        { header: 'Payment Method', key: 'payment_method', sortTable: true },
+        { header: 'Total', key: 'total', sortTable: true },
+        { header: 'Branch', key: 'branch_id', sortTable: true },
         { header: 'Actions', key: 'actions', sortTable: false },
     ];
 
@@ -212,7 +217,11 @@ export default function OrderPage({ orders, current_page, total_pages, total_row
         const isDeleted: boolean = !!order.deleted_at;
         return {
             id: order.id,
-            name: order?.order_number,
+            order_number: order?.order_number,
+            status: getOrderStatusLabel(order.status),
+            payment_method: getPaymentMethodLabel(order.payment_method),
+            total: `₱${Number(order.total).toFixed(2)}`,
+            branch_id: order?.branch?.name,
             actions: (
                 <ActionButtons
                     toggleId={order.id}

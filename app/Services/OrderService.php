@@ -21,8 +21,8 @@ class OrderService
             });
         }
 
-        if ($request->filled('name')) {
-            $query->where('name', 'like', "%{$request->name}%");
+        if ($request->filled('order_number')) {
+            $query->where('order_number', 'like', "%{$request->order_number}%");
         }
 
         if ($request->filled('withDeleted') && $request->withDeleted == 'true') {
@@ -31,13 +31,18 @@ class OrderService
 
         $sortBy = $request->input('sortBy', 'id');
         $sortOrder = $request->filled('sortOrder') ? $request->sortOrder : 'desc';
-        $query->orderBy($sortBy, $sortOrder);
-
+        if ($sortBy === 'branch_id') {
+            $query->join('branches', 'orders.branch_id', '=', 'branches.id')
+                ->orderBy('branches.id', $sortOrder)
+                ->select('orders.*');
+        } else {
+            $query->orderBy($sortBy, $sortOrder);
+        }
 
 
         $perPage = $request->input('rowsPerPage', 10);
 
-        return $query->paginate($perPage);
+        return $query->with('branch')->paginate($perPage);
     }
 
     public function getOperatorOrder(Request $request)
