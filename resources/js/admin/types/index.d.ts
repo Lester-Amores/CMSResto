@@ -122,7 +122,7 @@ export interface Menu {
     deleted_at: string | null;
     created_at: string;
     updated_at: string;
-    meals:Meal[];
+    meals: Meal[];
 }
 
 export interface Meal {
@@ -167,6 +167,40 @@ export type IngredientMeal = {
     ingredient?: Ingredient | null;
     meal?: Meal | null;
 };
+
+export interface Order {
+    id: number;
+    order_number: string;
+    order_type: number;
+    discount_type?: number;
+    discount_id_number?: string | null;
+    discount_amount: number;
+    subtotal: number;
+    total: number;
+    tax_amount: number;
+    payment_method: number;
+    status: number;
+    notes?: string | null;
+    branch_id: number;
+    deleted_at?: string | null;
+    created_at: string;
+    updated_at: string;
+    branch: Branch;
+    meals: Meal[];
+}
+
+export interface OrderMeal {
+    id?: number;
+    order_id?: number;
+    meal_id: number;
+    quantity: number;
+    price?: string;
+    total?: string;
+    created_at?: string;
+    updated_at?: string;
+    deleted_at?: string | null;
+    meals?: Meal[];
+}
 
 
 export type PageProps = InertiaPageProps;

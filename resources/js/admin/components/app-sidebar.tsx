@@ -28,23 +28,28 @@ const mainNavItems: NavItem[] = [
         icon: Building2,
     },
     {
-        title: 'Menu',
+        title: 'Menus',
         href: '/admin/menus',
         icon: SquareMenuIcon,
     },
     {
-        title: 'Meal',
+        title: 'Meals',
         href: '/admin/meals',
         icon: UtensilsCrossedIcon,
     },
     {
-        title: 'Ingredient',
+        title: 'Ingredients',
         href: '/admin/ingredients',
         icon: BoxIcon,
     },
     {
         title: 'Unit',
         href: '/admin/units',
+        icon: Scale,
+    },
+    {
+        title: 'Order History',
+        href: '/admin/orders',
         icon: Scale,
     }
 ];

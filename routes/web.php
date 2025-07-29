@@ -6,6 +6,7 @@ use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\MealController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OperatorController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PublicPageController;
 use App\Http\Controllers\UnitController;
 use Illuminate\Support\Facades\Route;
@@ -70,6 +71,12 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/ingredients/multi-delete', [IngredientController::class, 'multiDelete'])->name('ingredients.multi-delete');
     Route::post('/ingredients/multi-restore', [IngredientController::class, 'multiRestore'])->name('ingredients.multi-restore');
     Route::post('/ingredients/restore', [IngredientController::class, 'restore'])->name('ingredients.restore');
+
+    Route::resource('/orders', OrderController::class)->except('update');
+    Route::post('/orders/{order}/update', [OrderController::class, 'update'])->name('orders.update');
+    Route::post('/orders/multi-delete', [OrderController::class, 'multiDelete'])->name('orders.multi-delete');
+    Route::post('/orders/multi-restore', [OrderController::class, 'multiRestore'])->name('orders.multi-restore');
+    Route::post('/orders/restore', [OrderController::class, 'restore'])->name('orders.restore');
 });
 
 

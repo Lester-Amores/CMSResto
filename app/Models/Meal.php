@@ -28,4 +28,11 @@ class Meal extends Model
         return $this->belongsToMany(Ingredient::class)
             ->withPivot('quantity');
     }
+
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class, 'order_meal')
+            ->withPivot(['quantity', 'price', 'total'])
+            ->withTimestamps();
+    }
 }

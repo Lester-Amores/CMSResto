@@ -186,3 +186,38 @@ export const fetchIngredients = async ({ page = 1, per_page = 10, withDeleted = 
         throw new Error('message.errorTryAgain');
     }
 };
+
+export const getOrder = async (id: number) => {
+    try {
+        const response = await http.get('admin/orders/' + id);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        if (isAxiosError(error)) {
+            const responseData = error.response?.data as ErrorResponse;
+            throw responseData?.message || 'message.error';
+        }
+        throw new Error('message.errorTryAgain');
+    }
+};
+
+export const fetchMeals = async ({ page = 1, per_page = 10, withDeleted = false, search = "" }) => {
+    try {
+        const queryParams = new URLSearchParams({
+            page: String(page),
+            per_page: String(per_page),
+            withDeleted: String(withDeleted),
+            search
+        }).toString();
+
+        const response = await http.get(`admin/meals?${queryParams}`);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        if (isAxiosError(error)) {
+            const responseData = error.response?.data as ErrorResponse;
+            throw responseData?.message || 'message.error';
+        }
+        throw new Error('message.errorTryAgain');
+    }
+};

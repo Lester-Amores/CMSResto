@@ -26,7 +26,8 @@ class DatabaseSeeder extends Seeder
             MenuSeeder::class,
             MealSeeder::class,
             IngredientSeeder::class,
-            UnitSeeder::class
+            UnitSeeder::class,
+            OrderSeeder::class
         ]);
     }
 }
