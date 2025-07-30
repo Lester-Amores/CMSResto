@@ -9,45 +9,40 @@ interface MenuListProps {
 
 export default function MenuList({ menus, onSelect, selectedMenuId }: MenuListProps) {
   return (
-    <div className="w-1/4 overflow-y-auto p-4 no-scrollbar bg-gray-100 dark:bg-black dark:border-r shadow-[4px_0_6px_-1px_rgba(0,0,0,0.1)]">
-      <h2 className="font-bold mb-4 text-center text-2xl">Menu List</h2>
-      <div className="space-y-3">
-        <div
-          className={`cursor-pointer h-8 rounded flex items-center justify-center font-semibold text-white transition ${selectedMenuId == null ? 'bg-red-700' : 'bg-gray-700 hover:bg-gray-700'
-            }`}
-          onClick={() => onSelect(null)}
-        >
-          SHOW ALL
-        </div>
+    <div className="flex gap-3 items-center overflow-x-auto no-scrollbar p-4">
+      {menus.map((menu) => {
+        const isSelected = menu.id === selectedMenuId;
 
-        {menus.map((menu) => {
-          const isSelected = menu.id === selectedMenuId;
+        const handleClick = () => {
+          if (isSelected) {
+            onSelect(null);
+          } else {
+            onSelect(menu);
+          }
+        };
 
-          return (
+        return (
+          <div
+            key={menu.id}
+            className={`w-full h-24 cursor-pointer relative min-w-[160px] rounded-lg overflow-hidden transition-transform transform hover:scale-105 shadow-md ${isSelected ? 'ring-3 ring-blue-500' : ''
+              }`}
+            onClick={handleClick}
+          >
             <div
-              key={menu.id}
-              className={`cursor-pointer relative h-28 rounded-lg overflow-hidden transition-transform transform hover:scale-105 shadow-md ${isSelected ? 'ring-2 ring-red-500' : ''
-                }`}
-              onClick={() => onSelect(menu)}
-            >
-              <div
-                className="absolute inset-0 bg-cover bg-center transition-transform"
-                style={{
-                  backgroundImage: `url(${getFullImageUrl(menu.img_src || '/placeholder.png')})`,
-                }}
-              />
-
-              <div className="absolute inset-0 bg-black/50 backdrop-brightness-75" />
-
-              <div className="relative z-10 flex items-center text-lg justify-center h-full hover:text-2xl">
-                <span className="text-white font-semibold text-center px-2 uppercase">
-                  {menu.name}
-                </span>
-              </div>
+              className="absolute inset-0 bg-cover bg-center"
+              style={{
+                backgroundImage: `url(${getFullImageUrl(menu.img_src || '/placeholder.png')})`,
+              }}
+            />
+            <div className="absolute inset-0 bg-black/50 backdrop-brightness-75" />
+            <div className="relative z-10 flex items-center justify-center h-full">
+              <span className="text-white font-semibold text-center px-2 uppercase text-sm">
+                {menu.name}
+              </span>
             </div>
-          );
-        })}
-      </div>
+          </div>
+        );
+      })}
     </div>
   );
 }

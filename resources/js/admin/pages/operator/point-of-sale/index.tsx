@@ -18,7 +18,10 @@ export default function OperatorPointOfSalePage({ menus }: POSProps) {
     const [cart, setCart] = useState<CartItem[]>([]);
 
     const breadcrumbs: BreadcrumbItem[] = [
-        { title: 'Point of Sale', href: '/operator/pos' },
+        {
+            title: 'Point of Sale',
+            href: '/operator/pos'
+        },
     ];
 
     const handleSelectMenu = (menu: Menu | null) => {
@@ -61,18 +64,32 @@ export default function OperatorPointOfSalePage({ menus }: POSProps) {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Point of Sale" />
             <div className="flex h-[calc(100vh-4rem)]">
-                <MenuList menus={menus} onSelect={handleSelectMenu} selectedMenuId={selectedMenu?.id} />
+                <div className="w-3/5 flex flex-col">
+                    <div className="w-full">
+                        <MenuList
+                            menus={menus}
+                            onSelect={handleSelectMenu}
+                            selectedMenuId={selectedMenu?.id}
+                        />
+                    </div>
                     <SelectedMeals
                         selectedMenu={selectedMenu}
                         menus={menus}
                         onAddToCart={handleAddToCart}
                     />
-                <Cart
-                    cartItems={cart}
-                    onUpdateQuantity={handleUpdateQuantity}
-                    onRemove={handleRemoveFromCart}
-                />
+                </div>
+
+                <div className="w-2/5 ml-4 border-l">
+                    <Cart
+                        cartItems={cart}
+                        onUpdateQuantity={handleUpdateQuantity}
+                        onRemove={handleRemoveFromCart}
+                    />
+                </div>
+
             </div>
+
         </AppLayout>
     );
+
 }
