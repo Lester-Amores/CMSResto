@@ -34,6 +34,7 @@ class OrderRequest extends FormRequest
             'status'           => 'required|integer|in:0,1,2,3',
             'notes'            => 'nullable|string|max:500',
             'branch_id'        => 'required|exists:branches,id',
+            'tax_amount'       => 'nullable|numeric|min:0',
             'meals'            => 'required|array|min:1',
             'meals.*.meal_id'  => 'required|exists:meals,id',
             'meals.*.quantity' => 'required|integer|min:1',

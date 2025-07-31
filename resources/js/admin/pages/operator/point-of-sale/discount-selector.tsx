@@ -5,7 +5,7 @@ import { Label } from "@/admin/components/ui/label";
 type DiscountType = 'none' | 'senior' | 'pwd' | 'student' | 'custom';
 
 interface DiscountSelectorProps {
-    discountType: string;
+    discountType?: number;
     setDiscountType: (type: DiscountType) => void;
     customDiscount: number;
     setCustomDiscount: (val: number) => void;
@@ -29,7 +29,7 @@ interface DiscountSelectorProps {
           <option value="custom">Custom</option>
         </select>
   
-        {(discountType === 'senior' || discountType === 'pwd') && (
+        {(discountType === 1 || discountType === 2) && (
           <div className="mt-2">
             <Input
               type="text"
@@ -41,7 +41,7 @@ interface DiscountSelectorProps {
           </div>
         )}
   
-        {discountType === 'custom' && (
+        {discountType === 3 && (
           <div className="mt-2">
             <Input
               type="number"

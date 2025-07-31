@@ -29,10 +29,10 @@ export default function AddOrder({ onSuccess }: AddOrderProps) {
 
         const formData = new FormData();
         Object.entries(data).forEach(([key, value]) => {
-    if (key !== 'meals' && value !== '' && value !== null && value !== undefined) {
-        formData.append(key, value);
-    }
-});
+            if (key !== 'meals' && value !== '' && value !== null && value !== undefined) {
+                formData.append(key, value);
+            }
+        });
 
 
         if (meals.length > 0) {

@@ -25,6 +25,8 @@ Route::get('/', [PublicPageController::class, 'home'])->name('home');
 Route::get('/about', [PublicPageController::class, 'about'])->name('about');
 Route::get('/services', [PublicPageController::class, 'services'])->name('services');
 Route::get('/contact', [PublicPageController::class, 'contact'])->name('contact');
+Route::post('/orders/store', [OrderController::class, 'store'])->name('orders.store');
+
 
 Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::get('dashboard', function () {
@@ -72,7 +74,7 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/ingredients/multi-restore', [IngredientController::class, 'multiRestore'])->name('ingredients.multi-restore');
     Route::post('/ingredients/restore', [IngredientController::class, 'restore'])->name('ingredients.restore');
 
-    Route::resource('/orders', OrderController::class)->except('update');
+    Route::resource('/orders', OrderController::class)->except('update', 'store');
     Route::post('/orders/{order}/update', [OrderController::class, 'update'])->name('orders.update');
     Route::post('/orders/multi-delete', [OrderController::class, 'multiDelete'])->name('orders.multi-delete');
     Route::post('/orders/multi-restore', [OrderController::class, 'multiRestore'])->name('orders.multi-restore');

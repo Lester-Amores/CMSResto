@@ -51,8 +51,11 @@ class OrderController extends Controller
     public function store(OrderRequest $request)
     {
         try {
-            $this->orderService->createOrder($request);
-            return redirect()->back()->with('success', 'Successfully created');
+            $order = $this->orderService->createOrder($request);
+            return redirect()->back()->with([
+                'success' => 'Successfully created',
+                'data'   => $order
+            ]);
         } catch (Exception $e) {
             \Log::info($e->getMessage());
             return redirect()->back()->with('error', 'Failed to create order');

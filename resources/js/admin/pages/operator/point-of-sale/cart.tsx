@@ -1,30 +1,33 @@
-import { useState, useEffect, useRef } from 'react';
-import type { Meal } from '@/admin/types';
+import { useEffect, useRef } from 'react';
+import type { FieldErrors, UseFormRegister, UseFormWatch, UseFormSetValue } from 'react-hook-form';
+import type { Meal, Order } from '@/admin/types';
 import { ShoppingCart } from 'lucide-react';
 import { CartItemRow } from './cart-item';
-import { DiscountSelector } from './discount-selector';
-import { PaymentMethodSelector } from './payment-method';
-import { CartSummary } from './cart-summary';
 import { Label } from '@/admin/components/ui/label';
-
+import { Input } from '@/admin/components/ui/input';
+import { CartSummary } from './cart-summary';
 
 type CartItem = Meal & { quantity: number };
 
-interface CartProps {
+interface CartFormProps {
   cartItems: CartItem[];
+  register: UseFormRegister<Order>;
+  watch: UseFormWatch<Order>;
+  setValue: UseFormSetValue<Order>;
+  errors: FieldErrors<Order>;
   onUpdateQuantity: (id: number, delta: number) => void;
   onRemove: (id: number) => void;
 }
 
-type DiscountType = 'none' | 'senior' | 'pwd' | 'student' | 'custom';
-
-export default function Cart({ cartItems, onUpdateQuantity, onRemove }: CartProps) {
-  const [orderType, setOrderType] = useState<'checkin' | 'checkout'>('checkin');
-  const [orderNotes, setOrderNotes] = useState('');
-  const [discountType, setDiscountType] = useState<DiscountType>('none');
-  const [customDiscount, setCustomDiscount] = useState<number>(0);
-  const [idNumber, setIdNumber] = useState('');
-  const [paymentMethod, setPaymentMethod] = useState<'cash' | 'card' | 'ewallet'>('cash');
+export default function CartForm({
+  cartItems,
+  register,
+  watch,
+  setValue,
+  errors,
+  onUpdateQuantity,
+  onRemove
+}: CartFormProps) {
   const listRef = useRef<HTMLUListElement>(null);
 
   useEffect(() => {
@@ -33,8 +36,10 @@ export default function Cart({ cartItems, onUpdateQuantity, onRemove }: CartProp
     }
   }, [cartItems.length]);
 
-  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const discountType = watch("discount_type");
+  const customDiscount = watch("discount_amount") || 0;
 
+  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const VAT_RATE = 0.12;
   const totalTax = cartItems.reduce((sum, item) => {
     const itemTax = (item.price - item.price / (1 + VAT_RATE)) * item.quantity;
@@ -43,105 +48,149 @@ export default function Cart({ cartItems, onUpdateQuantity, onRemove }: CartProp
 
   let discount = 0;
   switch (discountType) {
-    case 'senior':
-    case 'pwd':
+    case 1:
+    case 2:
       discount = subtotal * 0.2;
       break;
-    case 'student':
-      discount = subtotal * 0.1;
-      break;
-    case 'custom':
+    case 3:
+    default:
       discount = customDiscount;
-      break;
   }
+
+  useEffect(() => {
+    if (discountType === 0 || discountType === 3) {
+      setValue("discount_amount", 0);
+    }
+  }, [discountType, setValue]);
 
   const total = Math.max(subtotal - discount, 0);
 
+  useEffect(() => {
+    setValue("subtotal", subtotal);
+    setValue("discount_amount", discount);
+    setValue("tax_amount", totalTax);
+    setValue("total", total);
+  }, [subtotal, discount, totalTax, total, setValue]);
+
   return (
-    <div className="w-1/6 p-4 border flex flex-col justify-between">
-      <div className="flex flex-col">
-        <div className="flex items-center gap-2 mb-4">
-          <ShoppingCart />
-          <h2 className="font-bold text-lg">Cart</h2>
-        </div>
+    <>
+      <div className="flex items-center gap-2 mb-2">
+        <ShoppingCart className="w-5 h-5" />
+        <h2 className="font-bold text-base">Cart</h2>
+      </div>
 
-        <div className="mb-4 flex gap-4 text-sm">
-          <Label className="flex items-center gap-1">
-            <input
-              type="radio"
-              value="checkin"
-              checked={orderType === 'checkin'}
-              onChange={() => setOrderType('checkin')}
+      {cartItems.length === 0 ? (
+        <p className="text-xs text-gray-500 flex-1 border p-2 rounded">Cart is empty.</p>
+      ) : (
+        <ul
+          ref={listRef}
+          className="space-y-2 border p-2 rounded flex-1 overflow-y-auto"
+        >
+          {cartItems.map((item) => (
+            <CartItemRow
+              key={item.id}
+              id={item.id}
+              name={item.name}
+              price={item.price}
+              quantity={item.quantity}
+              onUpdateQuantity={onUpdateQuantity}
+              onRemove={onRemove}
             />
-            Check-in
-          </Label>
-          <Label className="flex items-center gap-1">
-            <input
-              type="radio"
-              value="checkout"
-              checked={orderType === 'checkout'}
-              onChange={() => setOrderType('checkout')}
-            />
-            Check-out
-          </Label>
-        </div>
+          ))}
+        </ul>
+      )}
 
-        {cartItems.length === 0 ? (
-          <p className="text-sm text-gray-500">Cart is empty.</p>
-        ) : (
-          <ul ref={listRef} className="space-y-3 border p-2 flex-grow overflow-y-auto max-h-46">
-            {cartItems.map((item) => (
-              <CartItemRow
-                key={item.id}
-                id={item.id}
-                name={item.name}
-                price={item.price}
-                quantity={item.quantity}
-                onUpdateQuantity={onUpdateQuantity}
-                onRemove={onRemove}
-              />
-            ))}
-          </ul>
-        )}
-
-        <div className="mt-3">
-          <Label className="text-xs">Order Notes:</Label>
-          <textarea
-            className="w-full border rounded p-1 text-sm"
-            rows={2}
-            value={orderNotes}
-            onChange={(e) => setOrderNotes(e.target.value)}
-            placeholder="Special instructions..."
-          />
-        </div>
-
-        <DiscountSelector
-          discountType={discountType}
-          setDiscountType={setDiscountType}
-          customDiscount={customDiscount}
-          setCustomDiscount={setCustomDiscount}
-          idNumber={idNumber}
-          setIdNumber={setIdNumber}
+      <div className="mb-4 mt-2">
+        <Label htmlFor="notes">Order Notes:</Label>
+        <Input
+          id="notes"
+          {...register("notes")}
+          type="text"
+          placeholder="Special instructions..."
         />
+        {errors.notes && <p className="text-red-600 text-sm mt-1">{errors.notes.message}</p>}
+      </div>
 
-        <PaymentMethodSelector paymentMethod={paymentMethod} setPaymentMethod={setPaymentMethod} />
+      <div className="mb-4">
+        <Label htmlFor="discount_type" required>Discount Type</Label>
+        <select
+          id="discount_type"
+          {...register("discount_type", { valueAsNumber: true })}
+          className="w-full border rounded p-2"
+        >
+          <option value="">Select discount</option>
+          <option value={0}>None</option>
+          <option value={1}>Senior</option>
+          <option value={2}>PWD</option>
+          <option value={3}>Promo</option>
+        </select>
+        {errors.discount_type && <p className="text-red-600 text-sm mt-1">{errors.discount_type.message}</p>}
+      </div>
+
+      {(discountType === 1 || discountType === 2) && (
+        <div className="mb-4">
+          <Label htmlFor="discount_id_number">Discount ID Number</Label>
+          <Input
+            id="discount_id_number"
+            {...register("discount_id_number", {
+              required: 'Discount ID Number is required for Senior/PWD'
+            })}
+            type="text"
+            placeholder="Required if discount is Senior or PWD"
+          />
+          {errors.discount_id_number && <p className="text-red-600 text-sm mt-1">{errors.discount_id_number.message}</p>}
+        </div>
+      )}
+
+      {(discountType === 3) && (
+        <div className="mb-4">
+          <Label htmlFor="discount_amount">Discount Amount</Label>
+          <Input
+            id="discount_amount"
+            {...register("discount_amount", { valueAsNumber: true })}
+            type="number"
+            step="0.01"
+            placeholder="0.00"
+          />
+          {errors.discount_amount && <p className="text-red-600 text-sm mt-1">{errors.discount_amount.message}</p>}
+        </div>
+      )}
+
+      <div className="mb-4">
+        <Label htmlFor="payment_method" required>Payment Method</Label>
+        <select
+          id="payment_method"
+          {...register("payment_method", { required: 'Payment method is required', valueAsNumber: true })}
+          className="w-full border rounded p-2"
+        >
+          <option value="">Select payment method</option>
+          <option value={0}>Cash</option>
+          <option value={1}>Card</option>
+          <option value={2}>E-Wallet</option>
+        </select>
+        {errors.payment_method && <p className="text-red-600 text-sm mt-1">{errors.payment_method.message}</p>}
+      </div>
+
+      <div className="mb-4">
+        <Label htmlFor="order_type" required>Order Type</Label>
+        <select
+          id="order_type"
+          {...register("order_type", { required: 'Order type is required', valueAsNumber: true })}
+          className="w-full border rounded p-2"
+        >
+          <option value="">Select type</option>
+          <option value={0}>Dine-in</option>
+          <option value={1}>Takeout</option>
+          <option value={2}>Delivery</option>
+          <option value={3}>Check-in</option>
+          <option value={4}>Check-out</option>
+        </select>
+        {errors.order_type && <p className="text-red-600 text-sm mt-1">{errors.order_type.message}</p>}
       </div>
 
       {cartItems.length > 0 && (
         <CartSummary subtotal={subtotal} totalTax={totalTax} discount={discount} total={total} />
       )}
-
-      <div>
-        <button
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold rounded p-2 "
-          onClick={() => {
-            console.log('Order confirmed, proceed to payment');
-          }}
-        >
-          Confirm Order
-        </button>
-      </div>
-
-    </div>
+    </>
   );
 }

@@ -74,7 +74,7 @@ class OrderService
     {
         $validated = $request->validated();
 
-        DB::transaction(function () use ($validated) {
+        return DB::transaction(function () use ($validated) {
             $orderData = collect($validated)->except('meals')->toArray();
             $order = Order::create($orderData);
             $order->update([
@@ -82,6 +82,7 @@ class OrderService
             ]);
 
             $this->attachMeals($order, $validated['meals']);
+            return $order->load('meals', 'branch');
         });
     }
 

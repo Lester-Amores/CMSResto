@@ -1,7 +1,7 @@
 import { Label } from "@/admin/components/ui/label";
 
 interface PaymentMethodSelectorProps {
-    paymentMethod: string;
+    paymentMethod: number;
     setPaymentMethod: (method: 'cash' | 'card' | 'ewallet') => void;
 }
 
@@ -14,9 +14,9 @@ export function PaymentMethodSelector({ paymentMethod, setPaymentMethod }: Payme
                 value={paymentMethod}
                 onChange={(e) => setPaymentMethod(e.target.value as any)}
             >
-                <option value="cash">Cash</option>
-                <option value="card">Card</option>
-                <option value="ewallet">E-Wallet</option>
+                <option value={0}>Cash</option>
+                <option value={1}>Card</option>
+                <option value={2}>E-Wallet</option>
             </select>
         </div>
     );
