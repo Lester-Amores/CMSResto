@@ -7,6 +7,8 @@ use App\Models\Order;
 use Exception;
 use App\Services\OrderService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 
@@ -57,7 +59,6 @@ class OrderController extends Controller
                 'data'   => $order
             ]);
         } catch (Exception $e) {
-            \Log::info($e->getMessage());
             return redirect()->back()->with('error', 'Failed to create order');
         }
     }
@@ -132,5 +133,49 @@ class OrderController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'restoration failed');
         }
+    }
+
+    public function getOrderByBranch(Request $request)
+    {
+        $user = Auth::user();
+        $branch_id = $user->operator->branch_id;
+
+        $orders = Order::where('branch_id', $branch_id)
+            ->whereIn('status', [0, 1, 2])
+            ->with('meals')
+            ->orderBy('id', 'asc')
+            ->get();
+
+        // $orders = Order::where('branch_id', $branch_id)
+        // ->whereIn('status', [0, 1])
+        // ->whereDate('created_at', Carbon::today()) // ✅ Only today's orders
+        // ->with('meals')
+        // ->orderBy('id', 'asc')
+        // ->get();
+
+
+        $data = [
+            'preparing' => $orders->where('status', 0)->values(),
+            'ready' => $orders->where('status', 1)->values(),
+            'completed' => $orders->where('status', 2)->values(),
+        ];
+
+        return $request->expectsJson()
+            ? response()->json($data)
+            : Inertia::render('operator/order/index', ['orders' => $data]);
+    }
+
+
+
+    public function updateStatus(Request $request, Order $order)
+    {
+        $request->validate([
+            'status' => 'required|in:0,1,2',
+        ]);
+
+        $order->status = $request->status;
+        $order->save();
+
+        return back()->with('success', 'Order status updated');
     }
 }

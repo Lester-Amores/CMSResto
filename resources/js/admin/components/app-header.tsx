@@ -25,6 +25,11 @@ const mainNavItems: NavItem[] = [
         href: '/operator/pos',
         icon: LayoutGrid,
     },
+    {
+        title: 'Orders',
+        href: '/operator/orders',
+        icon: LayoutGrid,
+    },
 ];
 
 const rightNavItems: NavItem[] = [

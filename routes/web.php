@@ -19,6 +19,8 @@ Route::prefix('operator')->middleware(['auth', 'role:operator'])->group(function
     })->name('operator.dashboard');
 
     Route::get('/pos', [MenuController::class, 'OperatorPosPage'])->name('operator.pos');
+    Route::get('/orders', [OrderController::class, 'getOrderByBranch'])->name('operator.orders');
+    Route::post('/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('operator.update-order-status');
 });
 
 Route::get('/', [PublicPageController::class, 'home'])->name('home');
