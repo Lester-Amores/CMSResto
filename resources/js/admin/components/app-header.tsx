@@ -10,7 +10,7 @@ import { useInitials } from '@/admin/hooks/use-initials';
 import { cn } from '@/admin/lib/utils';
 import { type BreadcrumbItem, type NavItem, type SharedData } from '@/admin/types';
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid, Menu } from 'lucide-react';
+import { BookOpen, ClipboardList, Folder, LayoutGrid, Menu, ShoppingCart } from 'lucide-react';
 import AppLogo from './app-logo';
 import AppLogoIcon from './app-logo-icon';
 
@@ -23,12 +23,12 @@ const mainNavItems: NavItem[] = [
     {
         title: 'Point of Sale',
         href: '/operator/pos',
-        icon: LayoutGrid,
+        icon: ShoppingCart,
     },
     {
         title: 'Orders',
         href: '/operator/orders',
-        icon: LayoutGrid,
+        icon: ClipboardList,
     },
 ];
 
