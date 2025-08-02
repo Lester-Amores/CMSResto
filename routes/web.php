@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BranchController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\MealController;
 use App\Http\Controllers\MenuController;
@@ -14,13 +15,12 @@ use Inertia\Inertia;
 
 
 Route::prefix('operator')->middleware(['auth', 'role:operator'])->group(function () {
-    Route::get('dashboard', function () {
-        return Inertia::render('operator/dashboard');
-    })->name('operator.dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'operator'])->name('operator.dashboard');
 
     Route::get('/pos', [MenuController::class, 'OperatorPosPage'])->name('operator.pos');
     Route::get('/orders', [OrderController::class, 'getOrderByBranch'])->name('operator.orders');
     Route::post('/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('operator.update-order-status');
+    Route::get('/sales-data', [DashboardController::class, 'operatorSalesData'])->name('operator.sales-data');
 });
 
 Route::get('/', [PublicPageController::class, 'home'])->name('home');

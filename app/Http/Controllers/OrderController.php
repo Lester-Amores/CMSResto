@@ -141,17 +141,11 @@ class OrderController extends Controller
         $branch_id = $user->operator->branch_id;
 
         $orders = Order::where('branch_id', $branch_id)
-            ->whereIn('status', [0, 1, 2])
-            ->with('meals')
-            ->orderBy('id', 'asc')
-            ->get();
-
-        // $orders = Order::where('branch_id', $branch_id)
-        // ->whereIn('status', [0, 1])
-        // ->whereDate('created_at', Carbon::today()) // ✅ Only today's orders
-        // ->with('meals')
-        // ->orderBy('id', 'asc')
-        // ->get();
+        ->whereIn('status', [0, 1])
+        ->whereDate('created_at', Carbon::today())
+        ->with('meals')
+        ->orderBy('id', 'asc')
+        ->get();
 
 
         $data = [
