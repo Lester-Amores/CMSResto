@@ -1,5 +1,5 @@
 <section class="min-h-screen py-12 bg-stone-300">
-    <div class="py-4">
+    <div class="mx-auto max-w-7xl">
         <div class="flex items-center justify-center">
             <div class="flex items-center max-w-xl">
                 <hr class="w-12 sm:w-18 border-black">
@@ -9,39 +9,81 @@
         </div>
         <h2 class="text-5xl font-bold text-gray-900 mb-6 text-center">OUR MENU</h2>
 
-        <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            @foreach ($menus as $menu)
-                <div class="relative rounded-lg shadow-lg overflow-hidden cursor-pointer group h-64 text-white text-center m-4"
-                    onclick="showMenuModal({{ json_encode($menu) }})">
+        <div class="relative w-full">
 
-                    <div class="absolute inset-0 bg-center bg-cover transition-transform duration-500 scale-100 group-hover:scale-110"
-                        style="background-image: url('{{ getFullImageUrl($menu->img_src) }}');">
+            <div class="overflow-x-auto px-4 sm:px-12">
+                <div
+                    id="menuTabs"
+                    class="flex lg:justify-center space-x-6 scroll-smooth whitespace-nowrap py-4">
+                    <div
+                        onclick="selectMenu('all')"
+                        class="menu-tab cursor-pointer px-6 py-3 rounded-lg font-bold text-xl hover:bg-stone-300 min-w-max">
+                        All
                     </div>
-
-                    <div class="absolute inset-0 bg-black/50 transition-opacity duration-300 group-hover:bg-black/60">
+                    @foreach ($data['menus'] as $menu)
+                    <div
+                        onclick="selectMenu({{ $menu->id }})"
+                        class="menu-tab cursor-pointer px-6 py-3 rounded-lg font-medium text-xl hover:bg-stone-300 min-w-max">
+                        {{ $menu->name }}
                     </div>
-
-                    <div class="relative z-10 flex items-center justify-center h-full">
-                        <h3 class="text-4xl font-bold transition-transform duration-300 group-hover:scale-105">
-                            {{ $menu->name }}
-                        </h3>
-                    </div>
+                    @endforeach
                 </div>
-            @endforeach
+            </div>
         </div>
-    </div>
 
-    <div id="menuModal" class="fixed inset-0 bg-black/80 hidden items-center justify-center z-50">
-        <div id="menuModalContent"
-            class="bg-stone-300 rounded shadow w-full max-w-5xl p-8 relative overflow-y-auto max-h-[80vh]">
-            <button class="absolute top-0 right-2 text-red-500 hover:text-red-800 text-4xl"
-                onclick="closeMenuModal()">&times;</button>
-            <h2 id="modalMenuName" class="text-3xl font-semibold text-center uppercase"></h2>
-            <h2 id="modalMenuDescription" class="text-1xl text-center mb-8"></h2>
-
-            <div id="modalMeals" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
-            <p id="noMealsText" class="text-center text-gray-500 hidden">No meals available.</p>
+        <div class="relative max-w-7xl mx-auto  border-t border-b border-yellow-700">
+            <div class=" overflow-y-auto no-scrollbar h-[300px] md:h-[500px] my-4">
+                <div id="mealsGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 p-4">
+                    @foreach ($data['menus'] as $menu)
+                    @foreach ($menu->meals as $meal)
+                    <div class="meal-card" data-menu-id="{{ $menu->id }}">
+                        <div class="relative rounded-lg shadow-lg overflow-hidden h-48 w-full text-white text-center bg-cover bg-center will-change-transform"
+                            style="background-image: url('{{ getFullImageUrl($meal->img_src) }}'); transform: translateZ(0);">
+                            <div class="absolute inset-0 bg-black/50"></div>
+                            <div class="relative z-10 flex items-center justify-center h-full">
+                                <h3 class="text-xl font-bold">{{ $meal->name }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                    @endforeach
+                </div>
+            </div>
         </div>
-    </div>
 
+    </div>
 </section>
+
+
+<script>
+    const tabs = document.querySelectorAll('.menu-tab');
+    const meals = document.querySelectorAll('.meal-card');
+    const scrollContainer = document.getElementById('menuTabs');
+
+    function selectMenu(menuId) {
+        tabs.forEach(tab => {
+            tab.classList.remove('text-red-700');
+        });
+
+        const activeTab = [...tabs].find(tab => {
+            return (menuId === 'all' && tab.textContent.trim() === 'All') || tab.textContent.trim() === getMenuName(menuId);
+        });
+
+        if (activeTab) {
+            activeTab.classList.add('text-red-700');
+        }
+
+        meals.forEach(meal => {
+            const show = menuId === 'all' || +meal.dataset.menuId === +menuId;
+            meal.style.display = show ? 'block' : 'none';
+        });
+    }
+
+    function getMenuName(menuId) {
+        const menus = @json($data['menus']);
+        const menu = menus.find(m => m.id === menuId);
+        return menu ? menu.name : '';
+    }
+
+    selectMenu('all');
+</script>

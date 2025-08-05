@@ -9,12 +9,20 @@ class PublicPageController extends Controller
 {
     public function home()
     {
+        $menus = Menu::with('meals')->get();
+        $allMeals = $menus->flatMap->meals;
+
         return view('public.home.home', [
             'title' => 'Home',
             'description' => 'Welcome to MySite, your go-to for XYZ services.',
-            'menus' => Menu::with('meals')->get(),
+            'data' => [
+                'menus' => $menus,
+                'meals' => $allMeals,
+            ],
         ]);
     }
+
+
 
     public function about()
     {
