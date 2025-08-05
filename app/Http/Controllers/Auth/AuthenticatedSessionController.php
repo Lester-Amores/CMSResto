@@ -21,7 +21,6 @@ class AuthenticatedSessionController extends Controller
     {
         if (Auth::check()) {
             $user = Auth::user();
-            \Log::info('Role check', ['role' => $user->role]);
 
             $redirectPath = match ($user->role) {
                 User::ROLE_ADMIN => route('admin.dashboard'),
