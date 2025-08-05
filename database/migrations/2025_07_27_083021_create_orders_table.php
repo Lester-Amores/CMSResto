@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('order_number')->unique()->nullable();
-            $table->unsignedTinyInteger('order_type')->comment('0 = dine-in, 1 = takeout, 2 = delivery, 3 = check-in, 4 = checkout');
+            $table->unsignedTinyInteger('order_type')->comment('0 = dine-in, 1 = takeout, 2 = delivery');
             $table->unsignedTinyInteger('discount_type')->nullable()->comment('0 = none, 1 = senior, 2 = PWD, 3 = promo');
             $table->string('discount_id_number')->nullable();
             $table->decimal('discount_amount', 10, 2)->default(0);

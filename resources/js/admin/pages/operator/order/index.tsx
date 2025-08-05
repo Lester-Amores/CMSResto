@@ -71,7 +71,7 @@ export default function OrdersPage({ orders }: Props) {
                 />
 
                 <div className="flex h-3/4 p-4">
-                    <div className="flex flex-1 flex-col p-4 shadow border rounded-xl bg-white overflow-x-auto">
+                    <div className="flex flex-1 flex-col p-4 shadow border rounded-xl overflow-x-auto">
                         {displayedOrders.length > 0 ? (
                             <div className="flex gap-4">
                                 {displayedOrders.map((order) => (
@@ -83,7 +83,7 @@ export default function OrdersPage({ orders }: Props) {
                                 ))}
                             </div>
                         ) : (
-                            <div className="flex flex-1 items-center justify-center text-gray-500">
+                            <div className="flex flex-1 items-center justify-center">
                                 No {activeTab} orders.
                             </div>
                         )}

@@ -141,7 +141,7 @@ class OrderController extends Controller
         $branch_id = $user->operator->branch_id;
 
         $orders = Order::where('branch_id', $branch_id)
-        ->whereIn('status', [0, 1])
+        ->whereIn('status', [0, 1, 2])
         ->whereDate('created_at', Carbon::today())
         ->with('meals')
         ->orderBy('id', 'asc')
@@ -149,9 +149,9 @@ class OrderController extends Controller
 
 
         $data = [
-            'preparing' => $orders->where('status', 0)->values(),
-            'ready' => $orders->where('status', 1)->values(),
-            'completed' => $orders->where('status', 2)->values(),
+            'preparing' => $orders->where('status', Order::STATUS_PREPARING)->values(),
+            'ready' => $orders->where('status', Order::STATUS_READY)->values(),
+            'completed' => $orders->where('status', Order::STATUS_COMPLETED)->values(),
         ];
 
         return $request->expectsJson()

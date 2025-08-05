@@ -28,8 +28,6 @@ class Order extends Model
     const TYPE_DINE_IN   = 0;
     const TYPE_TAKEOUT   = 1;
     const TYPE_DELIVERY  = 2;
-    const TYPE_CHECK_IN  = 3;
-    const TYPE_CHECK_OUT = 4;
 
     const DISCOUNT_NONE   = 0;
     const DISCOUNT_SENIOR = 1;

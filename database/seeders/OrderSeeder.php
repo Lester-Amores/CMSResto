@@ -40,7 +40,7 @@ class OrderSeeder extends Seeder
 
 
                     $order = Order::create([
-                        'order_type' => rand(0, 4),
+                        'order_type' => rand(0, 2),
                         'discount_type' => rand(0, 3),
                         'discount_id_number' => null,
                         'discount_amount' => rand(0, 1) ? rand(5, 50) : 0,

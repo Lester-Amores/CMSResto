@@ -12,7 +12,7 @@ export const KitchenCard = ({ order, onStatusChange }: KitchenCardProps) => {
     const isReady = order.status === 1;
 
     return (
-        <div className="min-w-[240px] bg-white border rounded-lg shadow-sm p-4 flex flex-col">
+        <div className="min-w-[240px] border rounded-lg shadow-sm p-4 flex flex-col">
             <div className="flex justify-between items-center border-b pb-2 mb-2">
                 <div className="flex flex-col">
                     <h3 className="text-lg font-bold">#{order.order_number}</h3>
@@ -27,10 +27,10 @@ export const KitchenCard = ({ order, onStatusChange }: KitchenCardProps) => {
             <div className="flex flex-col gap-1 flex-1">
                 {order.meals.map((meal: any, idx: number) => (
                     <div key={idx} className="flex justify-between items-center">
-                        <span className="text-sm font-medium text-gray-800">
+                        <span className="text-sm font-medium ">
                             {meal.name}
                         </span>
-                        <span className="text-base font-bold text-gray-900">x{meal.pivot.quantity}</span>
+                        <span className="text-base font-bold ">x{meal.pivot.quantity}</span>
                     </div>
                 ))}
             </div>

@@ -15,38 +15,38 @@ export const OrderStatusCards = ({ activeTab, onTabChange, counts }: Props) => {
         <div className="h-1/6 flex flex-row p-4 gap-4 max-h-26">
             <button
                 onClick={() => onTabChange('pending')}
-                className={`flex flex-1 bg-yellow-50 border rounded-xl shadow p-4 items-center justify-between transition 
-                  ${activeTab === 'pending' ? 'border-yellow-500 ring-2 ring-yellow-300' : 'border-yellow-200'}`}
+                className={`flex flex-1 bg-yellow-50 dark:bg-yellow-900 border rounded-xl shadow p-4 items-center justify-between transition 
+          ${activeTab === 'pending' ? 'border-yellow-500 ring-2 ring-yellow-300 dark:border-yellow-300 dark:ring-yellow-600' : 'border-yellow-200 dark:border-yellow-800'}`}
             >
                 <div className="flex flex-col text-left">
-                    <span className="text-sm font-medium text-yellow-700">Pending Orders</span>
-                    <span className="text-3xl font-bold text-yellow-800 leading-tight">{counts.pending}</span>
+                    <span className="text-sm font-medium text-yellow-700 dark:text-yellow-200">Pending Orders</span>
+                    <span className="text-3xl font-bold text-yellow-800 dark:text-yellow-100 leading-tight">{counts.pending}</span>
                 </div>
-                <Clock className="text-yellow-600 w-14 h-14 opacity-80" />
+                <Clock className="text-yellow-600 dark:text-yellow-100 w-14 h-14 opacity-80" />
             </button>
 
             <button
                 onClick={() => onTabChange('ready')}
-                className={`flex flex-1 bg-green-100 border rounded-xl shadow p-4 items-center justify-between transition 
-                  ${activeTab === 'ready' ? 'border-green-500 ring-2 ring-green-300' : 'border-green-300'}`}
+                className={`flex flex-1 bg-green-100 dark:bg-green-900 border rounded-xl shadow p-4 items-center justify-between transition 
+          ${activeTab === 'ready' ? 'border-green-500 ring-2 ring-green-300 dark:border-green-300 dark:ring-green-600' : 'border-green-300 dark:border-green-800'}`}
             >
                 <div className="flex flex-col text-left">
-                    <span className="text-sm font-medium text-green-700">Ready Orders</span>
-                    <span className="text-3xl font-bold text-green-900 leading-tight">{counts.ready}</span>
+                    <span className="text-sm font-medium text-green-700 dark:text-green-200">Ready Orders</span>
+                    <span className="text-3xl font-bold text-green-900 dark:text-green-100 leading-tight">{counts.ready}</span>
                 </div>
-                <Utensils className="text-green-600 w-14 h-14 opacity-80" />
+                <Utensils className="text-green-600 dark:text-green-100 w-14 h-14 opacity-80" />
             </button>
 
             <button
                 onClick={() => onTabChange('completed')}
-                className={`flex flex-1 bg-blue-100 border rounded-xl shadow p-4 items-center justify-between transition 
-                  ${activeTab === 'completed' ? 'border-blue-500 ring-2 ring-blue-300' : 'border-blue-300'}`}
+                className={`flex flex-1 bg-blue-100 dark:bg-blue-900 border rounded-xl shadow p-4 items-center justify-between transition 
+          ${activeTab === 'completed' ? 'border-blue-500 ring-2 ring-blue-300 dark:border-blue-300 dark:ring-blue-600' : 'border-blue-300 dark:border-blue-800'}`}
             >
                 <div className="flex flex-col text-left">
-                    <span className="text-sm font-medium text-blue-700">Completed Orders</span>
-                    <span className="text-3xl font-bold text-blue-900 leading-tight">{counts.completed}</span>
+                    <span className="text-sm font-medium text-blue-700 dark:text-blue-200">Completed Orders</span>
+                    <span className="text-3xl font-bold text-blue-900 dark:text-blue-100 leading-tight">{counts.completed}</span>
                 </div>
-                <CheckCircle className="text-blue-600 w-14 h-14 opacity-80" />
+                <CheckCircle className="text-blue-600 dark:text-blue-100 w-14 h-14 opacity-80" />
             </button>
         </div>
     );
