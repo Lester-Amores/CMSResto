@@ -1,4 +1,5 @@
 import { Button } from "@/admin/components/ui/button";
+import { getOrderTypeLabel } from "@/admin/lib/helpers";
 import type { Order } from "@/admin/types";
 
 interface KitchenCardProps {
@@ -13,9 +14,13 @@ export const KitchenCard = ({ order, onStatusChange }: KitchenCardProps) => {
     return (
         <div className="min-w-[240px] bg-white border rounded-lg shadow-sm p-4 flex flex-col">
             <div className="flex justify-between items-center border-b pb-2 mb-2">
-                <h3 className="text-lg font-bold text-gray-900">#{order.order_number}</h3>
-                <span className="text-xs text-gray-500">
+                <div className="flex flex-col">
+                    <h3 className="text-lg font-bold">#{order.order_number}</h3>
+                    <span className="text-xs">{getOrderTypeLabel(order.order_type)}</span>
+                </div>
+                <span className="text-xs text-gray-500 dark:text-white">
                     {new Date(order.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+
                 </span>
             </div>
 
@@ -36,7 +41,6 @@ export const KitchenCard = ({ order, onStatusChange }: KitchenCardProps) => {
                 </div>
             )}
 
-            {/* ✅ Status Buttons */}
             <div className="flex gap-2 mt-3">
                 {isPending && (
                     <>

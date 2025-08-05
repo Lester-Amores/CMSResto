@@ -182,8 +182,6 @@ export default function CartForm({
           <option value={0}>Dine-in</option>
           <option value={1}>Takeout</option>
           <option value={2}>Delivery</option>
-          <option value={3}>Check-in</option>
-          <option value={4}>Check-out</option>
         </select>
         {errors.order_type && <p className="text-red-600 text-sm mt-1">{errors.order_type.message}</p>}
       </div>

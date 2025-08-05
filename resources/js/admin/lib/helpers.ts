@@ -16,8 +16,6 @@ export function getOrderTypeLabel(type: number | null | undefined): string {
     0: "Dine-in",
     1: "Takeout",
     2: "Delivery",
-    3: "Check-in",
-    4: "Check-out",
   };
   return labels[type] ?? "Unknown";
 }
