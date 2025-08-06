@@ -38,6 +38,10 @@ export default function ViewIngredient({ ingredientId }: ViewIngredientProps) {
                                 <h3 className="font-semibold">Unit Cost</h3>
                                 <p>{data ? data.unit_cost : `Not available`}</p>
                             </div>
+                            <div>
+                                <h3 className="font-semibold">Branch</h3>
+                                <p>{data ? data.branch.name : `Not available`}</p>
+                            </div>
 
                         </div>
 

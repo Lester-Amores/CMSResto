@@ -208,8 +208,11 @@ export default function IngredientPage({ ingredients, current_page, total_pages,
         { header: 'Unit', key: 'unit_id', sortTable: true },
         { header: 'Quantity', key: 'quantity', sortTable: true },
         { header: 'Cost', key: 'unit_cost', sortTable: true },
+        { header: 'Branch', key: 'branch_id', sortTable: true },
         { header: 'Actions', key: 'actions', sortTable: false },
     ];
+
+    console.log(ingredients)
 
     const data = ingredients?.map(ingredient => {
         const isDeleted: boolean = !!ingredient.deleted_at;
@@ -219,6 +222,7 @@ export default function IngredientPage({ ingredients, current_page, total_pages,
             unit_id: ingredient?.unit?.name,
             quantity: ingredient?.quantity,
             unit_cost: ingredient?.unit_cost,
+            branch_id: ingredient?.branch?.name,
             actions: (
                 <ActionButtons
                     toggleId={ingredient.id}

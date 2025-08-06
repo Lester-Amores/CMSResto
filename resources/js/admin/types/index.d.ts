@@ -107,7 +107,7 @@ export interface Branch {
     name: string;
     address: string;
     image: number;
-    operator_id: string;
+    operator_id: number;
     operator?: Operator;
     deleted_at: string | null;
     created_at: string;
@@ -151,13 +151,15 @@ export interface Unit {
 export interface Ingredient {
     id: number;
     name: string;
-    unit_id: string;
+    unit_id: number;
+    branch_id: number;
     unit_cost: number;
     quantity: number;
-    unit: Unit;
     deleted_at: string | null;
     created_at: string;
     updated_at: string;
+    unit: Unit;
+    branch: Branch;
 }
 
 export type IngredientMeal = {
@@ -173,7 +175,7 @@ export interface Order {
     order_number: string;
     order_type: number;
     discount_type?: number;
-    discount_id_number?: string | null;
+    discount_id_number?: number | null;
     discount_amount: number;
     subtotal: number;
     total: number;

@@ -8,6 +8,7 @@ import { handleFlashMessages, showErrors } from '@/admin/lib/utils';
 import { useQuery } from '@tanstack/react-query';
 import { getIngredient } from '@/admin/services/services';
 import UnitPicker from '@/admin/components/picker/unit-picker';
+import BranchPicker from '@/admin/components/picker/branch-picker';
 
 interface EditIngredientProps {
     onSuccess: () => void;
@@ -33,6 +34,11 @@ export default function EditIngredient({ onSuccess, ingredientId }: EditIngredie
 
         if (!data.unit_id) {
             setError("unit_id", { message: "This field is required." });
+            return;
+        };
+
+        if (!data.branch_id) {
+            setError("branch_id", { message: "This field is required." });
             return;
         };
 
@@ -70,6 +76,8 @@ export default function EditIngredient({ onSuccess, ingredientId }: EditIngredie
                 <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col h-full">
                     <IngredientForm register={register} errors={errors} />
                     <UnitPicker initialUnit={data?.unit} setValue={setValue} errors={errors} clearErrors={clearErrors} required />
+                    <BranchPicker initialBranch={data?.branch} setValue={setValue} errors={errors} clearErrors={clearErrors} required />
+
                     <div className="flex justify-end">
                         <Button type="submit">
                             Submit

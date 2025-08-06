@@ -33,6 +33,6 @@ class IngredientService
 
         $perPage = min($request->input('per_page', 10), 100);
 
-        return $query->with('unit')->paginate($perPage);
+        return $query->with(['unit', 'branch'])->paginate($perPage);
     }
 }

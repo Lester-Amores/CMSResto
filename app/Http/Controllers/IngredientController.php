@@ -48,7 +48,7 @@ class IngredientController extends Controller
 
     public function show(Ingredient $ingredient)
     {
-        $ingredient->load('unit');
+        $ingredient->load(['unit' , 'branch']);
         return response()->json($ingredient);
     }
 

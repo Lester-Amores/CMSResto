@@ -28,4 +28,9 @@ class Ingredient extends Model
         return $this->belongsToMany(Meal::class)
             ->withPivot('quantity');
     }
+
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class);
+    }
 }
