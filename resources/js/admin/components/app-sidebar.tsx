@@ -3,7 +3,7 @@ import { NavUser } from '@/admin/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/admin/components/ui/sidebar';
 import { type NavItem } from '@/admin/types';
 import { Link } from '@inertiajs/react';
-import { BoxIcon, Building2, LayoutGrid, Scale, SquareMenuIcon, User, Users, UtensilsCrossedIcon } from 'lucide-react';
+import { BoxIcon, Building2, History, LayoutGrid, Scale, SquareMenuIcon, User, Users, UtensilsCrossedIcon } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
@@ -50,7 +50,7 @@ const mainNavItems: NavItem[] = [
     {
         title: 'Order History',
         href: '/admin/orders',
-        icon: Scale,
+        icon: History,
     }
 ];
 
