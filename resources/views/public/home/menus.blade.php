@@ -29,7 +29,6 @@
         <h2 class="text-5xl font-bold text-gray-900 mb-6 text-center">OUR MENU</h2>
 
         <div class="relative w-full">
-
             <div class="overflow-x-auto px-4 sm:px-12">
                 <div
                     id="menuTabs"
@@ -71,11 +70,12 @@
 
                     <div id="mealsGrid"
                         class="mx-auto max-w-7xl flex space-x-4 px-4 overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar py-6 bg-stone-300">
-
                         @foreach ($data['menus'] as $menu)
                         @foreach ($menu->meals as $meal)
                         <div
-                            class="meal-card flex-shrink-0 w-64 snap-start bg-white/90 rounded-xl shadow-lg overflow-hidden ring-1 ring-stone-400">
+                            class="meal-card flex-shrink-0 w-64 snap-start bg-white/90 rounded-xl shadow-lg overflow-hidden ring-1 ring-stone-400"
+                            data-menu-id="{{ $menu->id }}">
+
                             <div class="h-40 bg-cover bg-center"
                                 style="background-image: url('{{ getFullImageUrl($meal->img_src) }}');">
                             </div>
