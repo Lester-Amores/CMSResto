@@ -1,5 +1,5 @@
 <nav class="fixed top-0 left-0 w-full z-50 text-[#AC9746] shadow bg-[#1c1c1c]">
-    <div class="max-w-7xl mx-auto flex justify-between items-center h-18 px-6">
+    <div class="px-12 mx-auto flex justify-between items-center h-18 px-6">
         <a href="{{ route('home') }}" class="flex items-center h-full select-none">
             <img src="{{ asset('images/app-logo.png') }}" alt="App Logo" class="h-12 w-auto">
             <h1 class="ml-2 text-xl font-semibold select-none">Coeur Véritable</h1>
