@@ -31,9 +31,9 @@ Route::post('/orders/store', [OrderController::class, 'store'])->name('orders.st
 
 
 Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('dashboard', function () {
-        return Inertia::render('dashboard');
-    })->name('admin.dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'admin'])->name('admin.dashboard');
+    Route::get('/sales-data', [DashboardController::class, 'adminSalesData'])->name('admin.sales-data');
+
     Route::resource('/admins', AdminController::class)->except('update');
     Route::post('/admins/{admin}/update', [AdminController::class, 'update'])->name('admins.update');
     Route::post('/admins/multi-delete', [AdminController::class, 'multiDelete'])->name('admins.multi-delete');

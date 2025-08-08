@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Services\AdminDashBoardService;
 use App\Services\OperatorDashBoardService;
 use Inertia\Inertia;
 
@@ -11,27 +12,31 @@ class DashboardController extends Controller
 {
 
     protected OperatorDashBoardService $operatorDashBoardService;
+    protected AdminDashboardService $adminDashBoardService;
 
-    public function __construct(OperatorDashBoardService $operatorDashBoardService)
+
+    public function __construct(OperatorDashBoardService $operatorDashBoardService, AdminDashBoardService $adminDashBoardService )
     {
         $this->operatorDashBoardService = $operatorDashBoardService;
+        $this->adminDashBoardService = $adminDashBoardService;
+
     }
 
-    public function admin()
+    public function admin(Request $request)
     {
-        $todaySales = Order::whereDate('created_at', today())->sum('total');
+        $data = $this->adminDashBoardService->getAdminDashboard();
 
-        $todayCompletedOrders = Order::whereDate('created_at', today())
-            ->where('status', 'completed')
-            ->count();
+        return $request->expectsJson()
+            ? response()->json($data)
+            : Inertia::render('admin/dashboard/index', ['data' => $data]);
+    }
 
-        $monthlySales = Order::whereMonth('created_at', now()->month)->sum('total');
+    public function adminSalesData(Request $request)
+    {
 
-        return inertia('Admin/Dashboard', [
-            'todaySales' => $todaySales,
-            'todayCompletedOrders' => $todayCompletedOrders,
-            'monthlySales' => $monthlySales,
-        ]);
+        $sales = $this->adminDashBoardService->getAdminSalesData($request);
+
+        return response()->json($sales);
     }
 
     public function operator(Request $request)

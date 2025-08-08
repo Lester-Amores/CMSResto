@@ -6,9 +6,9 @@ interface TopMeal {
 }
 
 export function TopMealsList({ meals }: { meals: TopMeal[] }) {
-  return meals.length > 0 ? (
+  return meals?.length > 0 ? (
     <div className="space-y-3">
-      {meals.map((meal, index) => (
+      {meals?.map((meal, index) => (
         <div key={index} className="flex items-center justify-between p-2 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 transition">
           <div className="flex items-center gap-2">
             <Award className="w-5 h-5 text-yellow-500" />

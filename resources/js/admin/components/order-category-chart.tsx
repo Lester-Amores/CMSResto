@@ -6,7 +6,7 @@ interface OrderTypeStat {
 }
 
 export function OrderCategoryChart({ orderTypes }: { orderTypes: OrderTypeStat[] }) {
-  return orderTypes.length > 0 ? (
+  return orderTypes?.length > 0 ? (
     <div className="h-[200px]">
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={orderTypes} margin={{ top: 10, right: 20, left: 0, bottom: 10 }}>
@@ -15,7 +15,7 @@ export function OrderCategoryChart({ orderTypes }: { orderTypes: OrderTypeStat[]
           <YAxis tick={{ fontSize: 12 }} />
           <Tooltip contentStyle={{ fontSize: '14px', borderRadius: '8px' }} />
           <Bar dataKey="total" radius={[4, 4, 0, 0]} barSize={35}>
-            {orderTypes.map((_, index) => (
+            {orderTypes?.map((_, index) => (
               <Cell
                 key={index}
                 fill={

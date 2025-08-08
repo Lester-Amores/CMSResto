@@ -244,3 +244,26 @@ export const fetchOperatorSalesData = async ({
         throw new Error("message.errorTryAgain");
     }
 };
+
+
+export const fetchAdminSalesData = async ({
+    range = "month",
+    date = new Date().toISOString().split("T")[0],
+}: { range?: "year" | "month" | "week" | "day"; date?: string }) => {
+    try {
+        const queryParams = new URLSearchParams({
+            range,
+            date,
+        }).toString();
+
+        const response = await http.get(`/admin/sales-data?${queryParams}`);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        if (isAxiosError(error)) {
+            const responseData = error.response?.data as ErrorResponse;
+            throw responseData?.message || "message.error";
+        }
+        throw new Error("message.errorTryAgain");
+    }
+};
