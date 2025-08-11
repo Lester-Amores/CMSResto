@@ -2,5 +2,5 @@
 
 @section('content')
     @include('public.home.welcome')
-    @include('public.home.menus')
+    @include('public..partials.menu-section', ['data' => $data])
 @endsection

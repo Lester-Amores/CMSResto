@@ -1,26 +1,7 @@
 <section class="min-h-screen bg-stone-300">
     <div class="mx-auto">
-        <div
-            class="relative bg-fixed bg-cover bg-center bg-no-repeat py-16 mb-8"
-            style="background-image: url('/images/menu-hero-images.jpg');">
-            <div class="absolute inset-0 bg-black/50 z-0"></div>
-            <div class="relative z-10 px-4 sm:px-6 lg:px-8 py-10 mx-auto max-w-7xl rounded-md text-center">
-                <p class="text-base sm:text-lg text-gray-500 font-medium uppercase tracking-wide mb-2">
-                    Elevate Your Experience
-                </p>
-                <h1 class="text-3xl sm:text-5xl font-bold text-white mb-6">
-                    A PLACE TO GATHER, SAVOR, AND CELEBRATE
-                </h1>
-                <p class="text-lg sm:text-xl text-white/90 leading-relaxed max-w-7xl mx-auto">
-                    Experience a perfect blend of tradition and taste. Our steakhouse combines timeless elegance with modern flair — featuring a curated selection of prime cuts, cozy ambiance, and impeccable service that brings a slice of luxury to your table.
-                </p>
-            </div>
-        </div>
-
-
-
         <div class="flex items-center justify-center">
-            <div class="flex items-center max-w-xl">
+            <div class="flex items-center max-w-xl mt-12">
                 <hr class="w-12 sm:w-18 border-black">
                 <span class="mx-4 text-md font-bold text-gray-900">DISCOVER</span>
                 <hr class="w-12 sm:w-18 border-black">
@@ -92,6 +73,23 @@
 
                 </div>
 
+            </div>
+        </div>
+
+        <div
+            class="relative bg-fixed bg-cover bg-center bg-no-repeat py-16 mt-8"
+            style="background-image: url('/images/menu-hero-images.jpg');">
+            <div class="absolute inset-0 bg-black/50 z-0"></div>
+            <div class="relative z-10 px-4 sm:px-6 lg:px-8 py-10 mx-auto max-w-7xl rounded-md text-center">
+                <p class="text-base sm:text-lg text-gray-500 font-medium uppercase tracking-wide mb-2">
+                    Elevate Your Experience
+                </p>
+                <h1 class="text-3xl sm:text-5xl font-bold text-white mb-6">
+                    A PLACE TO GATHER, SAVOR, AND CELEBRATE
+                </h1>
+                <p class="text-lg sm:text-xl text-white/90 leading-relaxed max-w-7xl mx-auto">
+                    Experience a perfect blend of tradition and taste. Our steakhouse combines timeless elegance with modern flair — featuring a curated selection of prime cuts, cozy ambiance, and impeccable service that brings a slice of luxury to your table.
+                </p>
             </div>
         </div>
 

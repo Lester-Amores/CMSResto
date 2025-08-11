@@ -19,7 +19,7 @@
             @foreach ([
                 'home' => 'Home',
                 'about' => 'About',
-                'services' => 'Services',
+                'menu' => 'Menu',
                 'contact' => 'Contact',
             ] as $route => $label)
                 <li>
@@ -37,7 +37,7 @@
     @foreach ([
         'home' => 'Home',
         'about' => 'About',
-        'services' => 'Services',
+        'menu' => 'Menu',
         'contact' => 'Contact',
     ] as $route => $label)
         <li>

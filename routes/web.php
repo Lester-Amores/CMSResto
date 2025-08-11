@@ -25,7 +25,7 @@ Route::prefix('operator')->middleware(['auth', 'role:operator'])->group(function
 
 Route::get('/', [PublicPageController::class, 'home'])->name('home');
 Route::get('/about', [PublicPageController::class, 'about'])->name('about');
-Route::get('/services', [PublicPageController::class, 'services'])->name('services');
+Route::get('/menu', [PublicPageController::class, 'menu'])->name('menu');
 Route::get('/contact', [PublicPageController::class, 'contact'])->name('contact');
 Route::post('/orders/store', [OrderController::class, 'store'])->name('orders.store');
 
