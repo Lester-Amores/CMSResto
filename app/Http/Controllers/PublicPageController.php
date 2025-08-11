@@ -32,11 +32,18 @@ class PublicPageController extends Controller
         ]);
     }
 
-    public function services()
+    public function menu()
     {
-        return view('public.services', [
-            'title' => 'Our Services',
-            'description' => 'Explore the services we offer to help you succeed.',
+        $menus = Menu::with('meals')->get();
+        $allMeals = $menus->flatMap->meals;
+
+        return view('public.menu', [
+            'title' => 'Our Menu',
+            'description' => 'Explore our best chef masterpieces.',
+            'data' => [
+                'menus' => $menus,
+                'meals' => $allMeals,
+            ],
         ]);
     }
 
