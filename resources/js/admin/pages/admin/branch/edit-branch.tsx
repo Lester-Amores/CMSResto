@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { router } from '@inertiajs/react';
 import { Button } from '@/admin/components/ui/button';
@@ -7,6 +7,7 @@ import { FlashMessages, Branch } from '@/admin/types';
 import { handleFlashMessages, showErrors } from '@/admin/lib/utils';
 import { useQuery } from '@tanstack/react-query';
 import { getBranch } from '@/admin/services/services';
+import ImageUpload from '@/admin/components/image-upload';
 
 interface EditBranchProps {
     onSuccess: () => void;
@@ -14,7 +15,9 @@ interface EditBranchProps {
 }
 
 export default function EditBranch({ onSuccess, branchId }: EditBranchProps) {
-    const { register, handleSubmit, formState: { errors }, reset } = useForm<Branch>();
+    const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm<Branch>();
+    const [imageFile, setImageFile] = useState<File | null>(null);
+
     const { data, isLoading, error } = useQuery({
         queryKey: ['branch', branchId],
         queryFn: () => getBranch(branchId),
@@ -35,6 +38,14 @@ export default function EditBranch({ onSuccess, branchId }: EditBranchProps) {
                 formData.append(key, value);
             }
         });
+
+        if (imageFile) {
+            formData.append('img_src', imageFile);
+        }
+
+        if (data.img_src === null) {
+            formData.append('img_src_removed', 'true');
+        }
 
         router.post(route('branches.update', branchId), formData, {
             preserveScroll: true,
@@ -62,6 +73,7 @@ export default function EditBranch({ onSuccess, branchId }: EditBranchProps) {
             ) : (
                 <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col h-full">
                     <BranchForm register={register} errors={errors} />
+                    <ImageUpload initialImageUrl={data?.img_src} label="Profile Image" name="img_src" onChange={(file) => setImageFile(file)} setValue={setValue} />
                     <div className="flex justify-end">
                         <Button type="submit">
                             Submit

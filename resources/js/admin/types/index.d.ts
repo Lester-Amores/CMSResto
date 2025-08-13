@@ -106,7 +106,7 @@ export interface Branch {
     id: number;
     name: string;
     address: string;
-    image: number;
+    img_src: number;
     operator_id: number;
     operator?: Operator;
     deleted_at: string | null;

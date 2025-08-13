@@ -38,8 +38,7 @@ class BranchController extends Controller
     public function store(BranchRequest $request)
     {
         try {
-            $validated = $request->validated();
-            Branch::create($validated);
+            $this->branchService->createBranch($request);
             return redirect()->back()->with('success', 'Successfully created');
         } catch (Exception $e) {
             return redirect()->back()->with('error', 'Failed to create branch');
@@ -56,9 +55,7 @@ class BranchController extends Controller
     {
 
         try {
-            $validated = $request->validated();
-            $branch->update($validated);
-            return redirect()->back()->with('success', 'Successfully created');
+            $this->branchService->updateBranch($request, $branch);
             return redirect()->back()->with('success', 'Successfully updated');
         } catch (Exception $e) {
             return redirect()->back()->with('error', 'Failed to update branch');

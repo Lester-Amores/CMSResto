@@ -4,8 +4,8 @@ namespace App\Services;
 
 use App\Models\Branch;
 use Illuminate\Http\Request;
-
-
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
 
 class BranchService
 {
@@ -30,11 +30,53 @@ class BranchService
         $sortBy = $request->input('sortBy', 'id');
         $sortOrder = $request->filled('sortOrder') ? $request->sortOrder : 'desc';
         $query->orderBy($sortBy, $sortOrder);
-      
+
 
 
         $perPage = $request->input('rowsPerPage', 10);
 
         return $query->paginate($perPage);
+    }
+
+    public function createBranch(Request $request)
+    {
+        $validated = $request->validated();
+
+        if ($request->hasFile('img_src')) {
+            $imagePath = $request->file('img_src')->store('uploads/branches', 'public');
+            $validated['img_src'] = $imagePath;
+        }
+
+        $validated['img_src'] = $validated['img_src'] ?? null;
+
+        Branch::create($validated);
+    }
+
+    public function updateBranch(Request $request, Branch $branch)
+    {
+        $validated = $request->validated();
+
+        if ($request->boolean('img_src_removed') && empty($validated['img_src'])) {
+            throw ValidationException::withMessages([
+                'img_src' => 'Image is required.'
+            ]);
+        }
+
+        $imagePath = $branch->img_src;
+
+        if ($request->boolean('img_src_removed')) {
+            $imagePath = null;
+            if ($branch->img_src && Storage::disk('public')->exists($branch->img_src)) {
+                Storage::disk('public')->delete($branch->img_src);
+            }
+        }
+
+        if ($request->hasFile('img_src')) {
+            $imagePath = $request->file('img_src')->store('uploads/branches', 'public');
+        }
+
+        $validated['img_src'] = $imagePath;
+
+        $branch->update($validated);
     }
 }
