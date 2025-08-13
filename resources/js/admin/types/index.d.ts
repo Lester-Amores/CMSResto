@@ -106,13 +106,27 @@ export interface Branch {
     id: number;
     name: string;
     address: string;
-    img_src: number;
-    operator_id: number;
-    operator?: Operator;
+    city: string;
+    province: string;
+    postal_code: string;
+    phone: string;
+    email: string;
+    latitude: number;
+    longitude: number;
+    manager_name: string;
+    opening_time: string;
+    closing_time: string;
+    status: 'open' | 'temporarily_closed';
+    capacity: number;
+    delivery_available: boolean;
+    menu_url: string;
+    img_src: string;
+    notes?: string | null;
     deleted_at: string | null;
     created_at: string;
     updated_at: string;
 }
+
 
 export interface Menu {
     id: number;

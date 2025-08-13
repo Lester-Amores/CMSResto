@@ -23,13 +23,8 @@ class Branch extends Model
         'manager_name',
         'opening_time',
         'closing_time',
-        'status',
-        'capacity',
-        'delivery_available',
-        'menu_url',
         'img_src',
         'notes',
-        'operator_id',
     ];
 
     public function operators()

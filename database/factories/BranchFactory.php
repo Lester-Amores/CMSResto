@@ -24,10 +24,6 @@ class BranchFactory extends Factory
             'manager_name' => $this->faker->name,
             'opening_time' => $openingTime,
             'closing_time' => $closingTime,
-            'status' => $this->faker->randomElement(['open', 'temporarily_closed']),
-            'capacity' => $this->faker->numberBetween(30, 150),
-            'delivery_available' => $this->faker->boolean(80),
-            'menu_url' => $this->faker->url,
             'img_src' => $this->faker->imageUrl(640, 480, 'restaurant', true),
             'notes' => $this->faker->optional()->sentence(),
         ];

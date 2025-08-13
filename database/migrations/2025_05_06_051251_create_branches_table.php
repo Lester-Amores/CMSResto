@@ -25,10 +25,6 @@ return new class extends Migration
             $table->string('manager_name')->nullable();
             $table->time('opening_time')->nullable();
             $table->time('closing_time')->nullable();
-            $table->enum('status', ['open', 'temporarily_closed', 'permanently_closed'])->default('open');
-            $table->unsignedInteger('capacity')->nullable();
-            $table->boolean('delivery_available')->default(false);
-            $table->string('menu_url')->nullable();
             $table->string('img_src')->nullable();
             $table->text('notes')->nullable();
             $table->softDeletes();
