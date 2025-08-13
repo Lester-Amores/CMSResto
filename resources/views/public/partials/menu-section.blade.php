@@ -1,34 +1,34 @@
 <section class="min-h-screen bg-stone-300">
     <div class="mx-auto">
-        <div class="flex items-center justify-center">
-            <div class="flex items-center max-w-xl mt-12">
-                <hr class="w-12 sm:w-18 border-black">
-                <span class="mx-4 text-md font-bold text-gray-900">DISCOVER</span>
-                <hr class="w-12 sm:w-18 border-black">
-            </div>
-        </div>
-        <h2 class="text-5xl font-bold text-gray-900 mb-6 text-center">OUR MENU</h2>
-
-        <div class="relative w-full">
-            <div class="overflow-x-auto px-4 sm:px-12">
-                <div
-                    id="menuTabs"
-                    class="flex lg:justify-center space-x-6 scroll-smooth whitespace-nowrap py-4">
-                    <div
-                        onclick="selectMenu('all')"
-                        class="menu-tab cursor-pointer px-6 py-3 rounded-lg font-bold text-xl hover:bg-stone-300 min-w-max">
-                        All
-                    </div>
-                    @foreach ($data['menus'] as $menu)
-                    <div
-                        onclick="selectMenu({{ $menu->id }})"
-                        class="menu-tab cursor-pointer px-6 py-3 rounded-lg font-medium text-xl hover:bg-stone-300 min-w-max">
-                        {{ $menu->name }}
-                    </div>
-                    @endforeach
+            <div class="reveal flex items-center justify-center">
+                <div class="flex items-center max-w-xl mt-12">
+                    <hr class="w-12 sm:w-18 border-black">
+                    <span class="mx-4 text-md font-bold text-gray-900">DISCOVER</span>
+                    <hr class="w-12 sm:w-18 border-black">
                 </div>
             </div>
-        </div>
+            <h2 class="reveal text-5xl font-bold text-gray-900 mb-6 text-center">OUR MENU</h2>
+
+            <div class="reveal relative w-full">
+                <div class="overflow-x-auto px-4 sm:px-12">
+                    <div
+                        id="menuTabs"
+                        class="flex lg:justify-center space-x-6 scroll-smooth whitespace-nowrap py-4">
+                        <div
+                            onclick="selectMenu('all')"
+                            class="menu-tab cursor-pointer px-6 py-3 rounded-lg font-bold text-xl hover:bg-stone-300 min-w-max">
+                            All
+                        </div>
+                        @foreach ($data['menus'] as $menu)
+                        <div
+                            onclick="selectMenu({{ $menu->id }})"
+                            class="menu-tab cursor-pointer px-6 py-3 rounded-lg font-medium text-xl hover:bg-stone-300 min-w-max">
+                            {{ $menu->name }}
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
 
         <div class="relative mx-auto">
             <div class=" overflow-y-auto no-scrollbar h-[300px] my-4 p-4">
@@ -48,36 +48,36 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                         </svg>
                     </button>
+                    <div class="reveal">
+                        <div id="mealsGrid"
+                            class="mx-auto max-w-7xl flex space-x-4 px-4 overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar py-6 bg-stone-300">
+                            @foreach ($data['menus'] as $menu)
+                            @foreach ($menu->meals as $meal)
+                            <div
+                                class="meal-card flex-shrink-0 w-64 snap-start bg-white/90 rounded-xl shadow-lg overflow-hidden ring-1 ring-stone-400"
+                                data-menu-id="{{ $menu->id }}">
 
-                    <div id="mealsGrid"
-                        class="mx-auto max-w-7xl flex space-x-4 px-4 overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar py-6 bg-stone-300">
-                        @foreach ($data['menus'] as $menu)
-                        @foreach ($menu->meals as $meal)
-                        <div
-                            class="meal-card flex-shrink-0 w-64 snap-start bg-white/90 rounded-xl shadow-lg overflow-hidden ring-1 ring-stone-400"
-                            data-menu-id="{{ $menu->id }}">
-
-                            <div class="h-40 bg-cover bg-center"
-                                style="background-image: url('{{ getFullImageUrl($meal->img_src) }}');">
+                                <div class="h-40 bg-cover bg-center"
+                                    style="background-image: url('{{ getFullImageUrl($meal->img_src) }}');">
+                                </div>
+                                <div class="px-4 py-3">
+                                    <h3 class="text-lg font-semibold text-yellow-700">{{ $meal->name }}</h3>
+                                    <p class="text-sm text-stone-700 mt-1">
+                                        {{ $meal->description ?? 'No description available.' }}
+                                    </p>
+                                </div>
                             </div>
-                            <div class="px-4 py-3">
-                                <h3 class="text-lg font-semibold text-yellow-700">{{ $meal->name }}</h3>
-                                <p class="text-sm text-stone-700 mt-1">
-                                    {{ $meal->description ?? 'No description available.' }}
-                                </p>
-                            </div>
+                            @endforeach
+                            @endforeach
                         </div>
-                        @endforeach
-                        @endforeach
                     </div>
-
                 </div>
 
             </div>
         </div>
 
         <div
-            class="relative bg-fixed bg-cover bg-center bg-no-repeat py-16 mt-8"
+            class="relative bg-fixed bg-cover bg-center bg-no-repeat py-16 mt-8 reveal"
             style="background-image: url('/images/menu-hero-images.jpg');">
             <div class="absolute inset-0 bg-black/50 z-0"></div>
             <div class="relative z-10 px-4 sm:px-6 lg:px-8 py-10 mx-auto max-w-7xl rounded-md text-center">

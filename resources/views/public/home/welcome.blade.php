@@ -8,22 +8,26 @@
 
     <x-nav variant="dark" />
 
-    <div
-        class="relative z-10 flex flex-col items-center justify-center pb-10 h-full text-white px-4 text-center container mx-auto">
-        <div>
-            <img src="{{ asset('images/app-logo.png') }}" alt="App Logo" class="h-50 w-auto pl-8 ">
-        </div>
-        <h1 class="text-5xl md:text-8xl font-bold mb-4">Welcome To Coeur Véritable</h1>
-        <p class="text-2xl md:text-5xl max-w-lg">True Heart, Fine Taste</p>
 
-        <div class="mt-8">
+    <div class="relative z-10 flex flex-col items-center justify-center pb-10 h-full text-white px-4 text-center container mx-auto">
+        <div class="reveal">
+            <img src="{{ asset('images/app-logo.png') }}" alt="App Logo" class="h-50 w-auto pl-8">
+        </div>
+
+        <h1 class="reveal text-5xl md:text-8xl font-bold mb-4">
+            Welcome To Coeur Véritable
+        </h1>
+
+        <p class="reveal text-2xl md:text-5xl max-w-lg">
+            True Heart, Fine Taste
+        </p>
+
+        <div class="mt-8 reveal">
             <button
                 class="bg-[#AC9746] text-white text-lg px-6 py-3 rounded-full shadow-md hover:bg-[#937f3c] transition duration-300 cursor-pointer">
                 Reserve Now
             </button>
-
-
         </div>
-
     </div>
+
 </div>
