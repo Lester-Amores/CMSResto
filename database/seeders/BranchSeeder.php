@@ -18,11 +18,7 @@ class BranchSeeder extends Seeder
         ];
 
         foreach ($branches as $branch) {
-            Branch::create([
-                'name' => $branch['name'],
-                'address' => $branch['address'],
-                'img_src' => null,
-            ]);
+            Branch::factory()->create($branch);
         }
     }
 }

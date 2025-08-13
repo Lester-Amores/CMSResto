@@ -8,14 +8,28 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Branch extends Model
 {
-    /** @use HasFactory<\Database\Factories\BranchFactory> */
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'name',
         'address',
+        'city',
+        'province',
+        'postal_code',
+        'phone',
+        'email',
+        'latitude',
+        'longitude',
+        'manager_name',
+        'opening_time',
+        'closing_time',
+        'status',
+        'capacity',
+        'delivery_available',
+        'menu_url',
         'img_src',
-        'operator_id'
+        'notes',
+        'operator_id',
     ];
 
     public function operators()
