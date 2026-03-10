@@ -21,7 +21,7 @@ class OrderSeeder extends Seeder
             return;
         }
 
-        $totalOrders = 300000;
+        $totalOrders = 10000;
         $batchSize = 1000;
 
         $this->command->info("🚀 Seeding $totalOrders orders in batches of $batchSize...");
