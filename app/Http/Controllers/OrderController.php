@@ -38,18 +38,6 @@ class OrderController extends Controller
             : Inertia::render('admin/order/index', $data);
     }
 
-    public function OperatorPosPage(Request $request)
-    {
-        $orders = $this->orderService->getOperatorOrder($request);
-        $data = [
-            'orders' => $orders,
-        ];
-
-        return $request->expectsJson()
-            ? response()->json($data)
-            : Inertia::render('operator/point-of-sale/index', $data);
-    }
-
     public function store(OrderRequest $request)
     {
         try {

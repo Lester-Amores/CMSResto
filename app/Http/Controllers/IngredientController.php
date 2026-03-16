@@ -58,7 +58,6 @@ class IngredientController extends Controller
         try {
             $validated = $request->validated();
             $ingredient->update($validated);
-            return redirect()->back()->with('success', 'Successfully created');
             return redirect()->back()->with('success', 'Successfully updated');
         } catch (Exception $e) {
             return redirect()->back()->with('error', 'Failed to update ingredient');
