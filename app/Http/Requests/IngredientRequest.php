@@ -24,6 +24,7 @@ class IngredientRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'unit_id' => 'required|integer|exists:units,id',
+            'branch_id' => 'required|integer|exists:branches,id',
             'unit_cost' => 'required',
             'quantity' => 'required|integer'
         ];
