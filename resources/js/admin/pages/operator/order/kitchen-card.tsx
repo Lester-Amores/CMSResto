@@ -4,12 +4,13 @@ import type { Order } from "@/admin/types";
 
 interface KitchenCardProps {
     order: Order;
-    onStatusChange: (orderId: number, newStatus: 1 | 2) => void;
+    onStatusChange: (orderId: number, newStatus: 1 | 2 | 3) => void;
 }
 
 export const KitchenCard = ({ order, onStatusChange }: KitchenCardProps) => {
     const isPending = order.status === 0;
     const isReady = order.status === 1;
+    const isCancelled = order.status === 3;
 
     return (
         <div className="min-w-[240px] border rounded-lg shadow-sm p-4 flex flex-col">
@@ -56,16 +57,38 @@ export const KitchenCard = ({ order, onStatusChange }: KitchenCardProps) => {
                         >
                             Complete
                         </Button>
+                        <Button
+                            variant="destructive"
+                            className="flex-1"
+                            onClick={() => onStatusChange(order.id, 3)}
+                        >
+                            Cancel
+                        </Button>
                     </>
                 )}
 
                 {isReady && (
-                    <Button
-                        className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
-                        onClick={() => onStatusChange(order.id, 2)}
-                    >
-                        Complete
-                    </Button>
+                    <>
+                        <Button
+                            className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
+                            onClick={() => onStatusChange(order.id, 2)}
+                        >
+                            Complete
+                        </Button>
+                        <Button
+                            variant="destructive"
+                            className="flex-1"
+                            onClick={() => onStatusChange(order.id, 3)}
+                        >
+                            Cancel
+                        </Button>
+                    </>
+                )}
+
+                {isCancelled && (
+                    <div className="flex-1 text-center text-sm text-muted-foreground">
+                        Cancelled
+                    </div>
                 )}
             </div>
         </div>

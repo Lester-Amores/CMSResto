@@ -75,7 +75,11 @@ class OrderService
         $validated = $request->validated();
 
         return DB::transaction(function () use ($validated) {
-            $orderData = collect($validated)->except('meals')->toArray();
+            $amounts = $this->calculateAmounts($validated);
+            $orderData = collect($validated)
+                ->except('meals')
+                ->merge($amounts)
+                ->toArray();
             $order = Order::create($orderData);
             $order->update([
                 'order_number' => 'ORD-' . str_pad($order->id, 6, '0', STR_PAD_LEFT),
@@ -91,11 +95,53 @@ class OrderService
         $validated = $request->validated();
 
         DB::transaction(function () use ($validated, $order) {
-            $orderData = collect($validated)->except('meals')->toArray();
+            $amounts = $this->calculateAmounts($validated);
+            $orderData = collect($validated)
+                ->except('meals')
+                ->merge($amounts)
+                ->toArray();
             $order->update($orderData);
 
             $this->attachMeals($order, $validated['meals'], true);
         });
+    }
+
+    /**
+     * Calculate subtotal, discount_amount, tax_amount, and total on the server.
+     *
+     * @param array $validated
+     * @return array{subtotal: float, discount_amount: float, tax_amount: float, total: float}
+     */
+    protected function calculateAmounts(array $validated): array
+    {
+        $subtotal = 0.0;
+
+        foreach ($validated['meals'] as $meal) {
+            $mealModel = Meal::findOrFail($meal['meal_id']);
+            $quantity = (int) $meal['quantity'];
+            $price = (float) $mealModel->price;
+            $subtotal += $price * $quantity;
+        }
+
+        $discountAmount = isset($validated['discount_amount'])
+            ? max(0.0, (float) $validated['discount_amount'])
+            : 0.0;
+
+        // Cap discount so it cannot exceed subtotal
+        $discountAmount = min($discountAmount, $subtotal);
+
+        $taxAmount = isset($validated['tax_amount'])
+            ? max(0.0, (float) $validated['tax_amount'])
+            : 0.0;
+
+        $total = $subtotal - $discountAmount + $taxAmount;
+
+        return [
+            'subtotal' => $subtotal,
+            'discount_amount' => $discountAmount,
+            'tax_amount' => $taxAmount,
+            'total' => $total,
+        ];
     }
 
     protected function attachMeals(Order $order, array $meals, bool $sync = false): void

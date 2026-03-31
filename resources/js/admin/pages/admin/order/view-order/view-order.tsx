@@ -15,8 +15,8 @@ interface ViewOrderProps {
 }
 
 const orderTypeMap = ['Dine-In', 'Takeout', 'Delivery'];
-const paymentMethodMap = ['Cash', 'Card', 'GCash', 'Other'];
-const statusMap = ['Pending', 'Completed', 'Cancelled'];
+const paymentMethodMap = ['Cash', 'Card', 'E-Wallet'];
+const statusMap = ['Preparing', 'Ready', 'Completed', 'Cancelled'];
 
 export default function ViewOrder({ orderId }: ViewOrderProps) {
     const { data, isLoading } = useQuery({

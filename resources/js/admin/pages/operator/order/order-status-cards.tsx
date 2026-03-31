@@ -1,12 +1,13 @@
-import { Clock, Utensils, CheckCircle } from 'lucide-react';
+import { Clock, Utensils, CheckCircle, XCircle } from 'lucide-react';
 
 interface Props {
-    activeTab: 'pending' | 'ready' | 'completed';
-    onTabChange: (tab: 'pending' | 'ready' | 'completed') => void;
+    activeTab: 'pending' | 'ready' | 'completed' | 'cancelled';
+    onTabChange: (tab: 'pending' | 'ready' | 'completed' | 'cancelled') => void;
     counts: {
         pending: number;
         ready: number;
         completed: number;
+        cancelled: number;
     };
 }
 
@@ -47,6 +48,18 @@ export const OrderStatusCards = ({ activeTab, onTabChange, counts }: Props) => {
                     <span className="text-3xl font-bold text-blue-900 dark:text-blue-100 leading-tight">{counts.completed}</span>
                 </div>
                 <CheckCircle className="text-blue-600 dark:text-blue-100 w-14 h-14 opacity-80" />
+            </button>
+
+            <button
+                onClick={() => onTabChange('cancelled')}
+                className={`flex flex-1 bg-red-100 dark:bg-red-900 border rounded-xl shadow p-4 items-center justify-between transition 
+          ${activeTab === 'cancelled' ? 'border-red-500 ring-2 ring-red-300 dark:border-red-300 dark:ring-red-600' : 'border-red-300 dark:border-red-800'}`}
+            >
+                <div className="flex flex-col text-left">
+                    <span className="text-sm font-medium text-red-700 dark:text-red-200">Cancelled Orders</span>
+                    <span className="text-3xl font-bold text-red-900 dark:text-red-100 leading-tight">{counts.cancelled}</span>
+                </div>
+                <XCircle className="text-red-600 dark:text-red-100 w-14 h-14 opacity-80" />
             </button>
         </div>
     );

@@ -24,7 +24,7 @@ class OrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'order_type'       => 'required|integer|in:0,1,2,3,4',
+            'order_type'       => 'required|integer|in:0,1,2',
             'discount_type'    => 'nullable|integer|in:0,1,2,3',
             'discount_id_number'  => 'required_if:discount_type,1,2|string|max:50',
             'discount_amount'  => 'nullable|numeric|min:0',

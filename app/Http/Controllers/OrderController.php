@@ -129,7 +129,7 @@ class OrderController extends Controller
         $branch_id = $user->operator->branch_id;
 
         $orders = Order::where('branch_id', $branch_id)
-        ->whereIn('status', [0, 1, 2])
+        ->whereIn('status', [0, 1, 2, 3])
         ->whereDate('created_at', Carbon::today())
         ->with('meals')
         ->orderBy('id', 'asc')
@@ -140,6 +140,7 @@ class OrderController extends Controller
             'preparing' => $orders->where('status', Order::STATUS_PREPARING)->values(),
             'ready' => $orders->where('status', Order::STATUS_READY)->values(),
             'completed' => $orders->where('status', Order::STATUS_COMPLETED)->values(),
+            'cancelled' => $orders->where('status', Order::STATUS_CANCELLED)->values(),
         ];
 
         return $request->expectsJson()
@@ -152,8 +153,14 @@ class OrderController extends Controller
     public function updateStatus(Request $request, Order $order)
     {
         $request->validate([
-            'status' => 'required|in:0,1,2',
+            'status' => 'required|in:0,1,2,3',
         ]);
+
+        $user = Auth::user();
+        $operatorBranchId = $user?->operator?->branch_id;
+        if ($operatorBranchId === null || (int) $order->branch_id !== (int) $operatorBranchId) {
+            abort(403, 'Unauthorized');
+        }
 
         $order->status = $request->status;
         $order->save();

@@ -10,6 +10,7 @@ interface ordersProps {
     preparing: Order[];
     ready: Order[];
     completed: Order[];
+    cancelled: Order[];
 }
 
 interface Props {
@@ -18,7 +19,7 @@ interface Props {
 
 export default function OrdersPage({ orders }: Props) {
     
-    const [activeTab, setActiveTab] = useState<'pending' | 'ready' | 'completed'>('pending');
+    const [activeTab, setActiveTab] = useState<'pending' | 'ready' | 'completed' | 'cancelled'>('pending');
 
     const renderOrders = () => {
         switch (activeTab) {
@@ -28,6 +29,8 @@ export default function OrdersPage({ orders }: Props) {
                 return orders.ready;
             case 'completed':
                 return orders.completed;
+            case 'cancelled':
+                return orders.cancelled;
             default:
                 return [];
         }
@@ -35,7 +38,7 @@ export default function OrdersPage({ orders }: Props) {
 
     const displayedOrders = renderOrders();
 
-    const handleStatusChange = (orderId: number, newStatus: 1 | 2) => {
+    const handleStatusChange = (orderId: number, newStatus: 1 | 2 | 3) => {
         router.post(route('operator.update-order-status', orderId), { status: newStatus }, {
             preserveScroll: true,
             onSuccess: (page) => {
@@ -67,6 +70,7 @@ export default function OrdersPage({ orders }: Props) {
                         pending: orders.preparing.length,
                         ready: orders.ready.length,
                         completed: orders.completed.length,
+                        cancelled: orders.cancelled.length,
                     }}
                 />
 
